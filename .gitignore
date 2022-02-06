@@ -1,0 +1,9 @@
+trash
+.pylintrc
+password.txt
+*.ipynb
+.vscode
+__pycache__/
+.pytest_cache
+.ipynb_checkpoints
+カテゴリー.csv

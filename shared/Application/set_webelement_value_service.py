@@ -1,12 +1,16 @@
+from typing import List
+from shared.Domain.xweb_element import XWebElement
+from shared.Domain.xweb_element_list import XWebElementList
+
 # 対象のhtml要素のfieldに値をセットします
 class SetWebElementService:
-    def execute(self, web_element_list):
+    def execute(self, web_element_list: XWebElementList):
 
         list(
             map(
-                lambda web_element: web_element.get_element().send_keys(
-                    web_element.get_value()
+                lambda xweb_element: xweb_element.get_element().send_keys(
+                    xweb_element.get_value()
                 ),
-                web_element_list,
+                web_element_list.get_web_element_list(),
             )
         )

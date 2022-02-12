@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 # URLを6つの構成要素に分解(返り値は6つの構成要素のタプル)
 # [scheme]:// [netloc] / [path] ; [parameters] ? [query] # [fragment]
 class XUrl:
-    def __init__(self, href):
+    def __init__(self, href: str):
         self.href = href
 
     def get_href(self):

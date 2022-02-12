@@ -8,6 +8,9 @@ from shared.Application.find_web_element_service import FindWebElementService
 from shared.Domain.xbeautiful_soup import XBeautifulSoup
 from bs4 import BeautifulSoup
 
+from shared.Domain.selenium_scraper import XWebScraper
+from shared.Enums.ScrapingType import ScrapingType
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
@@ -17,8 +20,8 @@ url = OpenTextService().execute(x_text=XText(url_filepath), mode="r", encoding="
 
 res = requests.get(url)
 xbeautiful_soup = XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
-atag_resultset = FindWebElementService(xbeautiful_soup).find_element_by_selector(
-    ".review-title"
-)
+atag_resultset = FindWebElementService(
+    XWebScraper(ScrapingType.SOUP)
+).find_element_by_selector(".review-title")
 
 # 途中で実装中止

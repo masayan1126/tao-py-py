@@ -3,6 +3,7 @@ from glob import glob
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
+from shared.Domain.xurl import XUrl
 
 from shared.Domain.xweb_element import XWebElement
 from shared.Domain.xdriver import XDriver
@@ -20,9 +21,10 @@ chrome_options.add_experimental_option("detach", True)  # 処理完了後もブ�
 # options.add_argument('--headless')
 chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
 xdriver = XDriver(chrome_service, chrome_options, "Chrome")
-chrome_driver = xdriver.get_driver()
-chrome_browser = XBrowser(chrome_driver, "https://tinyjpg.com/")
-OpenBrowserService().execute(browser=chrome_browser)
+chrome_driver = xdriver.get_scraper()
+chrome_browser = OpenBrowserService().execute(
+    browser=XBrowser(chrome_driver, XUrl("https://tinyjpg.com/"))
+)
 
 # 画像アップロード -----------------------------------------------------------------------------------
 image_file_list = glob(
@@ -34,7 +36,7 @@ upload_element_list = []
 for image in image_file_list:
     upload_area_element = XWebElement(
         "",
-        chrome_browser.get_browser_object().find_element_by_xpath(
+        chrome_browser.find_element_by_xpath(
             "//*[@id='top']/section/div[1]/section/input"
         ),
         image,

@@ -5,6 +5,7 @@ import pytest
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Domain.xbrowser import XBrowser
 from shared.Domain.xdriver import XDriver
+from shared.Domain.xurl import XUrl
 from shared.Domain.xweb_element import XWebElement
 
 
@@ -16,16 +17,15 @@ def setuped_chrome_browser():
     # options.add_argument('--headless')
     chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
     xdriver = XDriver(chrome_service, chrome_options, "Chrome")
-    chrome_driver = xdriver.get_driver()
-    chrome_browser = XBrowser(chrome_driver, "https://maasaablog.com/")
-    return chrome_browser
+    return OpenBrowserService().execute(
+        xbrowser=XBrowser(xdriver, XUrl("https://maasaablog.com/")),
+        needs_multiple_tags=False,
+    )
 
 
-def test_対象のページからhtml要素を取得できること(setuped_chrome_browser: XBrowser):
-    OpenBrowserService().execute(browser=setuped_chrome_browser)
+def test_対象のページからhtml要素を取得できること(setuped_chrome_browser):
     xweb_element = XWebElement(
-        "",
-        setuped_chrome_browser.get_browser_object().find_element_by_id("menu-menu-1"),
+        setuped_chrome_browser.find_element_by_id("menu-menu-1"),
         "",
     )
 

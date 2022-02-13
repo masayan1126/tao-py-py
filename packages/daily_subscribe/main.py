@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from shared.Application.find_web_element_service import FindWebElementService
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Application.set_webelement_value_service import SetWebElementService
-from shared.Domain.data_frame_converter import DataFrameConverter
+from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbrowser import XBrowser
 from shared.Domain.xdriver import XDriver
@@ -76,8 +76,6 @@ for subscribe in subscribe_list:
             SetWebElementService().execute(xweb_element_list)
 
             # TODO: 固定になっている
-            xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.TAB)
-            xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.TAB)
             xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.ENTER)
 
         case SiteType.NEEDS_LOGIN_AND_ONE_STEP:

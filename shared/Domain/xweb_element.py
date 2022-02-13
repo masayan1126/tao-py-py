@@ -7,6 +7,16 @@ class XWebElement(IXWebElement):
         self.element = element
         self.value = value
 
+    def __eq__(self, other):
+        if not isinstance(other, XWebElement):
+            return NotImplemented
+        return (self.element, self.value) == (other.element, self.value)
+
+    def __lt__(self, other):
+        if not isinstance(other, XWebElement):
+            return NotImplemented
+        return (self.element, self.value) < (other.element, self.value)
+
     def get_element(self):
         return self.element
 

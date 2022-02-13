@@ -1,6 +1,7 @@
 from shared.Domain.i_web_scraper import IWebScraper
 from shared.Enums.ScrapingType import ScrapingType
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By
 
 
 class FindWebElementService:
@@ -9,8 +10,8 @@ class FindWebElementService:
 
     def find_element_by_tag_name(self, html_tag_name: str):
         if self.web_scraper.get_scraper_type() == ScrapingType.SELENIUM:
-            return self.web_scraper.get_scraper().find_elements_by_tag_name(
-                html_tag_name
+            return self.web_scraper.get_scraper().find_element(
+                By.TAG_NAME, html_tag_name
             )
 
         else:

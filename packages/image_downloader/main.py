@@ -10,7 +10,7 @@ from shared.Application.find_web_element_service import FindWebElementService
 from shared.Domain.xbeautiful_soup import XBeautifulSoup
 from bs4 import BeautifulSoup
 from shared.Domain.xcsv import XCsv
-from shared.Domain.selenium_scraper import XWebScraper
+from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Enums.ScrapingType import ScrapingType
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -25,7 +25,7 @@ res = requests.get(download_path_from)
 
 xbeautiful_soup = XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
 image_tag_list = FindWebElementService(
-    XWebScraper(ScrapingType.SOUP)
+    SeleniumScraper(ScrapingType.SOUP)
 ).find_by_html_tag_name("img")
 
 image_list_df = XCsv().read(

@@ -1,6 +1,4 @@
 from shared.Domain.i_web_scraper import IWebScraper
-from shared.Domain.xbeautiful_soup import XBeautifulSoup
-from shared.Domain.xdriver import XDriver
 from shared.Enums.ScrapingType import ScrapingType
 from selenium.webdriver.common.by import By
 

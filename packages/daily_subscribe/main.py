@@ -6,7 +6,7 @@ from shared.Application.find_web_element_service import FindWebElementService
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Application.set_webelement_value_service import SetWebElementService
 from shared.Domain.data_frame_converter import DataFrameConverter
-from shared.Domain.selenium_scraper import SeleniumScraper
+from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbrowser import XBrowser
 from shared.Domain.xdriver import XDriver
 from shared.Domain.xexcel import XExcel
@@ -46,7 +46,7 @@ for subscribe in subscribe_list:
 
     # ブラウザで起動するサイトの種別に応じてmatch～case文で処理
     match SiteType(subscribe["site_type"]):
-        case SiteType.NEEDS_LOGIM_AND_TWO_STEP:
+        case SiteType.NEEDS_LOGIN_AND_TWO_STEP:
             xweb_element_list = XWebElementList(web_elements=[
                 # user_id
                 XWebElement(
@@ -80,7 +80,7 @@ for subscribe in subscribe_list:
             xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.TAB)
             xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.ENTER)
 
-        case SiteType.NEEDS_LOGIM_AND_ONE_STEP:
+        case SiteType.NEEDS_LOGIN_AND_ONE_STEP:
             xweb_element_list = XWebElementList(web_elements=[
                 # user_id
                 XWebElement(

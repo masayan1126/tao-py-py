@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 import pytest
 import requests
 from shared.Application.open_browser_service import OpenBrowserService
-from shared.Domain.beautiful_soup_scraper import BeautifulSoupScraper
-from shared.Domain.selenium_scraper import SeleniumScraper
+from shared.Domain.Scraping.beautiful_soup_scraper import BeautifulSoupScraper
+from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbeautiful_soup import XBeautifulSoup
 from shared.Application.find_web_element_service import FindWebElementService
 from shared.Domain.xbrowser import XBrowser

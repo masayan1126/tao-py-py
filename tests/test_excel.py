@@ -14,11 +14,11 @@ def setuped_worksheet():
     xworksheet = xworkbook.get_sheet_by_name("プログラミング言語一覧")
     return xworksheet
 
-
+@pytest.mark.skipif(True, reason="[エクセルファイルの準備が必要なため]")
 def test_特定のセルを取得できる(setuped_worksheet: XWorksheet):
     assert setuped_worksheet.get_cell(2, 1) == "Python"
 
-
+@pytest.mark.skipif(True, reason="[エクセルファイルの準備が必要なため]")
 def test_特定のレコードを取得できる(setuped_worksheet: XWorksheet):
 
     data = {
@@ -32,7 +32,7 @@ def test_特定のレコードを取得できる(setuped_worksheet: XWorksheet):
     # check_names：bool、デフォルトはTrue (シリーズ名とインデックス名属性をチェックするかどうか。
     assert_series_equal(actual, expected, check_names=False)
 
-
+@pytest.mark.skipif(True, reason="[エクセルファイルの準備が必要なため]")
 def test_複数レコードを取得できる(setuped_worksheet: XWorksheet):
 
     data = {

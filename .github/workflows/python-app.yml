@@ -39,4 +39,4 @@ jobs:
         pip install pipenv
         pipenv run pipenv install
         pipenv install
-        pipenv run tests
+        pipenv run pytest

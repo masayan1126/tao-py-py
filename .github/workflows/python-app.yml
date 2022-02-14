@@ -32,11 +32,16 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: install pipenv
       run: |
-        pwd
-        ls -la
-        pip install pipenv
-        pipenv run pipenv install
-        pipenv install
-        pipenv run pytest
+        python -m pip install --upgrade pip
+        python -m pip install pipenv
+    
+    - name: lock package version
+      run: pipenv lock
+    
+    - name: install packages
+      run: pipenv sync --dev
+    
+    - name: run test
+      run: pipenv run test

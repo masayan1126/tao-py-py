@@ -35,4 +35,6 @@ jobs:
       run: |
         pwd
         ls -la
-        pytest tests
+        pip install pipenv
+        pipenv install
+        pipenv run pytest

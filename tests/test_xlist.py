@@ -1,6 +1,6 @@
 import pytest
 
-from shared.Util.xlist import XList
+from shared.Domain.xlist import XList
 
 
 @pytest.fixture

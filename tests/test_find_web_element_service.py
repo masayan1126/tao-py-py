@@ -5,7 +5,7 @@ from shared.Application.open_browser_service import OpenBrowserService
 from shared.Domain.Scraping.beautiful_soup_scraper import BeautifulSoupScraper
 from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbeautiful_soup import XBeautifulSoup
-from shared.Application.find_web_element_service import FindWebElementService
+from shared.Application.find_web_elements_service import FindWebElementsService
 from shared.Domain.xbrowser import XBrowser
 from shared.Domain.xdriver import XDriver
 from shared.Domain.xurl import XUrl
@@ -38,14 +38,14 @@ def setuped_driver():
 
 
 def test_対象のページからhtml要素を取得できること_soup(setuped_xbeautiful_soup: XBeautifulSoup):
-    title_tag_list = FindWebElementService(
+    title_tag_list = FindWebElementsService(
         BeautifulSoupScraper(xbeautiful_soup=setuped_xbeautiful_soup)
     ).find_element_by_tag_name("title")
     assert title_tag_list[0].text == "masayanblog | 現役のweb系エンジニアが役立つ情報をまったりご紹介"
 
 
 def test_対象のページからhtml要素を取得できること_selenium(setuped_driver):
-    header_tag_list = FindWebElementService(
+    header_tag_list = FindWebElementsService(
         SeleniumScraper(driver=setuped_driver)
     ).find_element_by_tag_name("header")
 

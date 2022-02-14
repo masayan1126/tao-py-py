@@ -37,4 +37,5 @@ jobs:
         ls -la
         pip install pipenv
         pipenv install
-        pipenv run pytest
+        python -m pip freeze
+        pipenv run python pytest tests

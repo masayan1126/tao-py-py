@@ -1,7 +1,9 @@
 from shared.Domain.i_xweb_element import IXWebElement
 from selenium.webdriver.remote.webelement import WebElement
+from functools import total_ordering
 
 
+@total_ordering
 class XWebElement(IXWebElement):
     def __init__(self, element: WebElement, value):
         self.element = element

@@ -2,15 +2,19 @@ import io, sys, os, signal
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
+from shared.Domain.i_web_scraper import IWebScraper
 from shared.Domain.xurl import XUrl
 
 from shared.Domain.xweb_element import XWebElement
 from shared.Domain.xdriver import XDriver
 from shared.Application.open_text_service import OpenTextService
 from shared.Domain.xbrowser import XBrowser
+from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
+from shared.Application.find_web_elements_service import FindWebElementsService
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Domain.xtext import XText
 from shared.Application.set_webelement_value_service import SetWebElementService
+from shared.Domain.xweb_element_list import XWebElementList
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
@@ -34,26 +38,25 @@ chrome_options.add_experimental_option("detach", True)  # 処理完了後もブ�
 # options.add_argument('--headless')
 chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
 xdriver = XDriver(chrome_service, chrome_options, "Chrome")
-chrome_driver = xdriver.get_scraper()
-chrome_browser = OpenBrowserService().execute(
-    xbrowser=XBrowser(chrome_driver, XUrl("https://id.jobcan.jp/")),
+webdriver = OpenBrowserService().execute(
+    xbrowser=XBrowser(xdriver, XUrl("https://id.jobcan.jp/")),
     needs_multiple_tags=False,
 )
 
 # htmlを取得し値をセットして送信 -----------------------------------------------------------------------------------
 # TODO:emailも外から渡すようにする
 user_email = XWebElement(
-    "user_email",
-    chrome_browser.find_element_by_id("user_email"),
+    FindWebElementsService(SeleniumScraper(driver=webdriver)).by_id("user_email")[0],
     "nishigaki@aivick.co.jp",
 )
 user_password = XWebElement(
-    "user_password",
-    chrome_browser.find_element_by_id("user_password"),
+    FindWebElementsService(SeleniumScraper(driver=webdriver)).by_id("user_password")[0],
     password,
 )
-SetWebElementService().execute([user_email, user_password])
-chrome_browser.find_element_by_xpath("//*[@id='new_user']/input[2]").click()
+SetWebElementService().execute(XWebElementList([user_email, user_password]))
+FindWebElementsService(SeleniumScraper(driver=webdriver)).by_xpath(
+    "//*[@id='new_user']/input[2]"
+)[0].click()
 
 # 処理後、ブラウザを閉じる場合は以下
 # chrome_browser.get_browser_object().quit()

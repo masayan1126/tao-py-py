@@ -7,7 +7,7 @@ from PIL import UnidentifiedImageError
 
 
 class DownloadImageService:
-    def execute(self, x_image: XImage, download_path_to, prefix):
+    def execute(self, x_image: XImage, download_path_to, prefix=None):
 
         print(x_image)
         if not CheckIsValidUrlService().execute(x_image.get_url()):

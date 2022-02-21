@@ -5,15 +5,16 @@ from shared.Domain.xpath import XPath
 
 
 files = GetFileSystemInfoService().execute(
-    XPath("C:\\Users\\nishigaki\\Desktop\\tavenal-com\\public\\comm")
+    XPath("C:\\Users\\nishigaki\\jupyter-lab\\shared\\Application")
 )
 
-# print(files)
+# XCsv().output(
+#     "C:\\Users\\nishigaki\\Desktop\\path_lists.csv",
+#     pd.DataFrame(data=files),
+# )
 
-# for f in files:
-#     print(f)
-
-XCsv().output(
-    "C:\\Users\\nishigaki\\Desktop\\path_list.csv",
-    pd.DataFrame(data=files, columns={"ファイル名", "a", "b"}),
-)
+for root, dirs, files in files:
+    print("-" * 10)
+    print("root:{}".format(root))
+    print("dirs:{}".format(dirs))
+    print("files:{}".format(files))

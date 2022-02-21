@@ -18,12 +18,18 @@
 # from shared.Enums.ScrapingType import ScrapingType
 # from shared.Enums.browser_type import BrowserType
 
-from __future__ import unicode_literals
-import youtube_dl
+# from __future__ import unicode_literals
+# import youtube_dl
 
-ydl_opts = {}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    ydl.download(["https://www.youtube.com/watch?v=CFLOiR2EbKM"])
+# ydl_opts = {}
+# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+#     ydl.download(["https://www.youtube.com/watch?v=CFLOiR2EbKM"])
+
+
+program_langs = ["PHP", "Python", "Ruby"]
+
+for i, program_lang in enumerate(program_langs):
+    print(f"{i}:{program_lang}")
 
 # xurl = XUrl("https://maasaablog.com/")
 # res = requests.get(xurl.get_href())

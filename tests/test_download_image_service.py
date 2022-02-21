@@ -4,6 +4,7 @@ from shared.Domain.xurl import XUrl
 import os
 
 
+@pytest.mark.skipif(True, reason="[a]")
 def test_画像をダウンロードできること():
 
     image_url = "https://www.olympus-imaging.jp/product/dslr/e30/sample/images/index_image_02_l.jpg"

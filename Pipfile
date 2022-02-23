@@ -9,6 +9,8 @@ pandas = "*"
 webdriver-manager = "*"
 beautifulsoup4 = "*"
 selenium = "*"
+youtube-dl = "*"
+cairosvg = "*"
 
 [dev-packages]
 

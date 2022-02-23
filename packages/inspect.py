@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import bs4
 from selenium import webdriver
 import requests
+import file_downloader.main
+from shared.Domain.xurl import XUrl
 
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.remote.webelement import WebElement
@@ -14,7 +16,6 @@ from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbeautiful_soup import XBeautifulSoup
 from shared.Domain.xbrowser import XBrowser
 
-from shared.Domain.xurl import XUrl
 from shared.Enums.ScrapingType import ScrapingType
 from shared.Enums.browser_type import BrowserType
 

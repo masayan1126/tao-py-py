@@ -1,6 +1,5 @@
 import abc
 from functools import total_ordering
-from types import NotImplementedType
 
 
 @total_ordering
@@ -10,9 +9,9 @@ class BaseClass(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def __eq__(self, other) -> NotImplementedType | bool:
+    def __eq__(self, other):
         pass
 
     @abc.abstractmethod
-    def __lt__(self, other) -> NotImplementedType | bool:
+    def __lt__(self, other):
         pass

@@ -1,3 +1,4 @@
+import pytest
 from shared.Application.download_image_service import DownloadImageService
 from shared.Domain.ximage import XImage
 from shared.Domain.xurl import XUrl

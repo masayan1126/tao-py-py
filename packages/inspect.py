@@ -26,10 +26,36 @@
 #     ydl.download(["https://www.youtube.com/watch?v=CFLOiR2EbKM"])
 
 
-program_langs = ["PHP", "Python", "Ruby"]
+# 1.ログの出力方法
 
-for i, program_lang in enumerate(program_langs):
-    print(f"{i}:{program_lang}")
+from logging import DEBUG, FileHandler, Formatter, StreamHandler, getLogger
+
+# loggerオブジェクトの生成
+logger = getLogger(__name__)
+
+# どのようにログを出力するかを制御するオブジェクト
+# handler = StreamHandler()  # 標準出力
+handler = FileHandler("logs/log.txt")  # ファイルへの出力
+
+# 出力するログレベルの設定
+# ケースによって使い分ける(DEBUG,INFO,WARNING,ERROR,CRITICAL)
+# handlerにセットされたログレベルよりレベルが低いログは出力されない
+# 例えば、handlerにWARNINGのログレベルをセットすると、DEBUGやINFOのログは出力されない
+handler.setLevel(DEBUG)
+logger.setLevel(DEBUG)
+
+# loggerオブジェクトにhandlerをセット
+logger.addHandler(handler)
+
+# logの出力
+logger.debug("debug log")
+
+# 2.ログの出力フォーマット
+formatter = Formatter("[%(asctime)s] : %(levelname)s - %(message)s - (%(filename)s)")
+handler.setFormatter(formatter)
+
+# logの出力
+logger.debug("debug log")
 
 # xurl = XUrl("https://maasaablog.com/")
 # res = requests.get(xurl.get_href())

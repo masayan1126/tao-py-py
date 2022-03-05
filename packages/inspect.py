@@ -7,7 +7,6 @@ from shared.Domain.xurl import XUrl
 
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.remote.webelement import WebElement
-from shared.Application.Init.init_chrome_browser_option import InitChromeBrowserOption
 from shared.Application.find_web_elements_service import FindWebElementsService
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Domain.Converter.web_element_converter import WebElementConverter
@@ -37,7 +36,6 @@ print(WebElementConverter().convert(web_element_list).get_web_element_list()[0])
 
 # from selenium.webdriver.chrome import service as fs
 # from selenium.webdriver.remote.webelement import WebElement
-# from shared.Application.Init.init_chrome_browser_option import InitChromeBrowserOption
 # from shared.Application.find_web_elements_service import FindWebElementsService
 # from shared.Application.open_browser_service import OpenBrowserService
 # from shared.Domain.Converter.web_element_converter import WebElementConverter
@@ -57,37 +55,6 @@ print(WebElementConverter().convert(web_element_list).get_web_element_list()[0])
 # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 #     ydl.download(["https://www.youtube.com/watch?v=CFLOiR2EbKM"])
 
-
-# 1.ログの出力方法
-
-from logging import DEBUG, FileHandler, Formatter, StreamHandler, getLogger
-
-# loggerオブジェクトの生成
-logger = getLogger(__name__)
-
-# どのようにログを出力するかを制御するオブジェクト
-# handler = StreamHandler()  # 標準出力
-handler = FileHandler("logs/log.txt")  # ファイルへの出力
-
-# 出力するログレベルの設定
-# ケースによって使い分ける(DEBUG,INFO,WARNING,ERROR,CRITICAL)
-# handlerにセットされたログレベルよりレベルが低いログは出力されない
-# 例えば、handlerにWARNINGのログレベルをセットすると、DEBUGやINFOのログは出力されない
-handler.setLevel(DEBUG)
-logger.setLevel(DEBUG)
-
-# loggerオブジェクトにhandlerをセット
-logger.addHandler(handler)
-
-# logの出力
-logger.debug("debug log")
-
-# 2.ログの出力フォーマット
-formatter = Formatter("[%(asctime)s] : %(levelname)s - %(message)s - (%(filename)s)")
-handler.setFormatter(formatter)
-
-# logの出力
-logger.debug("debug log")
 
 # xurl = XUrl("https://maasaablog.com/")
 # res = requests.get(xurl.get_href())

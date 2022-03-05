@@ -5,7 +5,9 @@
 # 書き込み(w または wt)
 # 追記(a または at)
 
+import sys
 from shared.Domain.xtext import XText
+from shared.x_logger import XLogger
 
 
 class OpenTextService:
@@ -15,7 +17,8 @@ class OpenTextService:
             return f.read()
 
         except FileNotFoundError:
-            print("対象のファイルが存在しないか、破損しています")
+            XLogger.exceptionToSlack("対象のファイルが存在しないか、破損しています")
+            sys.exit()
         finally:
             # 必ず閉じる。閉じていないファイルに再びアクセスしたら、ファイルが開きっぱなしなので開けない等になる
             # with文を使用すれば、自動で閉じてくれる

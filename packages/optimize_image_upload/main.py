@@ -9,7 +9,7 @@ from shared.Domain.xweb_element import XWebElement
 from shared.Domain.xdriver import XDriver
 from shared.Domain.xbrowser import XBrowser
 from shared.Application.open_browser_service import OpenBrowserService
-from shared.Application.set_webelement_value_service import SetWebElementService
+from shared.Application.set_webelement_service import SetWebElementService
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")

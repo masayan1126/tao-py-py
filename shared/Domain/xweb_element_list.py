@@ -5,7 +5,7 @@ from functools import total_ordering
 
 @total_ordering
 class XWebElementList:
-    def __init__(self, web_elements: List[XWebElement]):
+    def __init__(self, web_elements: List[XWebElement] = []):
         self.web_element_list = []
         list(map(lambda web_element: self.add(web_element), web_elements))
 

@@ -1,12 +1,12 @@
+import os
 from time import sleep
 from selenium import webdriver
+from shared.Application.Init.initializer import Initializer
 from shared.Application.find_web_elements_service import FindWebElementsService
-from shared.Application.Init.init_chrome_browser_option_service import (
-    InitChromeBrowserOptionService,
-)
+
 from shared.Application.open_browser_service import OpenBrowserService
 from shared.Application.open_text_service import OpenTextService
-from shared.Application.set_webelement_value_service import SetWebElementService
+from shared.Application.set_webelement_service import SetWebElementService
 from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbrowser import XBrowser
 from shared.Domain.xtext import XText
@@ -14,10 +14,9 @@ from shared.Domain.xurl import XUrl
 from shared.Domain.xweb_element import XWebElement
 from shared.Domain.xweb_element_list import XWebElementList
 from shared.Enums.browser_type import BrowserType
-import io, sys
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+Initializer().ioOption()
+xdriver = Initializer().chromeBrowserOption(BrowserType.CHROME, is_headless=False)
 
 # ログインパスワードを取得 -------------------------------------------------------------------------------
 # TODO:OSの環境変数に追加してそれを使うようにする
@@ -26,13 +25,8 @@ password = OpenTextService().execute(
     x_text=XText(password_filepath), mode="r", encoding="UTF-8"
 )
 
-if password == "":
-    sys.exit()
 
 # ブラウザ起動 ---------------------------------------------------------------------------------------------------
-xdriver = InitChromeBrowserOptionService().execute(
-    BrowserType.CHROME, is_headless=False
-)
 webdriver = OpenBrowserService().execute(
     xbrowser=XBrowser(xdriver, XUrl("https://id.jobcan.jp/")),
     needs_multiple_tags=False,

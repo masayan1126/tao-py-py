@@ -2,7 +2,6 @@ from selenium.webdriver.remote.webelement import WebElement
 from functools import total_ordering
 from shared.base_class import BaseClass
 
-
 # @total_ordering
 class XWebElement(BaseClass):
     def __init__(self, element: WebElement, value):
@@ -27,3 +26,7 @@ class XWebElement(BaseClass):
 
     def get_value(self):
         return self.value
+
+    def set_value(self, value):
+        self.value = value
+        return self

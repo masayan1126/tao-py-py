@@ -1,3 +1,4 @@
+import io, sys
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 from webdriver_manager.chrome import ChromeDriverManager
@@ -5,8 +6,9 @@ from shared.Domain.xdriver import XDriver
 from shared.Enums.browser_type import BrowserType
 
 
-class InitChromeBrowserOptionService:
-    def execute(self, browser_type:BrowserType, is_headless=True) -> XDriver:
+
+class Initializer:
+    def chromeBrowserOption(self, browser_type:BrowserType, is_headless=True) -> XDriver:
 
         match browser_type:
             case browser_type.CHROME:
@@ -32,3 +34,7 @@ class InitChromeBrowserOptionService:
                 pass
             case _:
                 pass
+
+    def ioOption(self) -> None:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")

@@ -4,7 +4,7 @@ from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.common.keys import Keys
 from shared.Application.find_web_element_service import FindWebElementService
 from shared.Application.open_browser_service import OpenBrowserService
-from shared.Application.set_webelement_value_service import SetWebElementService
+from shared.Application.set_webelement_service import SetWebElementService
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
 from shared.Domain.xbrowser import XBrowser

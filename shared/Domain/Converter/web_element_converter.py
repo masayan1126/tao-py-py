@@ -6,11 +6,11 @@ from selenium.webdriver.remote.webelement import WebElement
 
 class WebElementConverter:
     @staticmethod
-    def convert(iterable: List[WebElement]):
+    def convert(web_element_list: List[WebElement]):
 
-        xweb_element_list = XWebElementList([])
+        xweb_element_list = XWebElementList()
 
-        for item in iterable:
-            xweb_element_list.add(XWebElement(item, ""))
+        for web_element in web_element_list:
+            xweb_element_list.add(XWebElement(web_element, ""))
 
         return xweb_element_list

@@ -16,7 +16,7 @@ from shared.Domain.xweb_element_list import XWebElementList
 from shared.Enums.browser_type import BrowserType
 
 Initializer().ioOption()
-xdriver = Initializer().chromeBrowserOption(BrowserType.CHROME, is_headless=False)
+xdriver = Initializer().webBrowserOption(BrowserType.CHROME, is_headless=False)
 
 # ログインパスワードを取得 -------------------------------------------------------------------------------
 # TODO:OSの環境変数に追加してそれを使うようにする
@@ -47,7 +47,7 @@ SetWebElementService().execute(
         [
             XWebElement(
                 user_email,
-                "nishigaki@aivick.co.jp",
+                os.environ.get("AIVICK_EMAIL"),
             ),
             XWebElement(
                 user_password,

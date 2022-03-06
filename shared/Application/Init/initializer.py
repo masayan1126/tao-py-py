@@ -8,7 +8,7 @@ from shared.Enums.browser_type import BrowserType
 
 
 class Initializer:
-    def chromeBrowserOption(self, browser_type:BrowserType, is_headless=True) -> XDriver:
+    def webBrowserOption(self, browser_type:BrowserType, is_headless=True) -> XDriver:
 
         match browser_type:
             case browser_type.CHROME:

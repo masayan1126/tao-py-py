@@ -10,6 +10,6 @@ class SetWebElementService:
                 lambda xweb_element: xweb_element.get_element().send_keys(
                     xweb_element.get_value()
                 ),
-                web_element_list.get_web_element_list(),
+                web_element_list.all(),
             )
         )

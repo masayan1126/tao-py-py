@@ -14,5 +14,5 @@ class XBrowser:
         self.xurl = xurl
         return self
 
-    def get_web_scraper(self):
+    def get_webdriver(self):
         return self.xdriver.get_driver()

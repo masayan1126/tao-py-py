@@ -26,7 +26,7 @@ web_element_list = FindWebElementsService(
     BeautifulSoupScraper(xbeautiful_soup=xbeautiful_soup)
 ).by_tag_name("h2")
 
-print(WebElementConverter().convert(web_element_list).get_web_element_list()[0])
+print(WebElementConverter().convert(web_element_list).all()[0])
 
 # xdriver = InitChromeBrowserOption().execute(BrowserType.CHROME)
 # from bs4 import BeautifulSoup
@@ -64,7 +64,7 @@ print(WebElementConverter().convert(web_element_list).get_web_element_list()[0])
 #     BeautifulSoupScraper(xbeautiful_soup=xbeautiful_soup)
 # ).by_tag_name("h2")
 
-# print(WebElementConverter().convert(web_element_list).get_web_element_list()[0])
+# print(WebElementConverter().convert(web_element_list).all()[0])
 
 # xdriver = InitChromeBrowserOptionService().execute(BrowserType.CHROME)
 

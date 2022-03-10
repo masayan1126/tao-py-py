@@ -22,8 +22,17 @@ class XWebElementList:
     def add(self, web_element):
         self.web_element_list.append(web_element)
 
-    def get_web_element_list(self) -> List[XWebElement]:
+    def all(self) -> List[XWebElement]:
         return self.web_element_list
 
     def count(self):
-        return len(self.get_web_element_list())
+        return len(self.all())
+
+    def is_empty(self):
+        return self.count() == 0
+
+    def first(self) -> XWebElement | IndexError:
+        if self.is_empty():
+            raise IndexError
+        else:
+            return self.all()[0]

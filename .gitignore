@@ -1,6 +1,5 @@
 trash
 .pylintrc
-password.txt
 *.ipynb
 .vscode
 __pycache__/

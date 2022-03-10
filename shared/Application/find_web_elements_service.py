@@ -1,6 +1,9 @@
 from shared.Domain.i_web_scraper import IWebScraper
 from shared.Enums.ScrapingType import ScrapingType
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+
+from bs4.element import Tag
 
 
 class FindWebElementsService:
@@ -25,12 +28,12 @@ class FindWebElementsService:
         else:
             return self.web_scraper.get_scraper().select(html_class_name)
 
-    def by_id(self, id_name: str):
+    def by_id(self, id_name: str) -> WebElement | Tag:
         if self.web_scraper.get_scraper_type() == ScrapingType.SELENIUM:
-            return self.web_scraper.get_scraper().find_elements(By.ID, id_name)
+            return self.web_scraper.get_scraper().find_elements(By.ID, id_name)[0]
 
         else:
-            return self.web_scraper.get_scraper().select(id_name)
+            return self.web_scraper.get_scraper().select(id_name)[0]
 
     def by_attr_name(self, attr_name: str):
         if self.web_scraper.get_scraper_type() == ScrapingType.SELENIUM:
@@ -41,7 +44,7 @@ class FindWebElementsService:
 
     def by_xpath(self, xpath: str):
         if self.web_scraper.get_scraper_type() == ScrapingType.SELENIUM:
-            return self.web_scraper.get_scraper().find_elements(By.XPATH, xpath)
+            return self.web_scraper.get_scraper().find_elements(By.XPATH, xpath)[0]
 
         else:
             return self.web_scraper.get_scraper().select(xpath)

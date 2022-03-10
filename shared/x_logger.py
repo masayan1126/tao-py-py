@@ -64,8 +64,8 @@ class XLogger:
         logger = getLogger(__name__)
 
         # どのようにログを出力するかを制御するオブジェクト
-        # handler = StreamHandler()  # 標準出力
-        handler = FileHandler("logs/log.txt", encoding="utf-8")  # ファイルへの出力
+        handler = StreamHandler()  # 標準出力
+        # handler = FileHandler("logs/log.txt", encoding="utf-8")  # ファイルへの出力
 
         # 出力するログレベルの設定
         # ケースによって使い分ける(DEBUG,INFO,WARNING,ERROR,CRITICAL)

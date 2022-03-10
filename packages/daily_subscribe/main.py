@@ -76,7 +76,7 @@ for subscribe in subscribe_list:
             SetWebElementService().execute(xweb_element_list)
 
             # TODO: 固定になっている
-            xweb_element_list.get_web_element_list()[0].get_element().send_keys(Keys.ENTER)
+            xweb_element_list.all()[0].get_element().send_keys(Keys.ENTER)
 
         case SiteType.NEEDS_LOGIN_AND_ONE_STEP:
             xweb_element_list = XWebElementList(web_elements=[

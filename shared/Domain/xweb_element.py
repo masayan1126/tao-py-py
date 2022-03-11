@@ -14,12 +14,12 @@ class XWebElement(BaseClass):
     def __eq__(self, other):
         if not isinstance(other, XWebElement):
             return NotImplemented
-        return (self.element, self.value) == (other.element, self.value)
+        return (self.element, self.value) == (other.element, other.value)
 
     def __lt__(self, other):
         if not isinstance(other, XWebElement):
             return NotImplemented
-        return (self.element, self.value) < (other.element, self.value)
+        return (self.element, self.value) < (other.element, other.value)
 
     def get_element(self):
         return self.element

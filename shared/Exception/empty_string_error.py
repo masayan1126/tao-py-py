@@ -1,0 +1,2 @@
+class EmptyStringError(Exception):
+    pass

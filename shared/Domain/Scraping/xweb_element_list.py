@@ -1,5 +1,5 @@
 from typing import List
-from shared.Domain.xweb_element import XWebElement
+from shared.Domain.Scraping.xweb_element import XWebElement
 from functools import total_ordering
 
 

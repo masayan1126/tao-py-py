@@ -1,35 +1,26 @@
-from shared.Domain.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Application.Init.initializer import Initializer
 from shared.Domain.xurl import XUrl
 import pytest
-from shared.Domain.xweb_element_list import XWebElementList
+from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Enums.browser_type import BrowserType
-from shared.Domain.browser_factory import BrowserFactory
+from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
+from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.i_factory import IFactory
 from shared.di_container import DiContainer
 
 
-# @pytest.fixture
-# def setuped_xbeautiful_soup():
-#     base_path = "https://maasaablog.com/"
-#     res = requests.get(base_path)
-#     return XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
-
-
 @pytest.fixture
 def setuped_i_web_browser_operator():
-    xdriver = Initializer().webBrowserOption(BrowserType.CHROME, is_headless=True)
+    factory: IFactory = XDriverFactory()
+    xdriver = factory.create(BrowserType.CHROME)
+
+    factory: IFactory = XBrowserFactory()
+    xbrowser = factory.create(xdriver, XUrl("https://maasaablog.com/"))
+
     i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
         IWebBrowserOperator
     )
-
-    # return i_web_browser_operator(
-    #     xbrowser=XBrowser(xdriver, XUrl("https://maasaablog.com/")),
-    #     needs_multiple_tags=False,
-    # )
-
-    factory: IFactory = BrowserFactory()
-    xbrowser = factory.create(xdriver, XUrl("https://maasaablog.com/"))
     i_web_browser_operator.boot(xbrowser)
 
     return i_web_browser_operator
@@ -37,7 +28,19 @@ def setuped_i_web_browser_operator():
 
 def test_ID名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
     # ヘッダメニューのタイトル
-    acutual = setuped_i_web_browser_operator.find_by_id("header-in").get_element().text
+    acutual = setuped_i_web_browser_operator.find_by_id("header-in").web_element().text
+    excepted = "masayanblog"
+
+    assert acutual == excepted
+
+
+def test_xpath名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
+    # ヘッダメニューのタイトル
+    acutual = (
+        setuped_i_web_browser_operator.find_by_xpath("//*[@id='header-in']/h1/a/span")
+        .web_element()
+        .text
+    )
     excepted = "masayanblog"
 
     assert acutual == excepted

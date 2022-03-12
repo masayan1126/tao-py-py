@@ -10,11 +10,10 @@ from shared.Domain.xurl import XUrl
 from shared.Application.check_is_valid_url_service import CheckIsValidUrlService
 from shared.Application.download_image_service import DownloadImageService
 from shared.Domain.ximage import XImage
-from shared.Application.find_web_elements_service import FindWebElementsService
-from shared.Domain.xbeautiful_soup import XBeautifulSoup
+from shared.Domain.Scraping.xbeautiful_soup import XBeautifulSoup
 from bs4 import BeautifulSoup
 from shared.Domain.xcsv import XCsv
-from shared.Domain.Scraping.beautiful_soup_scraper import BeautifulSoupScraper
+from shared.Domain.Scraping.html_analyzer import BeautifulSoupScraper
 from shared.Enums.ScrapingType import ScrapingType
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")

@@ -14,7 +14,7 @@
 # from selenium.webdriver.chrome import service as fs
 # from webdriver_manager.chrome import ChromeDriverManager
 
-
+# TODO: bs4用にテストを作成
 # @pytest.fixture
 # def setuped_xbeautiful_soup():
 #     base_path = "https://maasaablog.com/"

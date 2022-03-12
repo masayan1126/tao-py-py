@@ -1,5 +1,5 @@
 import pytest
-from shared.Domain.xweb_element_list import XWebElementList
+from shared.Domain.Scraping.xweb_element_list import XWebElementList
 
 
 def test_first存在しないキーを指定した場合は例外():

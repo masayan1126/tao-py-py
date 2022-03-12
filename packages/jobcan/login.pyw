@@ -1,32 +1,28 @@
-from selenium import webdriver
 from shared.Application.Init.initializer import Initializer
-from shared.i_factory import IFactory
-from shared.Domain.browser_factory import BrowserFactory
 from shared.di_container import DiContainer
-from shared.Domain.i_web_browser_operator import IWebBrowserOperator
-from shared.Domain.xbrowser import XBrowser
+from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
+from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.Domain.xurl import XUrl
-from shared.Domain.xweb_element import XWebElement
-from shared.Domain.xweb_element_list import XWebElementList
+from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Enums.browser_type import BrowserType
+from shared.i_factory import IFactory
 from time import sleep
 import os
 
 
-# 1.初期化
 Initializer().ioOption()
-xdriver = Initializer().webBrowserOption(BrowserType.CHROME, is_headless=False)
-i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(IWebBrowserOperator)
 
-
-# 2.ブラウザ起動 ---------------------------------------------------------------------------------------------------
-factory: IFactory = BrowserFactory()
+# 1.ブラウザ起動 ---------------------------------------------------------------------------------------------------
+factory: IFactory = XDriverFactory()
+xdriver = factory.create(BrowserType.CHROME, is_headless=False)
+factory: IFactory = XBrowserFactory()
 xbrowser = factory.create(xdriver, XUrl("https://id.jobcan.jp/"))
+i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(IWebBrowserOperator)
 i_web_browser_operator.boot(xbrowser)
 
 
-# 3.htmlを取得し値をセットして送信 -----------------------------------------------------------------------------------
-# TODO:返り値はXwebelemtnになるように
+# 2.htmlを取得し値をセットして送信 -----------------------------------------------------------------------------------
 user_email = i_web_browser_operator.find_by_id(id_name="user_email")
 user_password = i_web_browser_operator.find_by_id(id_name="user_password")
 
@@ -38,10 +34,12 @@ i_web_browser_operator.send_value(
         ]
     )
 )
-i_web_browser_operator.find_by_xpath(xpath="//*[@id='new_user']/input[2]").click()
+i_web_browser_operator.find_by_xpath(
+    xpath="//*[@id='new_user']/input[2]"
+).web_element().click()
 
 sleep(1)
 
 i_web_browser_operator.find_by_xpath(
     xpath="//*[@id='jbc-app-links']/ul/li[2]/a"
-).click()
+).web_element().click()

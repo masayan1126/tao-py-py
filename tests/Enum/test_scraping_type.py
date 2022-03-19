@@ -1,22 +1,21 @@
 import pytest
-from shared.Enums.ScrapingType import ScrapingType
-from shared.Enums.SiteType import SiteType
+from shared.Enums.browser_type import BrowserType
 
-# 数字で指定すると対応する値(ScrapingType.SELENIUM)が返る
-def test_数字からスクレイピング種別を取得できる():
-    assert ScrapingType(1) == ScrapingType.SELENIUM
+
+def test_数字からスクレイピング種別を取得できる() -> None:
+    assert BrowserType(1) == BrowserType.CHROME
 
 
 # enumの識別子
-def test_スクレイピング種別の識別子を取得できる():
-    assert ScrapingType.SOUP.name == "SOUP"
+def test_スクレイピング種別の識別子を取得できる() -> None:
+    assert BrowserType.FIREFOX.name == "FIREFOX"
 
 
 # enumの値
-def test_スクレイピング種別の値を取得できる():
-    assert ScrapingType.SOUP.value == 2
+def test_スクレイピング種別の値を取得できる() -> None:
+    assert BrowserType.CHROME.value == 1
 
 
-def test_存在しない種別の場合は例外():
+def test_存在しない種別の場合は例外() -> None:
     with pytest.raises(ValueError):
-        ScrapingType(99) == ScrapingType.SELENIUM
+        BrowserType(99)

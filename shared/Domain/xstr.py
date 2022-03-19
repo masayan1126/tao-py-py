@@ -1,6 +1,5 @@
 from shared.base_class import BaseClass
 from shared.Exception.empty_string_error import EmptyStringError
-from shared.x_logger import XLogger
 
 
 class XStr(BaseClass):
@@ -9,7 +8,6 @@ class XStr(BaseClass):
             raise TypeError
         # 空文字の場合
         if len(string) == 0:
-            XLogger.exceptionToSlack("空文字は指定できません")
             raise EmptyStringError("空文字は指定できません")
 
         self.string = string

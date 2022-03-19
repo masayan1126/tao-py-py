@@ -14,13 +14,10 @@ import os
 Initializer().ioOption()
 
 # 1.ブラウザ起動 ---------------------------------------------------------------------------------------------------
-factory: IFactory = XDriverFactory()
-xdriver = factory.create(BrowserType.CHROME, is_headless=False)
-factory: IFactory = XBrowserFactory()
-xbrowser = factory.create(xdriver, XUrl("https://id.jobcan.jp/"))
+xdriver = XDriverFactory().create(BrowserType.CHROME, is_headless=False)
+xbrowser = XBrowserFactory().create(xdriver, XUrl("https://id.jobcan.jp/"))
 i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(IWebBrowserOperator)
 i_web_browser_operator.boot(xbrowser)
-
 
 # 2.htmlを取得し値をセットして送信 -----------------------------------------------------------------------------------
 user_email = i_web_browser_operator.find_by_id(id_name="user_email")

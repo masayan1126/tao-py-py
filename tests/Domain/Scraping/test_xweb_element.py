@@ -1,37 +1,41 @@
-# from webdriver_manager.chrome import ChromeDriverManager
-# from selenium import webdriver
-# from selenium.webdriver.chrome import service as fs
-# import pytest
-# from shared.Application.open_browser_service import OpenBrowserService
-# from shared.Domain.xbrowser import XBrowser
-# from shared.Domain.xdriver import XDriver
-# from shared.Domain.xurl import XUrl
-# from shared.Domain.xweb_element import XWebElement
+from typing import Dict
+import pytest
+from shared.Domain.Scraping.xweb_element import XWebElement
+from shared.Domain.Scraping.xweb_element_list import XWebElementList
+from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.xurl import XUrl
+from shared.Enums.browser_type import BrowserType
+from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
+from shared.Domain.Scraping.x_driver_factory import XDriverFactory
+from shared.di_container import DiContainer
 
 
-# @pytest.fixture
-# def setuped_driver():
-#     chrome_options = webdriver.ChromeOptions()
-#     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
-#     chrome_options.add_experimental_option("detach", True)  # 処理完了後もブラウザが起動している状態を保持する
-#     chrome_options.add_argument("--headless")
-#     chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
-#     xdriver = XDriver(chrome_service, chrome_options, "Chrome")
+@pytest.fixture
+def setuped():
+    xdriver = XDriverFactory().create(BrowserType.CHROME)
+    xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
 
-#     return OpenBrowserService().execute(
-#         xbrowser=XBrowser(xdriver, XUrl("https://maasaablog.com/")),
-#         needs_multiple_tags=False,
-#     )
+    i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
+        IWebBrowserOperator
+    )
+    i_web_browser_operator.boot(xbrowser)
+
+    return {
+        "list": XWebElementList(
+            [
+                i_web_browser_operator.find_by_id("header-in"),
+                i_web_browser_operator.find_by_id("go-to-top"),
+            ]
+        ),
+        "operator": i_web_browser_operator,
+    }
 
 
-# def test_対象のページからhtml要素を取得できること(setuped_driver):
-#     web_element_list = FindWebElementsService(
-#         SeleniumScraper(driver=driver)
-#     ).by_tag_name("h1")
+def test_webelementを取得できる(setuped: Dict) -> None:
 
-#     xweb_element = XWebElement(
-#         setuped_driver.find_element_by_id("menu-menu-1"),
-#         "",
-#     )
+    xweb_element: XWebElement = setuped["operator"].find_by_id("header-in")
+    xweb_element_list: XWebElementList = setuped["list"]
 
-#     assert xweb_element.get_value() == ""
+    excepted = xweb_element.web_element()
+    acutual = xweb_element_list.first().web_element()
+    assert acutual == excepted

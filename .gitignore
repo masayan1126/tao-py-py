@@ -1,9 +1,9 @@
-trash
-.pylintrc
-*.ipynb
-.vscode
 __pycache__/
-.pytest_cache
+trash
+*.ipynb
 .ipynb_checkpoints
-カテゴリー.csv
+.mypy_cache
+.pytest_cache
+.vscode
 logs
+mypy.ini

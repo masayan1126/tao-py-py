@@ -3,7 +3,7 @@ from shared.Domain.xurl import XUrl
 
 
 class CheckIsValidUrlService:
-    def execute(self, xurl: XUrl):
+    def execute(self, xurl: XUrl) -> bool:
         try:
             f = urllib.request.urlopen(xurl.get_href())
             return True

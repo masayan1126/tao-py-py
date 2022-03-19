@@ -1,4 +1,3 @@
-from types import MethodType
 from shared.Enums.browser_type import BrowserType
 from shared.i_factory import IFactory
 from shared.Domain.Scraping.xdriver import XDriver
@@ -11,11 +10,11 @@ from shared.Enums.browser_type import BrowserType
 
 class XDriverFactory(IFactory):
     def create(self, browser_type:BrowserType, is_headless=True):
-        return XDriver(self._closure(browser_type, is_headless))
+        return XDriver(self.build_webdriver(browser_type, is_headless))
 
     # Loan Pattern
-    def _closure(self,browser_type:BrowserType, is_headless):
-        def build_webdriver():
+    def build_webdriver(self,browser_type:BrowserType, is_headless):
+        def _closure():
             match browser_type:
                 case browser_type.CHROME:
                     chrome_options = webdriver.ChromeOptions()
@@ -38,4 +37,4 @@ class XDriverFactory(IFactory):
                 # TODO:firefox 
                 case browser_type.FIREFOX:
                     pass
-        return build_webdriver
+        return _closure

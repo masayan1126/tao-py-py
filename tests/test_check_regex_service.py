@@ -25,7 +25,7 @@ def test_正規表現に一致する文字列を返すこと_match():
         "https://zozo.jp/men-category/jacket-outerwear/tailored-jacket/?p_gtype=2"
     )
     xregex = XRegex(".+?(?=\?)")
-    matches = re.match(xregex.get_pattern(), xstr.get_string())
+    matches = re.match(xregex.pattern(), xstr.get_string())
 
     assert (
         matches.group()
@@ -40,7 +40,7 @@ def test_正規表現に一致する文字列を返すこと_search():
         "https://zozo.jp/men-category/jacket-outerwear/tailored-jacket/?p_gtype=2"
     )
     xregex = XRegex(".+?(?=\?)")
-    matches = re.search(xregex.get_pattern(), xstr.get_string())
+    matches = re.search(xregex.pattern(), xstr.get_string())
 
     assert (
         matches.group()

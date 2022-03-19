@@ -1,5 +1,6 @@
 from abc import *
-from bs4 import BeautifulSoup, ResultSet
+from typing import List, Optional
+from bs4 import BeautifulSoup, ResultSet, Tag
 
 # ブラウザ自動操作用インターフェース
 class IHtmlAnalyzer(metaclass=ABCMeta):
@@ -8,15 +9,13 @@ class IHtmlAnalyzer(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def find_by_id(self, css_selector: str) -> ResultSet:
+    def find_by_id(self, id_name: str) -> Tag:
         pass
 
-    # @abstractmethod
-    # def find_by_class_name(
-    #     self, webdriver: WebDriver, class_name: str
-    # ) -> List[XWebElement]:
-    #     pass
+    @abstractmethod
+    def find_by_selector(self, selector: str) -> Tag:
+        pass
 
-    # @abstractmethod
-    # def send_value(self, web_element_list: XWebElementList) -> None:
-    #     pass
+    @abstractmethod
+    def search_by_class(self, class_name: str) -> Optional[ResultSet]:
+        pass

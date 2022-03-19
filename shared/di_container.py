@@ -8,7 +8,7 @@ from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 
 
 class DiContainer:
-    def mappings(self, binder):
+    def mappings(self, binder)->None:
         binder.bind(
             IWebBrowserOperator, to=injector.InstanceProvider(WebBrowserOperator())
         )

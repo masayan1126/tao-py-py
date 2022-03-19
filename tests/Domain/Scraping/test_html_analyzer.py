@@ -1,52 +1,44 @@
-# from bs4 import BeautifulSoup
-# import pytest
-# import requests
-# from shared.Application.open_browser_service import OpenBrowserService
-# from shared.Domain.Scraping.beautiful_soup_scraper import BeautifulSoupScraper
-# from shared.Domain.Scraping.selenium_scraper import SeleniumScraper
-# from shared.Domain.xbeautiful_soup import XBeautifulSoup
-# from shared.Application.find_web_elements_service import FindWebElementsService
-# from shared.Domain.xbrowser import XBrowser
-# from shared.Domain.xdriver import XDriver
-# from shared.Domain.xurl import XUrl
-# from shared.Enums.ScrapingType import ScrapingType
-# from selenium import webdriver
-# from selenium.webdriver.chrome import service as fs
-# from webdriver_manager.chrome import ChromeDriverManager
-
-# TODO: bs4用にテストを作成
-# @pytest.fixture
-# def setuped_xbeautiful_soup():
-#     base_path = "https://maasaablog.com/"
-#     res = requests.get(base_path)
-#     return XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
+import pytest
+from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
+from shared.Domain.Scraping.soup_factory import SoupFactory
+from shared.Domain.xurl import XUrl
+from shared.di_container import DiContainer
+from shared.Domain.xurl import XUrl
 
 
-# @pytest.fixture
-# def setuped_driver():
-#     chrome_options = webdriver.ChromeOptions()
-#     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
-#     chrome_options.add_experimental_option("detach", True)  # 処理完了後もブラウザが起動している状態を保持する
-#     chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
-#     xdriver = XDriver(chrome_service, chrome_options, "Chrome")
-#     driver = OpenBrowserService().execute(
-#         xbrowser=XBrowser(xdriver, XUrl("https://maasaablog.com/")),
-#         needs_multiple_tags=False,
-#     )
-
-#     return driver
+@pytest.fixture
+def setuped_html_analyzer() -> None:
+    soup = SoupFactory().create(XUrl("https://maasaablog.com/"))
+    i_html_analyzer: IHtmlAnalyzer = DiContainer().resolve(IHtmlAnalyzer)
+    i_html_analyzer.bind(soup)
+    return i_html_analyzer
 
 
-# def test_対象のページからhtml要素を取得できること_soup(setuped_xbeautiful_soup: XBeautifulSoup):
-#     title_tag_list = FindWebElementsService(
-#         BeautifulSoupScraper(xbeautiful_soup=setuped_xbeautiful_soup)
-#     ).find_element_by_tag_name("title")
-#     assert title_tag_list[0].text == "masayanblog | 現役のweb系エンジニアが役立つ情報をまったりご紹介"
+def test_id名で要素が見つからない場合は例外(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    with pytest.raises(IndexError):
+        tag = setuped_html_analyzer.find_by_id(id_name="nothing_id")
 
 
-# def test_対象のページからhtml要素を取得できること_selenium(setuped_driver):
-#     header_tag_list = FindWebElementsService(
-#         SeleniumScraper(driver=setuped_driver)
-#     ).find_element_by_tag_name("header")
+def test_id名で要素を取得できること(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    tag = setuped_html_analyzer.find_by_id(id_name="custom_html-4")
+    assert tag.h3.text == "おすすめの書籍"
 
-#     assert header_tag_list[0].text == "masayanblog"
+
+def test_cssセレクタで要素が見つからない場合は例外(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    with pytest.raises(IndexError):
+        tag = setuped_html_analyzer.find_by_selector(selector=".c > b > #c")
+
+
+def test_cssセレクタで要素を取得できること(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    tag = setuped_html_analyzer.find_by_selector(selector=".logo > a > span")
+    assert tag.text == "masayanblog"
+
+
+def test_class名で要素を取得できること(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    result_set = setuped_html_analyzer.search_by_class(class_name="logo")
+    assert result_set[0].a.text == "masayanblog"
+
+
+def test_class名で要素が見つからない場合は空配列(setuped_html_analyzer: IHtmlAnalyzer) -> None:
+    result_set = setuped_html_analyzer.search_by_class(class_name="nothing_class")
+    assert len(result_set) == 0

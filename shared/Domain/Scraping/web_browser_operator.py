@@ -31,15 +31,13 @@ class WebBrowserOperator:
 
     def find_by_id(self, id_name: str) -> XWebElement:
         def closure():
-            web_element = self.webdriver.find_element(By.ID, id_name)
-            return WebElementConverter().convert([web_element]).first()
+            return self.webdriver.find_element(By.ID, id_name)
 
         return self._handle(closure)
 
     def find_by_xpath(self, xpath: str) -> XWebElement:
         def closure():
-            web_element = self.webdriver.find_element(By.XPATH, xpath)
-            return WebElementConverter().convert([web_element]).first()
+            return self.webdriver.find_element(By.XPATH, xpath)
 
         return self._handle(closure)
 
@@ -61,7 +59,8 @@ class WebBrowserOperator:
 
     def _handle(self, closure):
         try:
-            return closure()
+            web_element = closure()
+            return WebElementConverter().convert([web_element]).first()
 
         except NoSuchElementException:
             XLogger.exceptionToSlack("対象のhtml要素が見つかりませんでした")

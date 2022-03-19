@@ -1,9 +1,4 @@
 import io, sys
-from selenium import webdriver
-from selenium.webdriver.chrome import service as fs
-from webdriver_manager.chrome import ChromeDriverManager
-from shared.Domain.Scraping.xdriver import XDriver
-from shared.Enums.browser_type import BrowserType
 
 
 class Initializer:

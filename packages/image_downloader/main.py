@@ -1,110 +1,63 @@
-# import io, sys
-# from pprint import pprint
-# from typing import List
+# import re
+
 # import pandas as pd
-# import requests
-# from selenium.webdriver.remote.webelement import WebElement
-# import io
-# from shared.Domain.Converter.data_frame_converter import DataFrameConverter
-# from shared.Domain.xurl import XUrl
-# from shared.Application.check_is_valid_url_service import CheckIsValidUrlService
-# from shared.Application.download_image_service import DownloadImageService
-# from shared.Domain.ximage import XImage
-# from shared.Domain.Scraping.xbeautiful_soup import XBeautifulSoup
-# from bs4 import BeautifulSoup
+# from shared.Domain.Converter.result_set_converter import ResultSetConverter
+# from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
+# from shared.Domain.Scraping.soup_factory import SoupFactory
+# from shared.Domain.xregex import XRegex
+# from shared.Domain.xstr import XStr
 # from shared.Domain.xcsv import XCsv
-# from shared.Domain.Scraping.html_analyzer import BeautifulSoupScraper
-# from shared.Enums.ScrapingType import ScrapingType
+# from shared.Domain.xurl import XUrl
+# from shared.di_container import DiContainer
 
-# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-# sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+# soup = SoupFactory().create(XUrl(""))
+# i_html_analyzer: IHtmlAnalyzer = DiContainer().resolve(IHtmlAnalyzer)
+# i_html_analyzer.bind(soup)
 
-# # 1.対象のurlの一覧をcsvから読み込む
-# # 2.対象のurlから特定の要素のリストを取得する
-# # 3.2.のリストをcsvに出力する
-# # 4.3のcsvを読み取り、画像をダウンロードする
+# url_result_set = i_html_analyzer.find_by_selector(selector="main")
+# name_result_set = i_html_analyzer.find_by_selector(
+#     selector="main"
+# )  # asideは除く
 
-# # get_webelement_the_url
+# atags = url_result_set[0].find_all("a")
 
-# url_list_df = XCsv().read(
-#     filepath="C:\\Users\\nishigaki\\Desktop\\url_list.csv",
-#     encoding="utf_8_sig",
-#     header=0,
-# )
-# column = "url"
-# url_list = url_list_df[column].to_list()
-
-# image_tag_list = []
-
-# for url in url_list:
-#     res = requests.get(url)
-#     xbeautiful_soup = XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
-#     image_tag_list.append(
-#         FindWebElementsService(BeautifulSoupScraper(xbeautiful_soup)).by_tag_name("a")
+# urls = list(
+#     map(
+#         lambda atag: atag.get("href"),
+#         atags,
 #     )
+# )
+
+# names = list(
+#     map(
+#         lambda tag: tag.text.strip(),
+#         name_result_set,
+#     )
+# )
 
 
-# # print(url_list)
+# results = []
 
-# # base_path = "http://localhost:8023/comm/20180522"
-# # target_dir = ""
-# # image_dir_path = base_path + "assets/img/top"
-# # download_path_from = base_path + target_dir
-# # res = requests.get(download_path_from)
-
-# # xbeautiful_soup = XBeautifulSoup(BeautifulSoup(res.text, "html.parser"))
-# # image_tag_list: List[WebElement] = FindWebElementsService(
-# #     BeautifulSoupScraper(xbeautiful_soup)
-# # ).by_tag_name("a")
-
-# image_url_list = []
-
-# for image_src_list in image_tag_list:
-#     for image_src in image_src_list:
-#         try:
-#             image_url_list.append(image_src["href"])
-#         except KeyError:
-#             print("src属性が見つかりませんでした")
-#             try:
-#                 image_url_list.append(image_src["data-src"])
-
-#             except KeyError:
-#                 image_url_list.append(image_src)
-#                 print("data-src属性が見つかりませんでした")
-
-# print(image_url_list)
-
+# for i, url in enumerate(urls):
+#     slug = XRegex("(?<=brand\/).+?(?=\/)").partial_match(target=XStr(url))
+#     d = {"name": names[i], "slag": slug}
+#     results.append(d)
 
 # XCsv().output(
-#     "C:\\Users\\nishigaki\\Desktop\\atag_list.csv",
-#     pd.DataFrame(data=image_url_list, columns={"url"}),
+#     "C:\\Users\\nishigaki\\Desktop\\brands.csv",
+#     results,
 # )
 
+# download_path_to = (
+#     # "C:\\Users\\nishigaki\\Desktop\\tavenal-com\\public\\assets\\img\\comm"
+#     "C:\\Users\\nishigaki\\Desktop\\downloads\\"
+# )
 
-# # XCsv().output(
-# #     "C:\\Users\\nishigaki\\Desktop\\image_tag_list.csv",
-# #     pd.DataFrame(data=image_src_list, columns={"ソース"}),
-# # )
-
-# # image_list_df = XCsv().read(
-# #     filepath="C:\\Users\\nishigaki\\Desktop\\image_url_list.csv",
-# #     encoding="utf_8_sig",
-# #     header=0,
-# # )
-# # column = "url"
-# # image_list = image_list_df[column].to_list()
-
-# # # public\assets\img\comm
-# # download_path_to = (
-# #     # "C:\\Users\\nishigaki\\Desktop\\tavenal-com\\public\\assets\\img\\comm"
-# #     "C:\\Users\\nishigaki\\Desktop\\downloads\\"
-# # )
-
-# # # 画像URLからダウンロード
-# # for i, image_url in enumerate(image_list):
-# #     x_url = XUrl(href=image_url)
-# #     if CheckIsValidUrlService().execute(x_url):
-# #         x_image = XImage(x_url=x_url, alt="")
-# #         DownloadImageService().execute(
-# #             x_image=x_image, download_path_to=download_path_to, prefix=i + 1
-# #         )
+# # 画像URLからダウンロード
+# for i, image_url in enumerate(image_list):
+#     x_url = XUrl(href=image_url)
+#     if CheckIsValidUrlService().execute(x_url):
+#         x_image = XImage(x_url=x_url, alt="")
+#         DownloadImageService().execute(
+#             x_image=x_image, download_path_to=download_path_to, prefix=i + 1
+#         )

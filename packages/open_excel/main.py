@@ -6,7 +6,7 @@ from shared.Domain.xexcel import XExcel
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
-filepath = glob("C:\\Users\\nishigaki\\jupyter-lab\\*.xlsx")[0]
+filepath = glob("C:\\Users\\nishigaki\\jupyter-lab\\packages\\open_excel\\*.xlsx")[0]
 xworkbook = XExcel().read(filepath, sheet_name=None)
 xworksheet = xworkbook.get_sheet_by_name("プログラミング言語一覧")
 target_cell_records = xworksheet.get_records(0, 100, 0, 6)

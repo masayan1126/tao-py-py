@@ -1,18 +1,21 @@
+from typing import Dict
 import pandas as pd
 
+from shared.Domain.Excel.xworkbook import XWorkbook
 
-class XCsv:
+
+class XExcel:
 
     # csvを読み取り、dfを返します
-    def read(self, filepath, encoding, header, sep=","):
+    def read(self, filepath, sheet_name) -> XWorkbook:
         try:
-            return pd.read_csv(filepath, encoding=encoding, header=header, sep=sep)
+            return XWorkbook(pd.read_excel(filepath, sheet_name=sheet_name))
         except FileNotFoundError:
             print("対象のファイルが存在しないか、破損しています")
 
     # dfを読み取り、csvをに出力します
-    def output(self, filepath, df: pd.DataFrame):
+    def output(filepath, df: pd.DataFrame):
         try:
-            df.to_csv(filepath, encoding="utf_8_sig")
+            df.to_csv(filepath)
         except FileNotFoundError:
             print("対象のファイルが存在しないか、破損しています")

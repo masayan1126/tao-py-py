@@ -4,11 +4,20 @@
 import sys
 import tkinter as tk
 
+from packages.lanchar.widget import Widget
 
+
+# ウィジェット用のオブジェクト生成
 root = tk.Tk()
+
+# アプリバーに表示するタイトル
 root.title(u"Software Title")
+
+# ウインドウサイズ
 root.geometry("800x500")
 
-root.title("tao-py-py")
+# パーツの設定
+widget = Widget(root=root)
 
-root.mainloop()
+# 起動
+widget.mainloop()

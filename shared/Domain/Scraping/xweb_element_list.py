@@ -1,5 +1,4 @@
 from typing import Callable, List
-from typing_extensions import Self
 from shared.Domain.Scraping.xweb_element import XWebElement
 from functools import total_ordering
 

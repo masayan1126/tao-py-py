@@ -7,3 +7,6 @@ trash
 .vscode
 logs
 mypy.ini
+build
+dist
+main.spec

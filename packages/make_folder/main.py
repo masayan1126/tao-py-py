@@ -23,21 +23,18 @@ folder_name_list = dirs_df[column].to_list()
 base_path = "C:\\Users\\nishigaki\\Desktop\\test\\"
 
 
-make_folder_command: ICommand = MakeFolderCommand()
-make_folder_command.setReciver(MakeFolderReciver())
+command: ICommand = MakeFolderCommand()
+command.set_reciver(MakeFolderReciver())
 
-x_folder_aggregate: IAggregate = XFolderAggregate()
+aggregate: IAggregate = XFolderAggregate()
 
+xfolder_list = [
+    aggregate.add_item(XFolder(base_path, folder_name))
+    for folder_name in folder_name_list
+]
 
-list(
-    map(
-        lambda folder_name: x_folder_aggregate.addItem(XFolder(base_path, folder_name)),
-        folder_name_list,
-    )
-)
+iterator: IIterator = aggregate.iterator()
 
-x_folder_iterator: IIterator = x_folder_aggregate.iterator()
-
-while x_folder_iterator.hasNext():
-    item = x_folder_iterator.next()
-    make_folder_command.execute(item)
+while iterator.has_next():
+    item = iterator.next()
+    command.execute(item)

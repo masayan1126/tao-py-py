@@ -8,13 +8,13 @@ class IAggregate:
     def __init__(self):
         pass
 
-    def addItem(self):
+    def add_item(self):
         pass
 
     def size(self) -> int:
         pass
 
-    def itemAt(self, index: int):
+    def item_at(self, index: int):
         pass
 
     def iterator(self) -> IIterator:

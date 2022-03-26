@@ -39,3 +39,6 @@ class XStr(BaseClass):
 
     def count(self):
         return len(self.get_string())
+
+    def to_list(self, sep=","):
+        return self.get_string().split(sep)

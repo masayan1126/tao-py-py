@@ -1,4 +1,3 @@
-import abc
 from shared.Domain.xfolder import XFolder
 
 from shared.i_iterator import IIterator
@@ -10,10 +9,10 @@ class XFolderIterator(IIterator):
         self.i_aggregate = i_aggregate
         self.index = 0
 
-    def hasNext(self) -> bool:
+    def has_next(self) -> bool:
         return self.index < self.i_aggregate.size()
 
     def next(self) -> XFolder:
-        next = self.i_aggregate.itemAt(self.index)
+        next = self.i_aggregate.item_at(self.index)
         self.index = self.index + 1
         return next

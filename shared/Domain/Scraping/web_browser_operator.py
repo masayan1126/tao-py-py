@@ -17,7 +17,7 @@ class WebBrowserOperator:
     @inject
     def boot(self, xbrowser: XBrowser, needs_multiple_tags: bool = False):
         webdriver = xbrowser.webdriver()
-        self.webdriver = webdriver
+        self._webdriver = webdriver
 
         if needs_multiple_tags:
             # 新しいタブを作成する
@@ -29,23 +29,36 @@ class WebBrowserOperator:
         webdriver.get(xbrowser.url())
         webdriver.maximize_window()
 
+        return xbrowser
+
     def find_by_id(self, id_name: str) -> XWebElement:
         def closure():
-            return self.webdriver.find_element(By.ID, id_name)
+            return self._webdriver.find_element(By.ID, id_name)
 
         return self._handle(closure)
 
     def find_by_xpath(self, xpath: str) -> XWebElement:
         def closure():
-            return self.webdriver.find_element(By.XPATH, xpath)
+            return self._webdriver.find_element(By.XPATH, xpath)
 
         return self._handle(closure)
 
     # TODO:
-    def find_by_class_name(
-        self, webdriver: WebDriver, class_name: str
-    ) -> List[XWebElement]:
-        return webdriver.find_elements(By.CLASS_NAME, class_name)
+    def find_by_class_name(self, class_name: str) -> XWebElementList:
+        return WebElementConverter().convert(
+            self._webdriver.find_elements(By.CLASS_NAME, class_name)
+        )
+
+    def find_by_css_selector(self, css_selector: str) -> XWebElement:
+        def closure():
+            return self._webdriver.find_element(By.CSS_SELECTOR, css_selector)
+
+        return self._handle(closure)
+
+    def search_by_css_selector(self, css_selector: str) -> XWebElement:
+        return WebElementConverter().convert(
+            self._webdriver.find_elements(By.CSS_SELECTOR, css_selector)
+        )
 
     def send_value(self, web_element_list: XWebElementList) -> None:
         list(
@@ -65,4 +78,7 @@ class WebBrowserOperator:
         except NoSuchElementException:
             XLogger.exceptionToSlack("対象のhtml要素が見つかりませんでした")
             XLogger.exception("対象のhtml要素が見つかりませんでした")
-            sys.exit()
+            raise NoSuchElementException
+
+    def webdriver(self):
+        return self._webdriver

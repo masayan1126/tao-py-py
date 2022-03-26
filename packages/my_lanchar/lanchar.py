@@ -26,7 +26,7 @@ class Lanchar(IWidget):
         btn1 = self.btn("勤怠", login.authenticate)
         btn1.grid(column=0, row=1, sticky="NSEW")
 
-        btn2 = self.btn("②")
+        btn2 = self.btn("工数", )
         btn2.grid(column=1, row=1, sticky="NSEW")
 
         btn3 = self.btn("③")

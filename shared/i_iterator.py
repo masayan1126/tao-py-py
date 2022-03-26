@@ -7,7 +7,7 @@ class IIterator:
         pass
 
     @abc.abstractmethod
-    def hasNext(self) -> bool:
+    def has_next(self) -> bool:
         pass
 
     def next(self):

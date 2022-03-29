@@ -6,13 +6,13 @@ from shared.Domain.xfile import XFile
 
 
 @pytest.fixture
-def setuped_xfile():
+def setuped_xfile() -> None:
     x_url = XUrl(href="https://www.home-movie.biz/mov/hts-samp001.mp4")
     x_file = XFile(x_url)
     return x_file
 
 
-def test_任意のファイルをダウンロードできること(setuped_xfile: XFile):
+def test_任意のファイルをダウンロードできること(setuped_xfile: XFile) -> None:
 
     download_path_to = "C:\\Users\\nishigaki\\Desktop\\"
 

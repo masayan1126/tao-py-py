@@ -1,16 +1,16 @@
 from typing import List
-from shared.Domain.xweb_element import XWebElement
-from shared.Domain.xweb_element_list import XWebElementList
+from shared.Domain.Scraping.xweb_element import XWebElement
+from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from selenium.webdriver.remote.webelement import WebElement
 
 
 class WebElementConverter:
     @staticmethod
-    def convert(iterable: List[WebElement]):
+    def convert(web_element_list: List[WebElement]) -> XWebElementList:
 
         xweb_element_list = XWebElementList([])
 
-        for item in iterable:
-            xweb_element_list.add(XWebElement(item, ""))
+        for web_element in web_element_list:
+            xweb_element_list.add(XWebElement(web_element, ""))
 
         return xweb_element_list

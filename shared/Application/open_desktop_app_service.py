@@ -7,7 +7,7 @@ from shared.Enums.os_type import OsType
 class OpenDesktopAppService:
     def execute(self, app_path):
         # 非同期処理
-        subprocess.Popen(app_path)
+        # subprocess.Popen(app_path)
         # 同期処理(前の処理を待ってから次の処理へ)
         subprocess.run(app_path)
 

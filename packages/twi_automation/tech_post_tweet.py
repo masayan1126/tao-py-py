@@ -42,4 +42,4 @@ for post in posts:
     link = post["link"]
     tweet_content = f"{title}""\n\n"f"{link}"
     twitter_operator = TwitterOperator()
-    result = twitter_operator.tweet(tweet_content)
+    twitter_operator.tweet(tweet_content)

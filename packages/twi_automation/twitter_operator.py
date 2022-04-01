@@ -31,7 +31,8 @@ class TwitterOperator(ITwitterOperator):
             logger.setLevel(DEBUG)
             logger.addHandler(handler)
 
-            return self._twi.update_status(tweet_content)
+            self._twi.update_status(tweet_content)
+            print("ツイートに成功しました""\n\n"f"{tweet_content}")
         except tweepy.errors.TweepyException as e:
 
             if 32 in e.api_codes:
@@ -96,25 +97,28 @@ class TwitterOperator(ITwitterOperator):
 
             black_list = ["ahobot_unchi"]
 
+            success_count = 0
+
             if screen_name not in black_list:
                 try:
                     # フォローしていいね
                     self._twi.create_friendship(screen_name=screen_name)
                     self._twi.create_favorite(tweet_id)
                     print('@' + screen_name + 'のフォローに成功しました')
+                    success_count += 1
                     # 以下で、RateLimitError ⇨ TooManyRequestsになった模様
                     # https://github.com/tweepy/tweepy/commit/cd5f696d09530f86ac0edf1ec0fe0a02578a3920
                 except tweepy.errors.TooManyRequests as e:
-                    logger.exception("【Twitter API Rate Limmit Error】@"f"{screen_name}のフォローに失敗しました")
-                    logger.exception(e)
+                    logger.exception("APIのリクエスト制限に引っかかったため、"f"{screen_name}のフォローに失敗しました""\n\n"f"{e}")
                 except tweepy.errors.TweepyException as e:
-
                     if 139 in e.api_codes:
-                        logger.exception("すでにフォローまたはいいねがされているため、処理をキャンセルしました")
-                    # elif 187 in e.api_codes:
-                    #     logger.exception("重複するツイートが投稿されました。")
+                        logger.exception(f"{screen_name}はすでにフォローまたはいいねがされているため、処理をキャンセルしました""\n\n"f"{e}")
+                    elif 161 in e.api_codes:
+                        logger.exception("フォロー上限数に達したため、処理をキャンセルしました""\n\n"f"{e}")
                     else:
-                        logger.exception("【Tweepy Error】@"f"{screen_name}のフォローに失敗しました")
+                        logger.exception(""f"{screen_name}のフォローに失敗しました""\n\n"f"{e}")
+                finally:
+                    print('成功:'f"{success_count}/25""失敗:"f"{25 - success_count}/25")
             
             
 
@@ -166,7 +170,7 @@ class TwitterOperator(ITwitterOperator):
 
 
         try:
-            f = open(file="/Users/nishigakimasaya/Desktop/twi/analytics.txt", mode='a', encoding="UTF-8")
+            f = open(file="/Users/nishigakimasaya/git/dev/tao-py-py/analytics.txt", mode='a', encoding="UTF-8")
 
             # if f.read() == "":
             #     XLogger.exceptionToSlack("対象のファイルがの中身が空です")

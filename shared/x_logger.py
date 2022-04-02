@@ -96,3 +96,15 @@ class XLogger:
         logger.setLevel(DEBUG)
         logger.addHandler(handler)
         logger.exception(msg)
+
+    @staticmethod
+    def notificationToSlack(msg: str) -> None:
+
+        WEBHOOK_URL = os.environ.get("WEBHOOK_URL_JOBCAN")
+
+        handler = SlackLogHandler(WEBHOOK_URL)
+        handler.setLevel(DEBUG)
+        logger = getLogger(__name__)
+        logger.setLevel(DEBUG)
+        logger.addHandler(handler)
+        logger.info(msg)

@@ -11,15 +11,15 @@ from shared.di_container import DiContainer
 from shared.i_command import ICommand
 
 
-class JobcanLoginService:
-    def handle(self):
+class LoginService:
+    def handle(self) -> IWebBrowserOperator:
         Initializer().ioOption()
         xdriver = XDriverFactory().create(BrowserType.CHROME, is_headless=False)
         xbrowser = XBrowserFactory().create(xdriver, XUrl("https://id.jobcan.jp/"))
         web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
             IWebBrowserOperator
         )
-        xbrowser: XBrowser = web_browser_operator.boot(xbrowser)
+        web_browser_operator.boot(xbrowser)
 
         command: ICommand = LoginCommand(web_browser_operator)
         command.set_reciver(LoginReciver())

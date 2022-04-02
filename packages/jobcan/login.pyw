@@ -1,4 +1,4 @@
-from packages.jobcan.Application.jobcan_login_service import JobcanLoginService
+from packages.jobcan.Application.login_service import LoginService
 
 
-JobcanLoginService().handle()
+LoginService().handle()

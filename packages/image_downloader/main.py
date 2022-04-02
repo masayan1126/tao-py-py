@@ -1,7 +1,6 @@
 # import re
 
 # import pandas as pd
-# from shared.Domain.Converter.result_set_converter import ResultSetConverter
 # from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 # from shared.Domain.Scraping.soup_factory import SoupFactory
 # from shared.Domain.xregex import XRegex

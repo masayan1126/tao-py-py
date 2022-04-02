@@ -9,10 +9,7 @@ from packages.github_issue_register.classes.Application.RegisterGitHubIssueServi
     RegisterGitHubIssueService,
 )
 
-from shared.Domain.xcsv import XCsv
-
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+from shared.Domain.Excel.xcsv import XCsv
 
 # issueのリスト(csv)を読み込み
 filepath = (

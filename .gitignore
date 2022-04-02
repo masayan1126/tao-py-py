@@ -10,3 +10,4 @@ mypy.ini
 build
 dist
 main.spec
+requirements.txt

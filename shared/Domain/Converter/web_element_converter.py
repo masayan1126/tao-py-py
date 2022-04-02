@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 class WebElementConverter:
     @staticmethod
+    # webelementのリストを受け取り、xwebelementのリストを返します
     def convert(web_element_list: List[WebElement]) -> XWebElementList:
 
         xweb_element_list = XWebElementList([])

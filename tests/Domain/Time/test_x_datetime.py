@@ -76,8 +76,12 @@ def test_日時オブジェクトから秒を取得できる() -> None:
 
 def test_今日の日時オブジェクトを生成できる() -> None:
 
+    t_delta = datetime.timedelta(hours=9)
+    # 日本標準時
+    jst = datetime.timezone(t_delta, "JST")
+
     acutual = XDateTime.now().format("%Y-%m-%d %H:%M:%S")
-    expected = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    expected = datetime.datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S")
 
     assert acutual == expected
 

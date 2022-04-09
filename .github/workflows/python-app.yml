@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         # FIXME: pipenvで依存関係をインストールできるように
-        python -m pip install pipenv requests pandas webdriver-manager beautifulsoup4 selenium Pillow youtube_dl injector slack_log_handler
+        python -m pip install pipenv requests pandas webdriver-manager beautifulsoup4 selenium Pillow youtube_dl injector slack_log_handler tweepy
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8

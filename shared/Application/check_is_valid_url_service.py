@@ -7,7 +7,7 @@ class CheckIsValidUrlService:
         try:
             response = urllib.request.urlopen(xurl.get_href())
             return True
-        except ValueError:
+        except urllib.error.URLError:
             return False
         finally:
             if "response" in locals():

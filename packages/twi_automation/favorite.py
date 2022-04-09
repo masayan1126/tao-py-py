@@ -16,7 +16,7 @@ try:
 
     XLogger.notification_to_slack(
         ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
-        "Favorite was successful\n total:f"{len(favorited_user_screen_names)}" \n" f"{favorited_user_screen_names}",
+        "Favorite was successful" "\n" f"{favorited_user_screen_names}",
     )
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
 

@@ -86,24 +86,32 @@ class XLogger:
         logger.exception(msg)
 
     @staticmethod
-    def exceptionToSlack(msg: str) -> None:
+    def exception_to_slack(webhook_url: str, msg: str) -> None:
 
-        WEBHOOK_URL = os.environ.get("WEBHOOK_URL_JOBCAN")
-
-        handler = SlackLogHandler(WEBHOOK_URL)
+        handler = SlackLogHandler(webhook_url)
         handler.setLevel(DEBUG)
-        logger = getLogger(__name__)
+        logger = getLogger()
         logger.setLevel(DEBUG)
         logger.addHandler(handler)
-        logger.exception(msg)
+
+        formatter = Formatter(
+            ":fire: *Exception!!* \n\n *Message*: \n `%(message)s` \n\n"
+        )
+        handler.setFormatter(formatter)
+
+        logger.exception(msg, stack_info=False)
 
     @staticmethod
-    def notificationToSlack(msg: str) -> None:
+    def notification_to_slack(webhook_url: str, msg: str) -> None:
 
-        WEBHOOK_URL = os.environ.get("WEBHOOK_URL_JOBCAN")
-
-        handler = SlackLogHandler(WEBHOOK_URL)
+        handler = SlackLogHandler(webhook_url)
         handler.setLevel(DEBUG)
+
+        formatter = Formatter(
+            ":tada: *Notification* \n\n *Message*: \n `%(message)s` \n\n"
+        )
+        handler.setFormatter(formatter)
+
         logger = getLogger(__name__)
         logger.setLevel(DEBUG)
         logger.addHandler(handler)

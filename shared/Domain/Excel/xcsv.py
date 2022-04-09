@@ -9,7 +9,7 @@ class XCsv:
         try:
             return pd.read_csv(filepath, encoding=encoding, header=header, sep=sep)
         except FileNotFoundError:
-            print("対象のファイルが存在しないか、破損しています")
+            raise FileNotFoundError
 
     # dfを読み取り、csvをに出力します
     def output(self, filepath, dict: Dict):
@@ -17,4 +17,4 @@ class XCsv:
             df = pd.DataFrame(dict)
             df.to_csv(filepath, encoding="utf_8_sig")
         except FileNotFoundError:
-            print("対象のファイルが存在しないか、破損しています")
+            raise FileNotFoundError

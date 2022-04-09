@@ -1,4 +1,5 @@
 from time import sleep
+from packages.jobcan.env import ENV
 
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.xstr import XStr
@@ -28,6 +29,10 @@ class PickUpNeedsFixRecordsService:
                 target_rows.append(row_text_list)
 
         if len(target_rows) == 0:
-            XLogger.notificationToSlack("修正が必要なレコードはありませんでした。")
+            XLogger.notification_to_slack(
+                ENV["SLACK_WEBHOOK_URL_JOBCAN"], "修正が必要なレコードはありませんでした。"
+            )
         else:
-            XLogger.exceptionToSlack(f"修正が必要なレコードは{target_rows}です")
+            XLogger.exception_to_slack(
+                ENV["SLACK_WEBHOOK_URL_JOBCAN"], f"修正が必要なレコードは{target_rows}です"
+            )

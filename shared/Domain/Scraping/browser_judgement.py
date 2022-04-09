@@ -1,8 +1,10 @@
+from shared.env import ENV
 from shared.i_judgement import IJudgement
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 from webdriver_manager.chrome import ChromeDriverManager
 from shared.x_logger import XLogger
+from selenium.common.exceptions import SessionNotCreatedException
 
 class BrowserJudgement(IJudgement):
     def __init__(self, browser_type, is_headless):
@@ -31,12 +33,8 @@ class BrowserJudgement(IJudgement):
 
                 try:
                     return webdriver.Chrome(service=chrome_service, options=chrome_options)
-                except:
-                    # TODO: ログの出し分け
-                    XLogger.exceptionToSlack(
-                        "webdriverのバージョンがChromeブラウザーのバージョンと一致していないため起動に失敗しました。"
-                    )
-                    XLogger.exception("webdriverのバージョンがChromeブラウザーのバージョンと一致していないため起動に失敗しました。")
+                except SessionNotCreatedException as e:
+                    raise e
             # TODO:firefox
             case self.browser_type.FIREFOX:
                 pass

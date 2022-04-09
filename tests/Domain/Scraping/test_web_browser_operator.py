@@ -27,9 +27,9 @@ def setuped_i_web_browser_operator():
 def test_ID名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
     # ヘッダメニューのタイトル
     acutual = setuped_i_web_browser_operator.find_by_id("header-in").web_element().text
-    excepted = "masayanblog"
+    expected = "masayanblog"
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_xpath名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
@@ -39,6 +39,6 @@ def test_xpath名でhtml要素を取得できること(setuped_i_web_browser_ope
         .web_element()
         .text
     )
-    excepted = "masayanblog"
+    expected = "masayanblog"
 
-    assert acutual == excepted
+    assert acutual == expected

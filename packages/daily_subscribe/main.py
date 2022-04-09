@@ -1,4 +1,5 @@
 import sys
+from packages.daily_subscribe.env import ENV
 from shared.Application.Init.initializer import Initializer
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Excel.xexcel import XExcel
@@ -13,6 +14,8 @@ from shared.Enums.browser_type import BrowserType
 from shared.i_factory import IFactory
 from time import sleep
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import SessionNotCreatedException
+from shared.x_logger import XLogger
 
 
 Initializer().ioOption()
@@ -31,7 +34,14 @@ if len(subscribe_list) == 0:
     sys.exit()
 
 # 1.ブラウザ起動 ---------------------------------------------------------------------------------------------------
-xdriver_factory: IFactory = XDriverFactory()
+try:
+    xdriver_factory: IFactory = XDriverFactory()
+except SessionNotCreatedException as e:
+    XLogger.exception_to_slack(
+        ENV["SLACK_WEBHOOK_URL_JOBCAN"],
+        "webdriverのバージョンがChromeブラウザーのバージョンと一致していないため起動に失敗しました。"
+    )
+
 xdriver = xdriver_factory.create(BrowserType.CHROME, is_headless=False)
 xbrowser_factory: IFactory = XBrowserFactory()
 i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(IWebBrowserOperator)

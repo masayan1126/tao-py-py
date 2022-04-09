@@ -34,9 +34,9 @@ def setuped():
 def test_first_1つめの要素を取得できる(setuped: Dict) -> None:
     xweb_element_list: XWebElementList = setuped["list"]
     acutual = xweb_element_list.first()
-    excepted = setuped["operator"].find_by_id("header-in")
+    expected = setuped["operator"].find_by_id("header-in")
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_first_空のリストから要素を取り出そうとした場合は例外() -> None:
@@ -50,18 +50,18 @@ def test_add_要素を追加できる(setuped: Dict) -> None:
     xweb_element_list = xweb_element_list.add(
         setuped["operator"].find_by_id("index-tab-wrap")
     )
-    excepted = 3
+    expected = 3
     acutual = xweb_element_list.count()
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_all_全ての要素を取得できる(setuped: Dict) -> None:
     xweb_element_list: XWebElementList = setuped["list"]
-    excepted = 2
+    expected = 2
     acutual = xweb_element_list.count()
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_map_個々の要素に関数を適用できる(setuped: Dict) -> None:
@@ -75,19 +75,19 @@ def test_map_個々の要素に関数を適用できる(setuped: Dict) -> None:
 
     xweb_element_list = xweb_element_list.map(callable)
 
-    excepted = 1
+    expected = 1
     acutual = xweb_element_list.first().value()
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_is_empty_空かどうかチェックできる(setuped: Dict) -> None:
 
     xweb_element_list: XWebElementList = XWebElementList([])
     # 空
-    excepted = True
+    expected = True
     acutual = xweb_element_list.is_empty()
-    assert acutual == excepted
+    assert acutual == expected
 
     # 要素有り
 
@@ -95,6 +95,6 @@ def test_is_empty_空かどうかチェックできる(setuped: Dict) -> None:
         setuped["operator"].find_by_id("index-tab-wrap")
     )
 
-    excepted = False
+    expected = False
     acutual = xweb_element_list.is_empty()
-    assert acutual == excepted
+    assert acutual == expected

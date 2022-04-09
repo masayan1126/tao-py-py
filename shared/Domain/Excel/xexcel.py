@@ -1,4 +1,3 @@
-from typing import Dict
 import pandas as pd
 
 from shared.Domain.Excel.xworkbook import XWorkbook
@@ -11,11 +10,11 @@ class XExcel:
         try:
             return XWorkbook(pd.read_excel(filepath, sheet_name=sheet_name))
         except FileNotFoundError:
-            print("対象のファイルが存在しないか、破損しています")
+            raise FileNotFoundError
 
     # dfを読み取り、csvをに出力します
     def output(filepath, df: pd.DataFrame):
         try:
             df.to_csv(filepath)
         except FileNotFoundError:
-            print("対象のファイルが存在しないか、破損しています")
+            raise FileNotFoundError

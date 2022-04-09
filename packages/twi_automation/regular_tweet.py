@@ -1,11 +1,34 @@
-import datetime
-from twitter_operator import TwitterOperator
+from packages.twi_automation.Domain.twi_error_handle_judgement import (
+    TwiErrorHandleJudgement,
+)
+from packages.twi_automation.env import ENV
+from shared.Domain.Time.x_date_time import XDateTime
+from shared.Domain.Twi.twitter_operator import TwitterOperator
+from shared.Domain.xstr import XStr
+from shared.x_logger import XLogger
+from tweepy import errors
 
-t_delta = datetime.timedelta(hours=9)
-JST = datetime.timezone(t_delta, 'JST')
-now = datetime.datetime.now(JST)
+now = XDateTime.now()
+tweet = ENV["REGULAR_TWEET"]
 
-tweet_content = "これだけは言わせてください\n\n未経験からWEBエンジニア転職に高額な教材等は不要です\n\n私自身が転職活動で得た戦略を紹介していますので、本気で転職をしたいという方だけ読んでみてください。\n\n#駆け出しエンジニアと繋がりたい\n\nhttps://note.com/maasaayaan1126/n/ndd2cd29f899c\n\n"f"{now.strftime('%Y年%m月%d日 %H:%M:%S')}"
-
+tweet_content = XStr(f"{tweet}{now.format('%Y/%m/%d %H:%M:%S')}")
 twitter_operator = TwitterOperator()
-twitter_operator.tweet(tweet_content)
+
+try:
+    response = twitter_operator.tweet(tweet_content)
+
+    XLogger.notification_to_slack(
+        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        "Tweet was successful" "\n\n" f"{tweet_content.get_string()}",
+    )
+except (errors.TweepyException) as e:
+
+    judgement = TwiErrorHandleJudgement(e)
+    log_msg = judgement.judge()
+
+    XLogger.exception_to_slack(
+        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        log_msg,
+    )
+
+print(response)

@@ -1,45 +1,52 @@
-import sys
-from twitter_operator import TwitterOperator
-import json
-import requests
+from pandas import DataFrame
+from packages.twi_automation.Domain.twi_error_handle_judgement import (
+    TwiErrorHandleJudgement,
+)
+from packages.twi_automation.env import ENV
+from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 
-tweet_content = ""
+from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.Twi.twitter_operator import TwitterOperator
+from shared.Domain.number_randomizer import NumberRandomizer
+from shared.Domain.xstr import XStr
+from shared.x_logger import XLogger
+import tweepy
+from tweepy import errors
 
-# WordPressページ数取得(パラメータ設定)
-url = "https://maasaablog.com/"
-endpoint = '/wp-json/wp/v2/posts'
-api_url = url + endpoint
-page_count = 100
+# 毎日30分おきにランダムで1記事をツイート(csvのリストから取得)
 
-# res = requests.get(f"{api_url}?page=2").json()
-response_headers = requests.head(api_url).headers
+posts_df: DataFrame = XCsv().read(
+    "C:\\Users\\nishigaki\\jupyter-lab\\packages\\twi_automation\\posts.csv",
+    encoding="UTF-8",
+    header=0,
+)
 
-total_page_count = int(response_headers['X-WP-TotalPages'])
-total_posts_count = int(response_headers["X-WP-Total"])
+posts = DataFrameConverter.to_list(posts_df)
 
-# TODO: pandasでcsv出力する(これは別スクリプトで1ヶ月に一回くらいcronで定期実行して所定のパスにおく or dbに保存)
-# for page_count in range(1, total_page_count + 1):
-#     res = requests.get(f"{api_url}?page={page_count}")
-#     posts = json.loads(res.text)
-    
-#     for post in posts:
-#         post_info = {"title": post["title"]["rendered"], "link":post["link"]}
-#         print(post_info)
+randomizer = NumberRandomizer()
+random_numbers = randomizer.generate(0, len(posts), 1)
 
-# TODO: pandasでcsvを読み取り、そのlinkをもとにtwitterにシェアする
-# 30分おきにランダムで1記事をツイートできるようにする
+twitter_operator = TwitterOperator()
 
+for random_number in random_numbers:
+    selected_post = posts[random_number]
+    title = selected_post["title"]
+    link = selected_post["link"]
+    tweet_content = XStr(f"{title}" "\n\n" f"{link}")
+    try:
+        twitter_operator.tweet(tweet_content)
 
-# 読み取ったdataframeサンプル
-posts = [
-    {"title": "Visual Studio CodeでPythonスクリプトを効率的にデバッグする方法", "link": "https://maasaablog.com/development/python/4357/"},
-    {"title": "VsCodeでマークダウンファイル(.md)を快適に使用するTips", "link": "https://maasaablog.com/tools/visual-studio-code/1762/"},
-]
+        XLogger.notification_to_slack(
+            ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+            "Tweet was successful" "\n\n" f"{tweet_content.get_string()}",
+        )
+    except (errors.TweepyException) as e:
+        judgement = TwiErrorHandleJudgement(e)
+        log_msg = judgement.judge()
 
+        XLogger.exception_to_slack(
+            ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+            log_msg,
+        )
 
-for post in posts:
-    title = post["title"]
-    link = post["link"]
-    tweet_content = f"{title}""\n\n"f"{link}"
-    twitter_operator = TwitterOperator()
-    twitter_operator.tweet(tweet_content)
+print("debug")

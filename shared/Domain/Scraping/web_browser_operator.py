@@ -10,6 +10,7 @@ from shared.Domain.Scraping.xbrowser import XBrowser
 from selenium.common.exceptions import NoSuchElementException
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
+from shared.env import ENV
 from shared.x_logger import XLogger
 
 
@@ -31,13 +32,13 @@ class WebBrowserOperator:
 
         return xbrowser
 
-    def find_by_id(self, id_name: str) -> XWebElement:
+    def find_by_id(self, id_name: str) -> (XWebElement | IndexError):
         def closure():
             return self._webdriver.find_element(By.ID, id_name)
 
         return self._handle(closure)
 
-    def find_by_xpath(self, xpath: str) -> XWebElement:
+    def find_by_xpath(self, xpath: str) -> (XWebElement | IndexError):
         def closure():
             return self._webdriver.find_element(By.XPATH, xpath)
 
@@ -49,13 +50,13 @@ class WebBrowserOperator:
             self._webdriver.find_elements(By.CLASS_NAME, class_name)
         )
 
-    def find_by_css_selector(self, css_selector: str) -> XWebElement:
+    def find_by_css_selector(self, css_selector: str) -> (XWebElement | IndexError):
         def closure():
             return self._webdriver.find_element(By.CSS_SELECTOR, css_selector)
 
         return self._handle(closure)
 
-    def search_by_css_selector(self, css_selector: str) -> XWebElement:
+    def search_by_css_selector(self, css_selector: str) -> XWebElementList:
         return WebElementConverter().convert(
             self._webdriver.find_elements(By.CSS_SELECTOR, css_selector)
         )
@@ -76,8 +77,7 @@ class WebBrowserOperator:
             return WebElementConverter().convert([web_element]).first()
 
         except NoSuchElementException:
-            XLogger.exceptionToSlack("対象のhtml要素が見つかりませんでした")
-            XLogger.exception("対象のhtml要素が見つかりませんでした")
+            # "対象のhtml要素が見つかりませんでした"
             raise NoSuchElementException
 
     def webdriver(self):

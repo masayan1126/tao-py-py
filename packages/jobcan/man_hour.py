@@ -1,7 +1,8 @@
 from packages.jobcan.Application.login_service import LoginService
-from packages.jobcan.Application.pick_up_needs_fix_records import (
+from packages.jobcan.Application.pick_up_needs_fix_records_service import (
     PickUpNeedsFixRecordsService,
 )
+
 from packages.jobcan.Application.register_manhour_service import RegisterManhourService
 
 # ログイン
@@ -12,4 +13,4 @@ web_browser_operator = LoginService().handle()
 RegisterManhourService().handle(web_browser_operator)
 PickUpNeedsFixRecordsService().handle(web_browser_operator)
 
-# print("debug")
+print("debug")

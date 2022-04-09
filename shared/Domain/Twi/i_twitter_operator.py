@@ -1,5 +1,8 @@
 import abc
 
+from shared.Domain.xstr import XStr
+
+
 class ITwitterOperator:
     @abc.abstractmethod
     def __init__(self):
@@ -10,18 +13,17 @@ class ITwitterOperator:
         pass
 
     @abc.abstractmethod
-    def favorite(self, hashtag: str):
+    def favorite(self, hashtag: XStr):
         pass
 
     @abc.abstractmethod
-    # FIXME: XStrを使う
-    def follow(self, hashtag: str):
+    def follow(self, hashtag: XStr):
         pass
 
     @abc.abstractmethod
-    def unfollow(self, my_screen_name:str):
+    def unfollow(self, my_screen_name: XStr):
         pass
 
     @abc.abstractmethod
-    def analyze(self, my_screen_name:str):
+    def analyze(self, my_screen_name: XStr):
         pass

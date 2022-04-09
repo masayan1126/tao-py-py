@@ -1,7 +1,7 @@
-import datetime
 import tkinter
 from typing import Callable, Optional
 from packages.jobcan import login
+from shared.Domain.Time.x_date import XDate
 from shared.Domain.i_widget import IWidget
 
 
@@ -19,14 +19,16 @@ class Lanchar(IWidget):
         root.grid_rowconfigure(2, weight=1)
 
     def build(self):
-        label = self.label(datetime.date.today())
+        label = self.label(XDate.today().date())
         label.grid(column=0, row=0, sticky=tkinter.E, columnspan=3)
 
         # ボタン
         btn1 = self.btn("勤怠", login.authenticate)
         btn1.grid(column=0, row=1, sticky="NSEW")
 
-        btn2 = self.btn("工数", )
+        btn2 = self.btn(
+            "工数",
+        )
         btn2.grid(column=1, row=1, sticky="NSEW")
 
         btn3 = self.btn("③")

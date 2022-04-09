@@ -36,6 +36,6 @@ def test_webelementを取得できる(setuped: Dict) -> None:
     xweb_element: XWebElement = setuped["operator"].find_by_id("header-in")
     xweb_element_list: XWebElementList = setuped["list"]
 
-    excepted = xweb_element.web_element()
+    expected = xweb_element.web_element()
     acutual = xweb_element_list.first().web_element()
-    assert acutual == excepted
+    assert acutual == expected

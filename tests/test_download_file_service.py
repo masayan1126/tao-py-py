@@ -16,7 +16,7 @@ def test_任意のファイルをダウンロードできること(setuped_xfile
 
     download_path_to = "C:\\Users\\nishigaki\\Desktop\\"
 
-    DownloadFileService().execute(
+    DownloadFileService().download(
         x_file=setuped_xfile, download_path_to=download_path_to, extension=".mp4"
     )
 

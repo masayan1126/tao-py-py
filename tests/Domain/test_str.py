@@ -12,9 +12,9 @@ def setuped_xstr():
 
 def test_文字列を取得できる(setuped_xstr: XStr):
     acutual = setuped_xstr.get_string()
-    excepted = "masayan"
+    expected = "masayan"
 
-    assert acutual == excepted
+    assert acutual == expected
 
 
 def test_空文字を指定した場合は例外():

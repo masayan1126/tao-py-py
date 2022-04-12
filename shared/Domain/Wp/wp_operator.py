@@ -1,7 +1,6 @@
 from typing import List
 
 import urllib.request, urllib.error
-from packages.twi_automation.env import ENV
 from shared.Domain.Wp.i_wp_operator import IWpOperator
 import requests
 from shared.Domain.xurl import XUrl

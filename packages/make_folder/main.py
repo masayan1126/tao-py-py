@@ -1,8 +1,10 @@
 import io, sys
 from packages.make_folder.Domain.make_folder_command import MakeFolderCommand
 from packages.make_folder.Domain.make_folder_reciver import MakeFolderReciver
+from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.xfolder import XFolder
 from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.xstr import XStr
 from shared.i_aggregate import IAggregate
 from shared.i_command import ICommand
 from shared.i_iterator import IIterator
@@ -14,13 +16,13 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 # csv読み込み(# TODO:取り込むcsvのフォーマットのルールを設ける必要がある)
 dirs_df = XCsv().read(
-    filepath="C:\\Users\\nishigaki\\jupyter-lab\\packages\\make_folder\\list.csv",
+    filepath=XFileSystemPath(XStr("packages/make_folder/list.csv")).to_absolute(),
     encoding="shift-jis",
     header=0,
 )
 column = "name"
 folder_name_list = dirs_df[column].to_list()
-base_path = "C:\\Users\\nishigaki\\Desktop\\test\\"
+base_path = XFileSystemPath.home_dir().join("Desktop/test")
 
 
 command: ICommand = MakeFolderCommand()

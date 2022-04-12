@@ -19,7 +19,7 @@ i_web_browser_operator.boot(xbrowser)
 
 # 画像アップロード -----------------------------------------------------------------------------------
 image_file_list = glob(
-    "C:\\Users\\nishigaki\\jupyter-lab\\packages\\optimize_image_upload\\images\\*.*"
+    "./images/*.*"
 )
 
 for image in image_file_list:

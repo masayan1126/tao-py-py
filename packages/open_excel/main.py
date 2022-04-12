@@ -1,12 +1,14 @@
 import io, sys
 from pprint import pprint
 from glob import glob
-from shared.Domain.xexcel import XExcel
+from shared.Domain.Excel.xexcel import XExcel
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
-filepath = glob("C:\\Users\\nishigaki\\jupyter-lab\\packages\\open_excel\\*.xlsx")[0]
+filepath = XFileSystemPath(XStr("packages/open_excel/sample.xlsx")).to_absolute()
 xworkbook = XExcel().read(filepath, sheet_name=None)
 xworksheet = xworkbook.get_sheet_by_name("プログラミング言語一覧")
 target_cell_records = xworksheet.get_records(0, 100, 0, 6)

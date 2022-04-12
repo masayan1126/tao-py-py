@@ -1,15 +1,14 @@
 import pandas as pd
 from shared.Application.get_file_system_info_service import GetFileSystemInfoService
-from shared.Domain.xcsv import XCsv
-from shared.Domain.xpath import XPath
+from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
 
 
-files = GetFileSystemInfoService().execute(
-    XPath("C:\\Users\\nishigaki\\jupyter-lab\\shared\\Application")
-)
+files = GetFileSystemInfoService().get_info(XFileSystemPath("shared", "Application"))
 
 # XCsv().output(
-#     "C:\\Users\\nishigaki\\Desktop\\path_lists.csv",
+#     XFileSystemPath.home_dir().join("Desktop/path_lists.csv"),
 #     pd.DataFrame(data=files),
 # )
 
@@ -18,3 +17,5 @@ for root, dirs, files in files:
     print("root:{}".format(root))
     print("dirs:{}".format(dirs))
     print("files:{}".format(files))
+
+print("debug")

@@ -10,11 +10,13 @@ from packages.github_issue_register.classes.Application.RegisterGitHubIssueServi
 )
 
 from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
 
 # issueのリスト(csv)を読み込み
-filepath = (
-    "C:\\Users\\nishigaki\\jupyter-lab\\packages\\github_issue_register\\issues.csv"
-)
+filepath = XFileSystemPath(
+    XStr("packages/github_issue_register/issues.csv")
+).to_absolute()
 issue_df = XCsv().read(filepath, encoding="shift-jis", header=0)
 
 # GithubApiを叩く準備

@@ -1,35 +1,40 @@
 from PIL import UnidentifiedImageError
 import pytest
 from shared.Application.download_image_service import DownloadImageService
+from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.ximage import XImage
+from shared.Domain.xstr import XStr
 from shared.Domain.xurl import XUrl
-import os
 
 
-@pytest.mark.skipif(True, reason="[a]")
-def test_画像をダウンロードできること():
-
-    image_url = "https://www.olympus-imaging.jp/product/dslr/e30/sample/images/index_image_02_l.jpg"
-
-    x_url = XUrl(href=image_url)
-
+@pytest.fixture
+def setuped_ximage() -> None:
+    x_url = XUrl(
+        href="https://www.olympus-imaging.jp/product/dslr/e30/sample/images/index_image_02_l.jpg"
+    )
     x_image = XImage(x_url=x_url, alt="猫の画像")
-    download_path_to = "C:\\Users\\nishigaki\\Desktop\\"
-    downloaded_image_filepath = DownloadImageService().execute(
-        x_image=x_image, download_path_to=download_path_to
+    yield x_image
+    x_file_system_path = XFileSystemPath(XStr("tests"))
+    downloaded_file_path = x_file_system_path.join(x_image.get_file_name())
+    downloaded_file_path.delete()
+
+
+def test_画像をダウンロードできること(setuped_ximage: XImage):
+
+    download_path = XFileSystemPath(XStr("tests")).to_absolute()
+    DownloadImageService().download(
+        x_image=setuped_ximage, download_path_to=download_path
     )
 
-    assert os.path.isfile(downloaded_image_filepath) == True
+    assert download_path.exsits()
 
 
 def test_識別不可能な画像の場合は例外():
     with pytest.raises(UnidentifiedImageError):
-        image_url = "https://www.olympus-imaging.jp/hoge.jpg"
-
-        x_url = XUrl(href=image_url)
-
-        x_image = XImage(x_url=x_url, alt="猫の画像")
-        download_path_to = "C:\\Users\\nishigaki\\Desktop\\"
-        downloaded_image_filepath = DownloadImageService().download(
+        wrong_image_url = "https://www.olympus-imaging.jp/hoge.jpg"
+        x_image = XImage(x_url=XUrl(href=wrong_image_url), alt="")
+        x_file_system_path = XFileSystemPath(XStr("tests"))
+        download_path_to = x_file_system_path.join(x_image.get_file_name())
+        DownloadImageService().download(
             x_image=x_image, download_path_to=download_path_to
         )

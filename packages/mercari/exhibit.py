@@ -2,11 +2,13 @@ import sys
 import pyautogui as pgui
 import pyperclip
 from shared.Application.open_text_service import OpenTextService
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
 from shared.Domain.xtext import XText
 
 detail = ""
-detail_filepath = "C:\\Users\\nishigaki\\jupyter-lab\\packages\\mercari\\detail.txt"
-detail = OpenTextService().execute(
+detail_filepath = XFileSystemPath(XStr("packages/mercari/detail.txt")).to_absolute()
+detail = OpenTextService().open(
     x_text=XText(detail_filepath), mode="r", encoding="UTF-8"
 )
 
@@ -18,7 +20,7 @@ pgui.click(x=934, y=340, duration=1)
 # # エクスプローラーのパス入力欄
 pgui.click(x=841, y=56, duration=1)
 # # # 画像のファイルパスを入力
-pyperclip.copy("C:\\Users\\nishigaki\\Desktop\\images\\")
+pyperclip.copy(XFileSystemPath.home_dir().join("Desktop/images"))
 pgui.hotkey("ctrl", "v")
 pgui.click(x=843, y=455, duration=1)
 pgui.hotkey("ctrl", "a")

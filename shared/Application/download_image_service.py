@@ -1,3 +1,4 @@
+from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.ximage import XImage
 import io
 import requests
@@ -6,12 +7,12 @@ from PIL import UnidentifiedImageError
 
 
 class DownloadImageService:
-    def download(self, x_image: XImage, download_path_to, prefix=None):
+    def download(self, x_image: XImage, download_path_to: XFileSystemPath, prefix=None):
         image_binary = io.BytesIO(requests.get(x_image.get_src()).content)
 
         try:
             image = Image.open(image_binary)
-            image.save(f"{download_path_to}{prefix}_{x_image.get_file_name()}")
+            image.save(f"{download_path_to.of_text()}/{x_image.get_file_name()}")
 
         except UnidentifiedImageError:
             raise UnidentifiedImageError

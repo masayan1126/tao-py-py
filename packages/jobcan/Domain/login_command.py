@@ -1,5 +1,4 @@
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.Domain.xfolder import XFolder
 from shared.i_command import ICommand
 from shared.i_reciver import IReceiver
 

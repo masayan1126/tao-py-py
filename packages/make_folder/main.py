@@ -31,7 +31,7 @@ command.set_reciver(MakeFolderReciver())
 aggregate: IAggregate = XFolderAggregate()
 
 xfolder_list = [
-    aggregate.add_item(XFolder(base_path, folder_name))
+    aggregate.add_item(XFolder(base_path.join(folder_name)))
     for folder_name in folder_name_list
 ]
 
@@ -40,3 +40,5 @@ iterator: IIterator = aggregate.iterator()
 while iterator.has_next():
     item = iterator.next()
     command.execute(item)
+
+print("debug")

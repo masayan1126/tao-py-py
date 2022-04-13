@@ -62,14 +62,21 @@ class XFileSystemPath:
     def is_dir(self) -> bool:
         return self.path().is_dir()
 
+    def set_path(self, path_str: str):
+        self._path = self._path.joinpath(path_str)
+        return self.path()
+
     # パス文字列を追加して返します
     def join(self, *more_path_strs: str):
-        joined_path_str = str(self.path().joinpath(*more_path_strs))
-
-        return XFileSystemPath(XStr(joined_path_str))
+        # joined_path_str = str(self.path().joinpath(*more_path_strs))
+        self._path = self._path.joinpath(*more_path_strs)
+        return XFileSystemPath(XStr(str(self.path())))
 
     def delete(self):
-        self.path().unlink()
+        if self.is_file():
+            self.path().unlink()
+        else:
+            self.path().rmdir()
 
     # TODO: 拡張子の取得(suffix), ディレクトリ・ファイル名の取得(name)
     # TODO: あるディレクトリのファイルの一覧

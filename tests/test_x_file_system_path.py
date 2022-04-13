@@ -85,3 +85,16 @@ def test_パスがファイルかどうかチェックできる_True() -> None:
 def test_パスがファイルかどうかチェックできる_False() -> None:
 
     assert not XFileSystemPath(XStr("tests")).is_file()
+
+
+def test_パスを追加できる() -> None:
+
+    filepath = XFileSystemPath(XStr("tests")).join("hoge/sample")
+    assert filepath.of_text() == str(pathlib.Path("tests/hoge/sample"))
+
+
+def test_パスを連続で追加できる() -> None:
+
+    filepath = XFileSystemPath(XStr("tests")).join("hoge/sample")
+    filepath.join("foo")
+    assert filepath.of_text() == str(pathlib.Path("tests/hoge/sample/foo"))

@@ -11,11 +11,12 @@ webdriver-manager = "*"
 selenium = "*"
 pillow = "*"
 youtube-dl = "*"
-injector = "*"
 slack-log-handler = "*"
 tweepy = "*"
 
 [dev-packages]
+flake8 = "*"
+injector = "*"
 
 [requires]
 python_version = "3.9"

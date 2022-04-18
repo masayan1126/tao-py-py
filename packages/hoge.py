@@ -1,19 +1,17 @@
-from beautifulsoup4 import BeautifulSoup
-import requests
-import datetime
-from dateutil.relativedelta import relativedelta
+from shared.Domain.Excel.xexcel import XExcel
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
+from shared.x_logger import XLogger
+from packages.twi_automation.env import ENV
 
-URL = "https://maasaablog.com/"
-response = requests.get(URL)
-soup = BeautifulSoup(response.text, "html")
-tag = soup.select(selector=".logo > a > span")[0]
-print(tag.text)
+try:
+    filepath = XFileSystemPath(XStr("tests/Domain/Hoge/sample.xlsx")).to_absolute()
+    xworkbook = XExcel().output(filepath, {})
 
-# timezoneを指定するとdatetimeの生成が早くなる
-t_delta = datetime.timedelta(hours=9)
-# 日本標準時
-jst = datetime.timezone(t_delta, "JST")
-now = datetime.datetime.now(jst).isoformat()
+except OSError as e:
+    XLogger.exception_to_slack(
+        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        e,
+    )
 
-with open(f"{now}_log.txt", "w") as f:
-    print(tag.text, file=f)
+print("debug")

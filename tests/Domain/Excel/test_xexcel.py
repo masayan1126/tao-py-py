@@ -42,7 +42,7 @@ def test_read_存在しないファイルを指定した場合は例外():
 
 
 def test_output_存在しないファイルを指定した場合は例外():
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(OSError):
         filepath = XFileSystemPath(XStr("tests/Domain/Hoge/sample.xlsx")).to_absolute()
 
         xworkbook = XExcel().output(filepath, {})

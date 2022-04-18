@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Tuple
 import pandas as pd
 
 from shared.Domain.Excel.xworkbook import XWorkbook
@@ -21,7 +21,7 @@ class XExcel:
         header_row_number: int = 0,
         # index行はデフォルトのまま、0始まりの連番とする
         index_col: int = None,
-    ) -> XWorkbook | FileNotFoundError | PermissionError:
+    ) -> Tuple[XWorkbook, FileNotFoundError, PermissionError]:
         try:
             return XWorkbook(
                 pd.read_excel(

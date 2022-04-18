@@ -13,6 +13,7 @@ xworkbook = XExcel().read(filepath, sheet_name=None)
 xworksheet = xworkbook.get_sheet_by_name("プログラミング言語一覧")
 target_cell_records = xworksheet.get_records(0, 100, 0, 6)
 
+
 for target_cell_record in target_cell_records:
     pprint(target_cell_record)
 

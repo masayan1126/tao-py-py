@@ -1,13 +1,17 @@
-import pathlib
 from shared.Domain.Excel.xexcel import XExcel
-
 from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
+from shared.x_logger import XLogger
+from packages.twi_automation.env import ENV
 
+try:
+    filepath = XFileSystemPath(XStr("tests/Domain/Hoge/sample.xlsx")).to_absolute()
+    xworkbook = XExcel().output(filepath, {})
 
-filepath = XFileSystemPath(XStr("tests/sample.xlsx")).to_absolute()
-xworkbook = XExcel().read(filepath, sheet_name=None, header_row_number=None)
-xworksheet = xworkbook.get_sheet_by_name("プログラミング言語一覧")
-cell = xworksheet.get_cell(0, 0)
+except OSError as e:
+    XLogger.exception_to_slack(
+        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        e,
+    )
 
 print("debug")

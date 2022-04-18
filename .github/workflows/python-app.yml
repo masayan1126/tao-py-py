@@ -4,45 +4,96 @@
 name: Python application
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
+
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: develops-tao-pypy
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.10
+    - name: Set up Python 3.9.4
       uses: actions/setup-python@v2
       with:
-        python-version: "3.10"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        # FIXME: pipenvで依存関係をインストールできるように
-        python -m pip install pipenv requests pandas webdriver-manager beautifulsoup4 selenium Pillow youtube_dl injector slack_log_handler tweepy
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: install pipenv
+        python-version: "3.9.4"
+    - name: Install pipenv
       run: |
         python -m pip install --upgrade pip
         python -m pip install pipenv
-    - name: lock package version
-      run: |
-        pipenv lock
-    - name: install packages
+    - name: Install dependencies
       run: |
         pipenv sync --dev
-    - name: run test
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        pipenv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+         pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Run test
       run: | 
         pipenv run pytest tests
+
+    - name: Slack Notification on Success
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: success()
+      env:
+        SLACK_USERNAME: Unit Test
+        SLACK_TITLE: Test Success
+        SLACK_MESSAGE: "Test ok"
+        SLACK_COLOR: good
+        SLACK_ICON_EMOJI: ":white_check_mark:"
+
+    - name: Slack Notification on Failure
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: failure()
+      env:
+        SLACK_USERNAME: Unit Test
+        SLACK_TITLE: Test Failed
+        SLACK_MESSAGE: "Test error! Please check github!"
+        SLACK_COLOR: danger
+        SLACK_ICON_EMOJI: ":fire:"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    env:
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: develops-tao-pypy
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: SFTP Deploy Action
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          username: ${{ secrets.SFTP_USER_NAME }}
+          server: ${{ secrets.SFTP_SERVER_IP }}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          port: 10022
+          local_path: './'
+          remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/app'
+    
+      - name: Slack Notification on Success
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: success()
+        env:
+          SLACK_USERNAME: Deploy
+          SLACK_TITLE: Deploy Success
+          SLACK_MESSAGE: "deploy ok"
+          SLACK_COLOR: good
+          SLACK_ICON_EMOJI: ":white_check_mark:"
+
+      - name: Slack Notification on Failure
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_USERNAME: Deploy
+          SLACK_TITLE: Deploy Failed
+          SLACK_MESSAGE: "deploy error! Please check github!"
+          SLACK_COLOR: danger
+          SLACK_ICON_EMOJI: ":fire:"

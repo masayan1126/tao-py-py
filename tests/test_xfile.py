@@ -1,4 +1,3 @@
-from types import NoneType
 from shared.Domain.xfile import XFile
 from shared.Domain.xurl import XUrl
 

@@ -4,15 +4,21 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
 pandas = "*"
-webdriver-manager = "*"
 beautifulsoup4 = "*"
+requests = "*"
+webdriver-manager = "*"
 selenium = "*"
+pillow = "*"
 youtube-dl = "*"
-cairosvg = "*"
+slack-log-handler = "*"
+tweepy = "*"
+openpyxl = "*"
 
 [dev-packages]
+flake8 = "*"
+injector = "*"
+pytest = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.9"

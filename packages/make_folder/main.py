@@ -22,18 +22,16 @@ dirs_df = XCsv().read(
 )
 column = "name"
 folder_name_list = dirs_df[column].to_list()
-base_path = XFileSystemPath.home_dir().join("Desktop/test")
-
+base_path = XFileSystemPath.home_dir().join("desktop/make_folder")
 
 command: ICommand = MakeFolderCommand()
 command.set_reciver(MakeFolderReciver())
 
 aggregate: IAggregate = XFolderAggregate()
 
-xfolder_list = [
-    aggregate.add_item(XFolder(base_path.join(folder_name)))
-    for folder_name in folder_name_list
-]
+for folder_name in folder_name_list:
+    f = XFileSystemPath(XStr(base_path.of_text()))
+    aggregate.add_item(XFolder(f.join(folder_name)))
 
 iterator: IIterator = aggregate.iterator()
 

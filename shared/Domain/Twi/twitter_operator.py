@@ -76,7 +76,6 @@ class TwitterOperator(ITwitterOperator):
 
         try:
             for friend_id in self.follow_ids(my_screen_name):
-                print(friend_id)
                 # 相互フォローでなければ
                 if friend_id not in self.follower_ids(my_screen_name):
                     if total_unfollow_count <= 100:

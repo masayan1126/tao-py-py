@@ -46,7 +46,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
           port: 10022
           local_path: './'
-          remote_path: '/maasaablog.com/public_html/dev.maasaablog.com/app'
+          remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/app'
           # args: '-o ConnectTimeout=5'
     
       # # 成功時

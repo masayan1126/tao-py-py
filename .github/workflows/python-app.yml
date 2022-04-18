@@ -8,12 +8,12 @@ on:
     branches: [ main ]
 
 jobs:
+  env:
+    SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+    SLACK_CHANNEL: develops-tao-pypy
+
   test:
     runs-on: ubuntu-latest
-
-    env:
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SLACK_CHANNEL: develops-tao-pypy
 
     steps:
     - uses: actions/checkout@v2
@@ -61,6 +61,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: SFTP Deploy Action

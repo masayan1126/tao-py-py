@@ -17,6 +17,7 @@ tweepy = "*"
 [dev-packages]
 flake8 = "*"
 injector = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.9"

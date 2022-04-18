@@ -32,13 +32,13 @@ class WebBrowserOperator:
 
         return xbrowser
 
-    def find_by_id(self, id_name: str) -> (XWebElement | IndexError):
+    def find_by_id(self, id_name: str) -> XWebElement:
         def closure():
             return self._webdriver.find_element(By.ID, id_name)
 
         return self._handle(closure)
 
-    def find_by_xpath(self, xpath: str) -> (XWebElement | IndexError):
+    def find_by_xpath(self, xpath: str) -> XWebElement:
         def closure():
             return self._webdriver.find_element(By.XPATH, xpath)
 
@@ -50,7 +50,7 @@ class WebBrowserOperator:
             self._webdriver.find_elements(By.CLASS_NAME, class_name)
         )
 
-    def find_by_css_selector(self, css_selector: str) -> (XWebElement | IndexError):
+    def find_by_css_selector(self, css_selector: str) -> XWebElement:
         def closure():
             return self._webdriver.find_element(By.CSS_SELECTOR, css_selector)
 

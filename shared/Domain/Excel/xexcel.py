@@ -21,7 +21,7 @@ class XExcel:
         header_row_number: int = 0,
         # index行はデフォルトのまま、0始まりの連番とする
         index_col: int = None,
-    ) -> Tuple[XWorkbook, FileNotFoundError, PermissionError]:
+    ) -> XWorkbook:
         try:
             return XWorkbook(
                 pd.read_excel(
@@ -38,7 +38,7 @@ class XExcel:
             raise PermissionError
 
     # dfをエクセルに出力します
-    def output(self, filepath: XFileSystemPath, data: Dict) -> None | FileNotFoundError:
+    def output(self, filepath: XFileSystemPath, data: Dict) -> None:
 
         # {"id": [1, 2, 3,4], "name": ["PHP", "Java", "Python", "Ruby"], "type": ["動的型付け", "静的型付け","動的型付け","動的型付け"]}
         # 辞書のキーをdataframeのカラムにしたいので、orientにindexを指定

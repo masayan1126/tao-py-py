@@ -44,8 +44,8 @@ jobs:
           username: ${{ secrets.SFTP_USER_NAME }}
           server: ${{ secrets.SFTP_SERVER_IP }}
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          local_path: './*'
-          remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/app'
+          local_path: './'
+          remote_path: '/maasaablog.com/public_html/dev.maasaablog.com/app'
           # args: '-o ConnectTimeout=5'
     
       # # 成功時

@@ -1,4 +1,5 @@
 from shared.Domain.Twi.twitter_operator import TwitterOperator
+from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from packages.twi_automation.env import ENV
 from shared.x_logger import XLogger
@@ -9,7 +10,7 @@ try:
     report = twitter_operator.analyze(my_screen_name=XStr(ENV["MY_SCREEN_NAME"]))
 
     f = open(
-        file="C:\\Users\\nishigaki\\jupyter-lab\\packages\\twi_automation\\analytics.txt",
+        file=XFileSystemPath(XStr("packages/twi_automation/analytics.txt")).of_text(),
         mode="a",
         encoding="UTF-8",
     )

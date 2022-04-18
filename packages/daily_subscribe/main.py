@@ -3,6 +3,8 @@ from packages.daily_subscribe.env import ENV
 from shared.Application.Init.initializer import Initializer
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Excel.xexcel import XExcel
+from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.xstr import XStr
 from shared.Enums.site_type import SiteType
 from shared.di_container import DiContainer
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
@@ -21,9 +23,8 @@ from shared.x_logger import XLogger
 Initializer().ioOption()
 
 # 自動起動したいサイトのurlやログイン情報を記載したエクセルを読み込み -------------------------------------------------------------------------------
-subscribe_list_filepath = (
-    "C:\\Users\\nishigaki\\jupyter-lab\\packages\\daily_subscribe\\subscribe_list.xlsx"
-)
+subscribe_list_filepath = XFileSystemPath(XStr("packages/daily_subscribe/subscribe_list.xlsx")).to_absolute()
+
 subscribe_wb = XExcel().read(filepath=subscribe_list_filepath, sheet_name=None)
 subscribe_sheet = subscribe_wb.get_sheet_by_name("subscribe_list")
 subscribe_records = subscribe_sheet.get_records(0, 100, 0, 10)

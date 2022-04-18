@@ -12,7 +12,7 @@ from shared.x_logger import XLogger
 
 
 class OpenTextService:
-    def execute(self, x_text: XText, mode, encoding) -> str:
+    def open(self, x_text: XText, mode, encoding) -> str:
         """ファイルを読み取り、読み取った文字列を返します
 
         Args:

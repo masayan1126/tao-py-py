@@ -42,14 +42,11 @@
 #     d = {"name": names[i], "slag": slug}
 #     results.append(d)
 
-# XCsv().output(
-#     "C:\\Users\\nishigaki\\Desktop\\brands.csv",
+# XCsv().output(XFileSystemPath.home_dir().join("Desktop/brands.csv")
 #     results,
 # )
 
-# download_path_to = (
-#     # "C:\\Users\\nishigaki\\Desktop\\tavenal-com\\public\\assets\\img\\comm"
-#     "C:\\Users\\nishigaki\\Desktop\\downloads\\"
+# download_path_to = (XFileSystemPath.home_dir().join("Desktop/downloads")
 # )
 
 # # 画像URLからダウンロード

@@ -2,8 +2,10 @@ import os
 import pytest
 from packages.make_folder.Domain.make_folder_command import MakeFolderCommand
 from packages.make_folder.Domain.make_folder_reciver import MakeFolderReciver
+from shared.Domain.x_file_system_path import XFileSystemPath
 
 from shared.Domain.xfolder import XFolder
+from shared.Domain.xstr import XStr
 from shared.i_command import ICommand
 
 
@@ -11,11 +13,12 @@ from shared.i_command import ICommand
 def setuped_command():
     command: ICommand = MakeFolderCommand()
     command.set_reciver(MakeFolderReciver())
-    return command
+    yield command
+    XFileSystemPath(XStr("tests/sample")).to_absolute().delete()
 
 
 def test_フォルダを作成できる(setuped_command: ICommand) -> None:
-    basepath = ".\\tests\\"
-    setuped_command.execute(XFolder(basepath, "hoge_dir"))
+    filepath = XFileSystemPath(XStr("tests/sample")).to_absolute()
+    setuped_command.execute(XFolder(filepath))
 
-    assert os.path.exists(basepath + "hoge_dir")
+    assert filepath.exsits()

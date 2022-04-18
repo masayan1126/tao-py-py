@@ -45,7 +45,7 @@ class XWebElementList:
     def is_empty(self) -> bool:
         return self.count() == 0
 
-    def first(self) -> XWebElement | IndexError:
+    def first(self) -> XWebElement:
         try:
             return self.all()[0]
         except IndexError:

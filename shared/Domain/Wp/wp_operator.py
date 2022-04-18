@@ -7,8 +7,6 @@ from shared.Domain.xurl import XUrl
 import json
 from shared.Exception.wp_error import WpError
 
-from shared.x_logger import XLogger
-
 
 class WpOperator(IWpOperator):
     def __init__(self, api_url: XUrl):
@@ -44,22 +42,24 @@ class WpOperator(IWpOperator):
 
             # ページ指定なし
             if page_number is None:
-                # TODO: pandasでcsv出力する(これは別スクリプトで1ヶ月に一回くらいcronで定期実行して所定のパスにおく or dbに保存)
+                _posts = []
                 for page_count in range(1, self.total_page_count() + 1):
                     res = requests.get(f"{self._api_url}?page={page_count}")
-                    _posts = json.loads(res.text)  # JSON文字列を辞書型に変換
+
+                    for post in json.loads(res.text):
+                        _posts.append(post)  # JSON文字列を辞書型に変換
 
             else:
                 res = requests.get(f"{self._api_url}?page={page_number}")
                 _posts = json.loads(res.text)  # JSON文字列を辞書型に変換
 
             for post in _posts:
+
                 post_info = {
                     "title": post["title"]["rendered"],
                     "link": post["link"],
                 }
                 posts.append(post_info)
-
             return posts
 
         except requests.exceptions.HTTPError as e:

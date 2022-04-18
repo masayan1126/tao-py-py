@@ -42,23 +42,21 @@ jobs:
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
-          SLACK_CHANNEL: notification-ghactions-stocker
-          SLACK_USERNAME: Deploy
-          SLACK_TITLE: Deploy Success
-          SLACK_MESSAGE: "deploy ok"
+          SLACK_USERNAME: Unit Test
+          SLACK_TITLE: Test Success
+          SLACK_MESSAGE: "Test ok"
           SLACK_COLOR: good
           SLACK_ICON_EMOJI: ":white_check_mark:"
 
-      - name: Slack Notification on Failure
-        uses: rtCamp/action-slack-notify@v2.0.2
-        if: failure()
-        env:
-          SLACK_CHANNEL: notification-ghactions-stocker
-          SLACK_USERNAME: Deploy
-          SLACK_TITLE: Deploy Failed
-          SLACK_MESSAGE: "deploy error! Please check github!"
-          SLACK_COLOR: danger
-          SLACK_ICON_EMOJI: ":fire:"
+    - name: Slack Notification on Failure
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: failure()
+      env:
+        SLACK_USERNAME: Unit Test
+        SLACK_TITLE: Test Failed
+        SLACK_MESSAGE: "Test error! Please check github!"
+        SLACK_COLOR: danger
+        SLACK_ICON_EMOJI: ":fire:"
 
   deploy:
     needs: test

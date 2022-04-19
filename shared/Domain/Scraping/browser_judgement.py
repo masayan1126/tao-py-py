@@ -16,7 +16,8 @@ class BrowserJudgement(IJudgement):
         if self.on_docker:
             try:
                 driver = webdriver.Remote(
-                    command_executor="http://docker-python_selenium_1:4444/wd/hub",
+                    # command_executor="http://docker-python_selenium_1:4444/wd/hub",
+                    command_executor="http://selenium:4444/wd/hub",
                     desired_capabilities=DesiredCapabilities.CHROME.copy(),
                 )
                 return driver

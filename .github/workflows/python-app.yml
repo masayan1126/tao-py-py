@@ -10,6 +10,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    container:
+      image: python:3.9.7-slim
+      # volumes:
+      #   - /__w/stocker:/var/www
+      
+    services:
+      # ubuntuからはこのサービスコンテナ名で通信可能
+      selenium:
+        image: selenium/standalone-chrome
+        volumes:
+          - /dev/shm:/dev/shm
 
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}

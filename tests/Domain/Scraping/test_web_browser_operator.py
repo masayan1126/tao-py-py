@@ -11,7 +11,7 @@ from shared.di_container import DiContainer
 @pytest.fixture
 def setuped_i_web_browser_operator():
     factory: IFactory = XDriverFactory()
-    xdriver = factory.create(BrowserType.CHROME)
+    xdriver = factory.create(BrowserType.CHROME, is_headless=True, on_docker=True)
 
     factory: IFactory = XBrowserFactory()
     xbrowser = factory.create(xdriver, XUrl("https://maasaablog.com/"))
@@ -21,7 +21,9 @@ def setuped_i_web_browser_operator():
     )
     i_web_browser_operator.boot(xbrowser)
 
-    return i_web_browser_operator
+    yield i_web_browser_operator
+
+    xdriver.driver().quit()
 
 
 def test_ID名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):

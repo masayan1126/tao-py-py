@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     container:
-      image: python:3.9.7-slim
+      image: python:3.9.4-slim
       # volumes:
       #   - /__w/stocker:/var/www
       
@@ -28,6 +28,10 @@ jobs:
       SLACK_CHANNEL: develops-tao-pypy
 
     steps:
+    - name: Set up Python 3.9.4
+      run: |
+        ls -la
+        python -V
     - uses: actions/checkout@v2
     - name: Set up Python 3.9.4
       uses: actions/setup-python@v2

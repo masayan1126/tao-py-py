@@ -12,7 +12,9 @@ from shared.di_container import DiContainer
 
 @pytest.fixture
 def setuped():
-    xdriver = XDriverFactory().create(BrowserType.CHROME)
+    xdriver = XDriverFactory().create(
+        BrowserType.CHROME, is_headless=True, on_docker=True
+    )
     xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
 
     i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
@@ -20,7 +22,7 @@ def setuped():
     )
     i_web_browser_operator.boot(xbrowser)
 
-    return {
+    yield {
         "list": XWebElementList(
             [
                 i_web_browser_operator.find_by_id("header-in"),
@@ -29,6 +31,8 @@ def setuped():
         ),
         "operator": i_web_browser_operator,
     }
+
+    xdriver.driver().quit()
 
 
 def test_first_1つめの要素を取得できる(setuped: Dict) -> None:

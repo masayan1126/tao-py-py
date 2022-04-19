@@ -4,6 +4,23 @@
 - Twitter 自動化
 - WordPress 自動化
 
+## 構成
+
+- バージョン管理
+
+  - Pipenv
+
+- 静的解析
+
+  - Flake8, mypy
+
+- 仮想環境
+
+  - Docker
+
+- 設計
+  - オブジェクト指向・ドメイン駆動設計
+
 ## 使用パターン
 
 - Factory Method

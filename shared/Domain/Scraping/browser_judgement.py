@@ -1,18 +1,32 @@
-from shared.env import ENV
 from shared.i_judgement import IJudgement
 from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome import service as fs
 from webdriver_manager.chrome import ChromeDriverManager
-from shared.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
 
 
 class BrowserJudgement(IJudgement):
-    def __init__(self, browser_type, is_headless):
+    def __init__(self, browser_type, is_headless, on_docker):
         self.browser_type = browser_type
         self.is_headless = is_headless
+        self.on_docker = on_docker
 
     def judge(self):
+        if self.on_docker:
+            try:
+                driver = webdriver.Remote(
+                    # command_executor="http://docker-python_selenium_1:4444/wd/hub",
+                    command_executor="http://selenium:4444/wd/hub",
+                    desired_capabilities=DesiredCapabilities.CHROME.copy(),
+                )
+                return driver
+            # tryにreturnがあっても、かならずfinally句の中が実行される
+            except SessionNotCreatedException as e:
+                raise e
+            # finally:
+            #     driver.quit()
+
         # 本番のpythonがanacondaの関係で3.9.4のためmatch～case文ではなくif文を使用する
         if self.browser_type == self.browser_type.CHROME:
             chrome_options = webdriver.ChromeOptions()

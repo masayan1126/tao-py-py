@@ -77,6 +77,7 @@ jobs:
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
+      SLACK_FOOTER: ":rocket:"
 
     steps:
       - uses: actions/checkout@v2
@@ -91,7 +92,7 @@ jobs:
           remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/tao-pypy'
     
       - name: Slack Notification on Success
-        uses: rtCamp/action-slack-notify@v2.0.2
+        uses: rtCamp/action-slack-notify@v2
         if: success()
         env:
           SLACK_USERNAME: Deploy
@@ -100,7 +101,7 @@ jobs:
           SLACK_ICON_EMOJI: ":white_check_mark:"
 
       - name: Slack Notification on Failure
-        uses: rtCamp/action-slack-notify@v2.0.2
+        uses: rtCamp/action-slack-notify@v2
         if: failure()
         env:
           SLACK_USERNAME: Deploy

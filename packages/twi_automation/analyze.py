@@ -7,7 +7,7 @@ from shared.x_logger import XLogger
 twitter_operator = TwitterOperator()
 
 try:
-    report = twitter_operator.analyze(my_screen_name=XStr(ENV["MY_SCREEN_NAME"]))
+    report = twitter_operator.analyze()
 
     f = open(
         file=XFileSystemPath(XStr("packages/twi_automation/analytics.txt")).of_text(),

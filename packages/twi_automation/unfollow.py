@@ -10,9 +10,7 @@ import tweepy
 twitter_operator = TwitterOperator()
 
 try:
-    unfollowed_user_screen_names = twitter_operator.unfollow(
-        my_screen_name=XStr(ENV["MY_SCREEN_NAME"])
-    )
+    unfollowed_user_screen_names = twitter_operator.unfollow()
     XLogger.notification_to_slack(
         ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
         "{0}のフォローを解除しました。".format(unfollowed_user_screen_names),

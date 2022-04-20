@@ -69,7 +69,9 @@ class TwitterOperator(ITwitterOperator):
                     # 以下で、RateLimitError ⇨ TooManyRequestsになった模様
                     # https://github.com/tweepy/tweepy/commit/cd5f696d09530f86ac0edf1ec0fe0a02578a3920
         except (errors.TweepyException) as e:
-            raise e
+            if 139 not in self.e.api_codes:
+                # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけでよい
+                raise e
 
         return success_count
 

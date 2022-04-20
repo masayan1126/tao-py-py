@@ -26,6 +26,8 @@ jobs:
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
+      SLACK_MESSAGE: 'Post Content :rocket:'
+      SLACK_FOOTER: null
 
     steps:
     - name: Confirm

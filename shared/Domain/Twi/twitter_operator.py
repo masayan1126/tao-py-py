@@ -79,9 +79,9 @@ class TwitterOperator(ITwitterOperator):
         unfollowed_user_screen_names: List[str] = []
 
         try:
-            for friend_id in self.follow_ids():
+            for friend_id in self.follow_ids(self.my_screen_name()):
                 # 相互フォローでなければ
-                if friend_id not in self.follower_ids():
+                if friend_id not in self.follower_ids(self.my_screen_name()):
                     if total_unfollow_count <= 100:
                         self._twi.destroy_friendship(user_id=friend_id)
                         total_unfollow_count += 1
@@ -103,15 +103,15 @@ class TwitterOperator(ITwitterOperator):
 
         now = XDateTime.now()
         return (
-            f"{now.format('%Y/%m/%d %H:%M:%S')}/ フォロー数: {len(self.follow_ids())}/フォロワー数: {len(self.follower_ids())}"
+            f"{now.format('%Y/%m/%d %H:%M:%S')}/ フォロー数: {len(self.follow_ids(self.my_screen_name()))}/フォロワー数: {len(self.follower_ids(self.my_screen_name()))}"
             "\n"
         )
 
-    def follower_ids(self):
-        return self._twi.get_follower_ids(screen_name=self.my_screen_name())
+    def follower_ids(self, screen_name: str):
+        return self._twi.get_follower_ids(screen_name=screen_name)
 
-    def follow_ids(self):
-        return self._twi.get_friend_ids(screen_name=self.my_screen_name())
+    def follow_ids(self, screen_name: str):
+        return self._twi.get_friend_ids(screen_name=screen_name)
 
-    def my_screen_name(self):
+    def my_screen_name(self) -> str:
         return self._my_screen_name

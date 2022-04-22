@@ -54,9 +54,11 @@ class TwitterOperator(ITwitterOperator):
             tweets = self._twi.search_tweets(q=hashtag.get_string(), count=25)
             success_count = 0
             black_list = ENV["BLACK_LIST"]
+            users_tried_to_follow = []
 
             for tweet in tweets:
                 screen_name = tweet.user.screen_name
+                users_tried_to_follow.append(f"{screen_name}" "\n")
 
                 # ブラックリストでもなく、自分自身でもない場合のみフォローしていいね
                 if (
@@ -73,7 +75,7 @@ class TwitterOperator(ITwitterOperator):
                 # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけでよい
                 raise e
 
-        return success_count
+        return success_count, users_tried_to_follow
 
     def unfollow(self):
 

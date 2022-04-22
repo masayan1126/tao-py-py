@@ -10,11 +10,12 @@ import tweepy
 twitter_operator = TwitterOperator()
 
 try:
-    success_count = twitter_operator.follow(hashtag=XStr(ENV["HASH_TAG"]))
+    success_count = twitter_operator.follow(hashtag=XStr(ENV["HASH_TAG"]))[0]
+    users_tried_to_follow = twitter_operator.follow(hashtag=XStr(ENV["HASH_TAG"]))[1]
 
     XLogger.notification_to_slack(
         ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
-        "フォロー・いいね数:" f"{success_count}/25",
+        "フォロー・いいね数:" f"{success_count}/25" "\n" f"{users_tried_to_follow}/25",
     )
 
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:

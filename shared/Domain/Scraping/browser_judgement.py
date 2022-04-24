@@ -16,16 +16,12 @@ class BrowserJudgement(IJudgement):
         if self.on_docker:
             try:
                 driver = webdriver.Remote(
-                    # command_executor="http://docker-python_selenium_1:4444/wd/hub",
                     command_executor="http://selenium:4444/wd/hub",
                     desired_capabilities=DesiredCapabilities.CHROME.copy(),
                 )
                 return driver
-            # tryにreturnがあっても、かならずfinally句の中が実行される
             except SessionNotCreatedException as e:
                 raise e
-            # finally:
-            #     driver.quit()
 
         # 本番のpythonがanacondaの関係で3.9.4のためmatch～case文ではなくif文を使用する
         if self.browser_type == self.browser_type.CHROME:

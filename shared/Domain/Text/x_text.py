@@ -5,7 +5,7 @@ class XText:
     def __init__(self, path: XFileSystemPath):
         self.path = path
 
-    def get_path(self):
+    def filepath(self):
         return self.path
 
     def set_path(self, path):

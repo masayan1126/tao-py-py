@@ -18,6 +18,7 @@ class TwitterOperator(ITwitterOperator):
         auth = tweepy.OAuth1UserHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
         self._twi = tweepy.API(auth)
+        self._my_screen_name = ENV["MY_SCREEN_NAME"]
 
     def tweet(self, tweet_content: XStr):
         try:
@@ -53,31 +54,38 @@ class TwitterOperator(ITwitterOperator):
             tweets = self._twi.search_tweets(q=hashtag.get_string(), count=25)
             success_count = 0
             black_list = ENV["BLACK_LIST"]
+            users_tried_to_follow = []
 
             for tweet in tweets:
                 screen_name = tweet.user.screen_name
+                users_tried_to_follow.append(f"{screen_name}" "\n")
 
-                if screen_name not in black_list:
-                    # フォローしていいね
+                # ブラックリストでもなく、自分自身でもない場合のみフォローしていいね
+                if (
+                    screen_name not in black_list
+                    and screen_name != self.my_screen_name()
+                ):
                     self._twi.create_friendship(screen_name=screen_name)
                     self._twi.create_favorite(tweet.id)
                     success_count += 1
                     # 以下で、RateLimitError ⇨ TooManyRequestsになった模様
                     # https://github.com/tweepy/tweepy/commit/cd5f696d09530f86ac0edf1ec0fe0a02578a3920
         except (errors.TweepyException) as e:
-            raise e
+            if 139 not in e.api_codes:
+                # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけでよい
+                raise e
 
-        return success_count
+        return success_count, users_tried_to_follow
 
-    def unfollow(self, my_screen_name: XStr):
+    def unfollow(self):
 
         total_unfollow_count = 0
         unfollowed_user_screen_names: List[str] = []
 
         try:
-            for friend_id in self.follow_ids(my_screen_name):
+            for friend_id in self.follow_ids(self.my_screen_name()):
                 # 相互フォローでなければ
-                if friend_id not in self.follower_ids(my_screen_name):
+                if friend_id not in self.follower_ids(self.my_screen_name()):
                     if total_unfollow_count <= 100:
                         self._twi.destroy_friendship(user_id=friend_id)
                         total_unfollow_count += 1
@@ -94,17 +102,20 @@ class TwitterOperator(ITwitterOperator):
         # 参考
         # https://kia-tips.com/it/python/write-twitter-bot-python-tweepy-unfollow-non-followers#i-3
 
-    def analyze(self, my_screen_name: XStr) -> str:
+    def analyze(self) -> str:
         # TODO: 前日比など
 
         now = XDateTime.now()
         return (
-            f"{now.format('%Y/%m/%d %H:%M:%S')}/ フォロー数: {len(self.follow_ids(my_screen_name))}/フォロワー数: {len(self.follower_ids(my_screen_name))}"
+            f"{now.format('%Y/%m/%d %H:%M:%S')}/ フォロー数: {len(self.follow_ids(self.my_screen_name()))}/フォロワー数: {len(self.follower_ids(self.my_screen_name()))}"
             "\n"
         )
 
-    def follower_ids(self, my_screen_name: XStr):
-        return self._twi.get_follower_ids(screen_name=my_screen_name.get_string())
+    def follower_ids(self, screen_name: str):
+        return self._twi.get_follower_ids(screen_name=screen_name)
 
-    def follow_ids(self, my_screen_name: XStr):
-        return self._twi.get_friend_ids(screen_name=my_screen_name.get_string())
+    def follow_ids(self, screen_name: str):
+        return self._twi.get_friend_ids(screen_name=screen_name)
+
+    def my_screen_name(self) -> str:
+        return self._my_screen_name

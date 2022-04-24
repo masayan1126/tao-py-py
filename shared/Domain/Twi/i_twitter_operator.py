@@ -21,9 +21,9 @@ class ITwitterOperator:
         pass
 
     @abc.abstractmethod
-    def unfollow(self, my_screen_name: XStr):
+    def unfollow(self):
         pass
 
     @abc.abstractmethod
-    def analyze(self, my_screen_name: XStr):
+    def analyze(self):
         pass

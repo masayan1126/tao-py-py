@@ -1,14 +1,14 @@
 import sys
 import pyautogui as pgui
 import pyperclip
-from shared.Application.open_text_service import OpenTextService
+from shared.Domain.Text.text_file_operator import TextFileOperator
 from shared.Domain.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
-from shared.Domain.xtext import XText
+from shared.Domain.Text.x_text import XText
 
 detail = ""
 detail_filepath = XFileSystemPath(XStr("packages/mercari/detail.txt")).to_absolute()
-detail = OpenTextService().open(
+detail = TextFileOperator().open(
     x_text=XText(detail_filepath), mode="r", encoding="UTF-8"
 )
 

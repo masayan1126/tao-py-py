@@ -13,8 +13,6 @@ class TwiErrorHandleJudgement(IJudgement):
         # tweepy.errors.TooManyRequests: 429 Too Many Requests
         elif 88 in self.e.api_codes:
             return "Twitter API Rate Limmit Error"
-        elif 139 in self.e.api_codes:
-            return "すでにフォローまたはいいねがされているため、処理をキャンセルしました"
 
         elif 161 in self.e.api_codes:
             return "フォロー上限数に達したため、処理をキャンセルしました"

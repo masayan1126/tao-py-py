@@ -3,6 +3,7 @@
 - 勤怠等の各種ブラウザ操作自動化
 - Twitter 自動化
 - WordPress 自動化
+- LINE Notify による RSS 通知
 
 ## 構成
 

@@ -8,7 +8,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 
 
 class XDriverFactory(IFactory):
-    def create(self, browser_type: BrowserType, is_headless=True, on_docker=True):
+    def create(self, browser_type: BrowserType, is_headless=True, on_docker=False):
         try:
             judgement = BrowserJudgement(browser_type, is_headless, on_docker)
             return XDriver(judgement.judge())

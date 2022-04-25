@@ -14,8 +14,9 @@ jobs:
     
     container:
       image: python:3.9.4-buster
-      # volumes:
-      #   - /__w/stocker:/var/www
+      credentials:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       
     services:
       # ubuntuからはこのサービスコンテナ名で通信可能

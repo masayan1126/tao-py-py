@@ -15,10 +15,13 @@ class TwiErrorHandleJudgement(IJudgement):
             return "Twitter API Rate Limmit Error"
 
         elif 161 in self.e.api_codes:
-            return "フォロー上限数に達したため、処理をキャンセルしました"
+            return "Reached the maximum number of followers"
 
         elif 187 in self.e.api_codes:
             return "Duplicate tweets have been posted"
+
+        elif 283 in self.e.api_codes:
+            return "Received spam treatment"
 
         else:
             return "Failed"

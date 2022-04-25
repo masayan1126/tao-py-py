@@ -37,6 +37,7 @@ class BrowserJudgement(IJudgement):
 
             if self.is_headless:
                 chrome_options.add_argument("--headless")
+                chrome_options.add_argument("--no-sandbox")
 
             chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
 

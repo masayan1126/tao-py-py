@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     
     container:
-      image: python:3.9.4-slim
+      image: python:3.9.4-buster
       # volumes:
       #   - /__w/stocker:/var/www
       
@@ -28,7 +28,6 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
       SLACK_FOOTER: ""
-      MSG_MINIMAL: true
 
     steps:
     - name: Confirm

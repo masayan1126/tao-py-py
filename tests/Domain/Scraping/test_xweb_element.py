@@ -13,7 +13,7 @@ from shared.di_container import DiContainer
 @pytest.fixture
 def setuped():
     xdriver = XDriverFactory().create(
-        BrowserType.CHROME, is_headless=True, on_docker=False
+        BrowserType.CHROME, is_headless=True, on_docker=True
     )
     xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
 

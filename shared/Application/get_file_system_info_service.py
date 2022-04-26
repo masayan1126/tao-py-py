@@ -1,6 +1,6 @@
 import os
 
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 
 
 # 対象のディレクトリに存在するディレクトリ名とファイル名を返します

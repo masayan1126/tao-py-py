@@ -1,5 +1,5 @@
 from shared.Domain.Scraping.xdriver import XDriver
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from selenium.webdriver.remote.webdriver import WebDriver
 
 
@@ -9,7 +9,7 @@ class XBrowser:
         self.xdriver = xdriver
 
     def url(self):
-        return self.xurl.get_href()
+        return self.xurl.href()
 
     def webdriver(self) -> WebDriver:
         return self.xdriver.driver()

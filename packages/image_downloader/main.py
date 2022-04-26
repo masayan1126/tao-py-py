@@ -52,7 +52,7 @@
 # # 画像URLからダウンロード
 # for i, image_url in enumerate(image_list):
 #     x_url = XUrl(href=image_url)
-#     if CheckIsValidUrlService().execute(x_url):
+#
 #         x_image = XImage(x_url=x_url, alt="")
 #         DownloadImageService().execute(
 #             x_image=x_image, download_path_to=download_path_to, prefix=i + 1

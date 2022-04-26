@@ -1,7 +1,7 @@
 from typing import Dict
 from bs4 import BeautifulSoup
 from shared.i_factory import IFactory
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 import requests
 
 
@@ -10,11 +10,11 @@ class SoupFactory(IFactory):
 
         if cookie:
             session = requests.session()
-            session.get(xurl.get_href())
+            session.get(xurl.href())
 
             return BeautifulSoup(
-                requests.get(xurl.get_href(), cookies=cookie).content, "html"
+                requests.get(xurl.href(), cookies=cookie).content, "html"
             )
         else:
-            res = requests.get(xurl.get_href())
+            res = requests.get(xurl.href())
             return BeautifulSoup(res.text, "html.parser")

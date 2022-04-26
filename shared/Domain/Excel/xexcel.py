@@ -2,7 +2,7 @@ from typing import Dict, Tuple
 import pandas as pd
 
 from shared.Domain.Excel.xworkbook import XWorkbook
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 
 
 # 使用するエクセルのフォーマットルール

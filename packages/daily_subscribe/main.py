@@ -3,14 +3,14 @@ from packages.daily_subscribe.env import ENV
 from shared.Application.Init.initializer import Initializer
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Excel.xexcel import XExcel
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from shared.Enums.site_type import SiteType
 from shared.di_container import DiContainer
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Enums.browser_type import BrowserType
 from shared.i_factory import IFactory

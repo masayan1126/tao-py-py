@@ -3,7 +3,7 @@ import urllib
 from shared.Domain.xregex import XRegex
 from shared.Application.check_regex_service import CheckRegexService
 from shared.Domain.xstr import XStr
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 
 
 class XImage:
@@ -15,17 +15,17 @@ class XImage:
         return self.x_url
 
     def get_src(self):
-        return self.x_url.get_href()
+        return self.x_url.href()
 
     # ファイル名を返します(フォルダ、クエリストリング除く純粋なファイル名をurlデコードしたもの)
     def get_file_name(self):
         file_name = CheckRegexService().execute(
-            XRegex(".+?(?=\?)"), xstr=XStr(self.x_url.get_href())
+            XRegex(".+?(?=\?)"), xstr=XStr(self.x_url.href())
         )
         return urllib.parse.unquote(os.path.basename(file_name))
 
     def get_file_name_with_queryst(self):
-        return os.path.basename(self.x_url.get_href())
+        return os.path.basename(self.x_url.href())
 
     def get_alt(self):
         return self.alt

@@ -1,5 +1,5 @@
 from shared.Domain.Twi.twitter_operator import TwitterOperator
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from packages.twi_automation.env import ENV
 from shared.x_logger import XLogger

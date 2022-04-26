@@ -1,8 +1,8 @@
 import io, sys
 from packages.make_folder.Domain.make_folder_command import MakeFolderCommand
 from packages.make_folder.Domain.make_folder_reciver import MakeFolderReciver
-from shared.Domain.x_file_system_path import XFileSystemPath
-from shared.Domain.xfolder import XFolder
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.xfolder import XFolder
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.xstr import XStr
 from shared.i_aggregate import IAggregate

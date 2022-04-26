@@ -3,7 +3,7 @@ from typing import List
 import urllib.request, urllib.error
 from shared.Domain.Wp.i_wp_operator import IWpOperator
 import requests
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 import json
 from shared.Exception.wp_error import WpError
 

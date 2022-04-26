@@ -2,7 +2,7 @@ from packages.twi_automation.env import ENV
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.Wp.wp_operator import WpOperator
 import urllib.request, urllib.error
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from shared.Exception.wp_error import WpError
 from shared.x_logger import XLogger

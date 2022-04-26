@@ -1,6 +1,6 @@
 import pytest
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory

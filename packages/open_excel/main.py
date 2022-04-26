@@ -2,7 +2,7 @@ import io, sys
 from pprint import pprint
 from glob import glob
 from shared.Domain.Excel.xexcel import XExcel
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")

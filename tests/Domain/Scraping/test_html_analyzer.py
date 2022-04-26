@@ -2,7 +2,7 @@ import pytest
 from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.di_container import DiContainer
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.i_factory import IFactory
 
 

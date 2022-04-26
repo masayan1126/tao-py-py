@@ -1,4 +1,4 @@
-from shared.Domain.ximage import XImage
+from shared.Domain.Image.ximage import XImage
 
 
 class CheckIsBase64Service:

@@ -17,6 +17,9 @@ class TwiErrorHandleJudgement(IJudgement):
         elif 161 in self.e.api_codes:
             return "Reached the maximum number of followers"
 
+        elif 162 in self.e.api_codes:
+            return "Canceled follow because of blocked user"
+
         elif 187 in self.e.api_codes:
             return "Duplicate tweets have been posted"
 

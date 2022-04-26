@@ -1,7 +1,7 @@
 from typing import Dict
 import pandas as pd
 
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 
 
 class XCsv:

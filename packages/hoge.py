@@ -1,6 +1,6 @@
 from shared.Domain.Text.text_file_operator import TextFileOperator
 from shared.Domain.Text.x_text import XText
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 
 filepath = XFileSystemPath(XStr("packages/sample.txt")).to_absolute()

@@ -13,10 +13,10 @@ from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.Domain.Text.text_file_operator import TextFileOperator
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from shared.Domain.Text.x_text import XText
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 from shared.di_container import DiContainer
 from shared.i_factory import IFactory

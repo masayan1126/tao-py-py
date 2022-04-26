@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 
 
@@ -76,12 +76,12 @@ def test_パスがディレクトリかどうかチェックできる_True() -> 
 
 def test_パスがディレクトリかどうかチェックできる_False() -> None:
 
-    assert not XFileSystemPath(XStr("tests/test_x_file_system_path.py")).is_dir()
+    assert not XFileSystemPath(XStr("README.md")).is_dir()
 
 
 def test_パスがファイルかどうかチェックできる_True() -> None:
 
-    assert XFileSystemPath(XStr("tests/test_x_file_system_path.py")).is_file()
+    assert XFileSystemPath(XStr("README.md")).is_file()
 
 
 def test_パスがファイルかどうかチェックできる_False() -> None:

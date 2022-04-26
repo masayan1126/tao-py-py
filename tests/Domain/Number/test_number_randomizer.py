@@ -1,5 +1,5 @@
 import pytest
-from shared.Domain.number_randomizer import NumberRandomizer
+from shared.Domain.Number.number_randomizer import NumberRandomizer
 
 
 # @pytest.fixture

@@ -1,5 +1,5 @@
-from shared.Domain.x_file_system_path import XFileSystemPath
-from shared.Domain.ximage import XImage
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.Image.ximage import XImage
 import io
 import requests
 from PIL import Image

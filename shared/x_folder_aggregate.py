@@ -1,5 +1,5 @@
 from typing import Callable, List
-from shared.Domain.xfolder import XFolder
+from shared.Domain.FileSystem.xfolder import XFolder
 from shared.i_aggregate import IAggregate
 from shared.x_folder_iterator import XFolderIterator
 

@@ -1,12 +1,12 @@
 from glob import glob
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.Application.Init.initializer import Initializer
 from shared.di_container import DiContainer
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.Domain.xurl import XUrl
+from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 
 Initializer().ioOption()
@@ -18,9 +18,7 @@ i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(IWebBrowserO
 i_web_browser_operator.boot(xbrowser)
 
 # 画像アップロード -----------------------------------------------------------------------------------
-image_file_list = glob(
-    "./images/*.*"
-)
+image_file_list = glob("./images/*.*")
 
 for image in image_file_list:
 

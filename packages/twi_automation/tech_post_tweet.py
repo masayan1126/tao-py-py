@@ -7,8 +7,8 @@ from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.Twi.twitter_operator import TwitterOperator
-from shared.Domain.number_randomizer import NumberRandomizer
-from shared.Domain.x_file_system_path import XFileSystemPath
+from shared.Domain.Number.number_randomizer import NumberRandomizer
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.xstr import XStr
 from shared.x_logger import XLogger
 import tweepy

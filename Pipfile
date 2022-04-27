@@ -15,6 +15,7 @@ slack-log-handler = "*"
 tweepy = "*"
 openpyxl = "*"
 chromedriver-binary = "==93.*"
+retry = "*"
 
 [dev-packages]
 flake8 = "*"

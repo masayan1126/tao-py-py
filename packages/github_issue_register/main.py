@@ -11,7 +11,7 @@ from packages.github_issue_register.classes.Application.RegisterGitHubIssueServi
 
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 
 # issueのリスト(csv)を読み込み
 filepath = XFileSystemPath(

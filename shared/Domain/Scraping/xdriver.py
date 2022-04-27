@@ -1,10 +1,9 @@
-from shared.x_logger import XLogger
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 
 class XDriver:
-    def __init__(self, webdriver):
+    def __init__(self, webdriver: WebDriver) -> None:
         self.webdriver = webdriver
 
-    def driver(self):
+    def driver(self) -> WebDriver:
         return self.webdriver

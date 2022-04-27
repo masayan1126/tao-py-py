@@ -3,7 +3,7 @@ from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
 from shared.Domain.Time.x_date_time import XDateTime
 from shared.Domain.Twi.i_twitter_operator import ITwitterOperator
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 import tweepy
 from tweepy import errors
 

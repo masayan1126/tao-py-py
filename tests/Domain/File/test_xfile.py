@@ -1,5 +1,5 @@
 import pytest
-from shared.Domain.FileSystem.x_file import XFile
+from shared.Domain.File.x_file import XFile
 from shared.Domain.Url.x_url import XUrl
 
 

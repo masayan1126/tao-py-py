@@ -3,7 +3,7 @@ import pyautogui as pgui
 import pyperclip
 from shared.Domain.Text.text_file_operator import TextFileOperator
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.x_text import XText
 
 detail = ""

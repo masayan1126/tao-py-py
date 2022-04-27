@@ -1,4 +1,4 @@
-from packages.jobcan.Application.login_service import LoginService
+from packages.jobcan.Application.login_jobcan_usecase import LoginJobcanUsecase
 
 
-LoginService().handle()
+LoginJobcanUsecase().handle()

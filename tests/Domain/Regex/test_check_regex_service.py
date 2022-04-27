@@ -1,6 +1,6 @@
-from shared.Domain.xregex import XRegex
-from shared.Application.check_regex_service import CheckRegexService
-from shared.Domain.xstr import XStr
+from shared.Domain.Regex.xregex import XRegex
+from shared.Domain.Regex.check_regex_service import CheckRegexService
+from shared.Domain.String.xstr import XStr
 import re
 
 
@@ -13,7 +13,7 @@ def test_正規表現に一致する文字列を返すこと():
     xregex = XRegex(".+?(?=\?)")
 
     assert (
-        CheckRegexService().execute(xregex, xstr=xstr)
+        CheckRegexService().check(xregex, xstr=xstr)
         == "https://zozo.jp/men-category/jacket-outerwear/tailored-jacket/"
     )
 
@@ -53,4 +53,4 @@ def test_正規表現に一致する文字列がない場合は引数の文字�
     xstr = XStr("hogemaru")
     xregex = XRegex(".+?(?=\?)")
 
-    assert CheckRegexService().execute(xregex, xstr=xstr) == "hogemaru"
+    assert CheckRegexService().check(xregex, xstr=xstr) == "hogemaru"

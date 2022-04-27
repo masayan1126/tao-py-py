@@ -4,7 +4,7 @@ from shared.Application.Init.initializer import Initializer
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 from shared.Domain.Excel.xexcel import XExcel
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 from shared.Enums.site_type import SiteType
 from shared.di_container import DiContainer
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
@@ -17,7 +17,7 @@ from shared.i_factory import IFactory
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import SessionNotCreatedException
-from shared.x_logger import XLogger
+from shared.Domain.Log.x_logger import XLogger
 
 
 Initializer().ioOption()
@@ -42,7 +42,7 @@ try:
 except SessionNotCreatedException as e:
     XLogger.exception_to_slack(
         ENV["SLACK_WEBHOOK_URL_JOBCAN"],
-        "webdriverのバージョンがChromeブラウザーのバージョンと一致していないため起動に失敗しました。",
+        "Chromeブラウザーのバージョンが最新でない可能性があります。一度確認してみてください",
     )
 
 xdriver = xdriver_factory.create(BrowserType.CHROME, is_headless=False)

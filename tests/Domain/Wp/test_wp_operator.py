@@ -1,6 +1,5 @@
 import unittest.mock
 import pytest
-import requests
 import urllib.error
 
 from shared.Domain.Wp.wp_operator import WpOperator

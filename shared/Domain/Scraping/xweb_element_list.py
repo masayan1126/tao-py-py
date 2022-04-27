@@ -1,9 +1,6 @@
 from typing import Callable, List
 from shared.Domain.Scraping.xweb_element import XWebElement
 from functools import total_ordering
-from shared.env import ENV
-
-from shared.x_logger import XLogger
 
 
 @total_ordering

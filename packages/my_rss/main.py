@@ -14,13 +14,13 @@ from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.Domain.Text.text_file_operator import TextFileOperator
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.x_text import XText
 from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 from shared.di_container import DiContainer
 from shared.i_factory import IFactory
-from shared.x_logger import XLogger
+from shared.Domain.Log.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
 
 

@@ -1,6 +1,6 @@
 import abc
 
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 
 
 class ITwitterOperator:

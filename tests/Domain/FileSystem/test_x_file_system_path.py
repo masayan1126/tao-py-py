@@ -3,7 +3,7 @@ import pathlib
 import pytest
 
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 
 
 def test_OSに依存しないパス文字列からパスオブジェクトを生成できる() -> None:

@@ -1,3 +1,4 @@
+from shared.Enums.browser_type import BrowserType
 from shared.i_judgement import IJudgement
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
@@ -24,7 +25,7 @@ class BrowserJudgement(IJudgement):
                 raise e
 
         # 本番のpythonがanacondaの関係で3.9.4のためmatch～case文ではなくif文を使用する
-        if self.browser_type == self.browser_type.CHROME:
+        if self.browser_type == BrowserType.CHROME:
             chrome_options = webdriver.ChromeOptions()
 
             # Chrome は自動テストソフトウェアによって制御されています。の表示とログ出力を非表示に

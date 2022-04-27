@@ -1,14 +1,14 @@
 import io, sys
-from packages.make_folder.Domain.make_folder_command import MakeFolderCommand
-from packages.make_folder.Domain.make_folder_reciver import MakeFolderReciver
+from shared.Domain.FileSystem.Command.make_folder_command import MakeFolderCommand
+from shared.Domain.FileSystem.make_folder_reciver import MakeFolderReciver
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.FileSystem.xfolder import XFolder
+from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Domain.Excel.xcsv import XCsv
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 from shared.i_aggregate import IAggregate
 from shared.i_command import ICommand
 from shared.i_iterator import IIterator
-from shared.x_folder_aggregate import XFolderAggregate
+from shared.Domain.FileSystem.x_folder_aggregate import XFolderAggregate
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")

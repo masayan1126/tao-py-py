@@ -1,17 +1,13 @@
 from abc import *
 import sys
 from typing import List
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
 from injector import inject
 from shared.Domain.Converter.web_element_converter import WebElementConverter
 from shared.Domain.Scraping.xbrowser import XBrowser
 from selenium.common.exceptions import NoSuchElementException
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.env import ENV
-from shared.x_logger import XLogger
 
 
 class WebBrowserOperator:

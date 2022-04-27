@@ -1,7 +1,7 @@
 from os import unlink
 import pathlib
 
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 
 
 class XFileSystemPath:

@@ -2,7 +2,7 @@ import pytest
 from shared.Domain.Excel.xexcel import XExcel
 from shared.Domain.Excel.xworksheet import XWorksheet
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.xstr import XStr
+from shared.Domain.String.xstr import XStr
 
 
 @pytest.fixture

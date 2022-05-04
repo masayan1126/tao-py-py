@@ -3,7 +3,7 @@ from packages.twi_automation.Domain.twi_error_handle_judgement_service import (
     TwiErrorHandleJudgementService,
 )
 from packages.twi_automation.env import ENV
-from shared.Domain.Text.text_file_operator import TextFileOperator
+from shared.Domain.Text.text_file_service import TextFileOperator
 from shared.Domain.Text.x_text import XText
 from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath

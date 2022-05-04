@@ -16,6 +16,8 @@ tweepy = "*"
 openpyxl = "*"
 chromedriver-binary = "==93.*"
 retry = "*"
+google-api-python-client = "*"
+google-auth = "*"
 
 [dev-packages]
 flake8 = "*"

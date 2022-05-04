@@ -12,14 +12,17 @@ class WpOperator(IWpOperator):
     def __init__(self, api_url: XUrl):
         # urlがそもそも無効ならここで落とす
 
-        try:
-            f = urllib.request.urlopen(api_url)
-            self._api_url = api_url
-        except urllib.error.URLError as e:
-            raise e
-        finally:
-            if "f" in locals():
-                f.close()
+        # f = urllib.request.urlopen(api_url)
+        self._api_url = api_url
+
+        # try:
+        #     f = urllib.request.urlopen(api_url)
+        #     self._api_url = api_url
+        # except urllib.error.URLError as e:
+        #     raise e
+        # finally:
+        #     if "f" in locals():
+        #         f.close()
 
     def response_headers(self):
         return requests.head(self._api_url).headers
@@ -35,6 +38,15 @@ class WpOperator(IWpOperator):
             return int(self.response_headers()["X-WP-Total"])
         except KeyError as e:
             raise WpError("This url is valid. But may not be a wordpress api url")
+
+    def fetch_post(self):
+        try:
+            res = requests.get(f"{self._api_url}")
+            _posts = json.loads(res.text)  # JSON文字列を辞書型に変換
+            return _posts
+
+        except requests.exceptions.HTTPError as e:
+            raise e
 
     def fetch_posts(self, page_number: int = None) -> List[dict]:
         try:

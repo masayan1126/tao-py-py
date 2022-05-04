@@ -45,3 +45,11 @@ def test_対象の文字列が特定の文字で始まっているかチェッ�
 def test_対象の文字列が特定の文字で終わっているかチェックできること(setuped_xstr: XStr) -> None:
 
     assert setuped_xstr.has_end("an") == True
+
+
+def test_対象の文字列オブジェクトに文字列を結合できる(setuped_xstr: XStr) -> None:
+
+    actual = setuped_xstr.join("\n")
+    expected = XStr("masayan".join("\n"))
+
+    assert actual == expected

@@ -42,3 +42,6 @@ class XStr(BaseClass):
 
     def to_list(self, sep=","):
         return self.get_string().split(sep)
+
+    def join(self, s="\n"):
+        return XStr(self.get_string().join(s))

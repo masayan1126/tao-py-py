@@ -6,7 +6,7 @@ from typing import IO, List
 from shared.Domain.Text.x_text import XText
 
 
-class TextFileOperator:
+class TextFileService:
     def __init__(self, x_text: XText):
         self.x_text = x_text
 
@@ -27,7 +27,7 @@ class TextFileOperator:
             if "f" in locals():
                 f.close()
 
-    def readline(self, encoding: str) -> List[str]:
+    def readlines(self, encoding: str) -> List[str]:
         try:
             f = self._open(mode="r", encoding=encoding)
             return [s.strip() for s in f.readlines()]
@@ -37,7 +37,9 @@ class TextFileOperator:
             if "f" in locals():
                 f.close()
 
-    def write(self, content: str, is_overwrite: False, encoding) -> str:
+    def write(
+        self, content: List[str], is_overwrite: False, encoding, needs_indention: True
+    ) -> str:
         # 上書き
         if is_overwrite:
             mode = "w"
@@ -47,7 +49,14 @@ class TextFileOperator:
 
         try:
             f = self._open(mode=mode, encoding=encoding)
-            f.write(content)
+
+            # 改行が必要なら、文字列のリストの各要素に改行コードを付与して書き込み
+            if needs_indention:
+                f.write("\n".join(content))
+
+            else:
+                # 改行不要なら、文字列のリストをそのまま繋げて書き込み
+                f.writelines(content)
             # 書き込み後に最新のテキスト情報を返す
             f = self._open(mode="r", encoding=encoding)
             return f.read()

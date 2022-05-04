@@ -3,6 +3,7 @@ import pytest
 import urllib.error
 
 from shared.Domain.Wp.wp_operator import WpOperator
+from shared.Exception.wp_error import WpError
 
 
 def test_WordPressの記事を取得できる() -> None:
@@ -45,7 +46,7 @@ def test_WordPressの記事を取得できる() -> None:
 
 
 def test_WordPressの記事を取得できる_無効なurlは例外() -> None:
-    with pytest.raises(urllib.error.HTTPError):
+    with pytest.raises(WpError):
         wrong_url = "https://hoge.com"
 
         wp = WpOperator(api_url=wrong_url)

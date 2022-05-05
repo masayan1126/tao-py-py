@@ -6,4 +6,8 @@ import urllib.error
 # エスケープされた %xx をそれに対応した単一文字に置き換え
 class DecodeUrlService:
     def decode(self, xurl: XUrl) -> str:
-        return urllib.parse.unquote(xurl.href())
+
+        try:
+            return urllib.parse.unquote(xurl.href())
+        except urllib.error.HTTPError as e:
+            raise e

@@ -3,7 +3,8 @@ from shared.Domain.Calendar.g_calendar_event import GCalendarEvent
 from shared.Domain.Notification.line_notification_service import LineNotificationService
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.Calendar.g_calendar_service import GCalendarService
-import datetime
+
+from shared.Domain.Time.x_date_time import XDateTime
 
 
 class TodayTaskNotificationUsecase:
@@ -14,13 +15,10 @@ class TodayTaskNotificationUsecase:
         self.g_calendar_service = g_calendar_service
 
     def notify_to_line(self) -> int:
-        # Googleカレンダーからイベントを取得する
-        # 現在時刻を世界協定時刻（UTC）のISOフォーマットで取得する
-        utc_now_str = datetime.datetime.utcnow().isoformat()
-        time_min = utc_now_str + "Z"
-        time_max = datetime.datetime.fromisoformat(utc_now_str) + datetime.timedelta(
-            hours=1
-        )
+        # 世界協定時刻（UTC）のISOフォーマットで取得する
+        utc_now = XDateTime.utc_now()
+        time_min = XDateTime.utc_now().format("%Y-%m-%dT%H:%M:%S%z")
+        time_max = utc_now.add_hours(1).format("%Y-%m-%dT%H:%M:%S%z")
 
         event_list = self.g_calendar_service.fetch_events(
             calendar_id="masa199311266@gmail.com", time_min=time_min, time_max=time_max

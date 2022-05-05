@@ -46,6 +46,12 @@ class XDateTime:
 
         return XDateTime(now_str)
 
+    @staticmethod
+    def utc_now():
+        # 世界協定時刻（UTC）
+        utc_str = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        return XDateTime(utc_str)
+
     # 指定月の月末日を返します
     @staticmethod
     def last_datetime_of_month(year: int, month: int):
@@ -70,3 +76,36 @@ class XDateTime:
         date = datetime.date(dt.year, dt.month, dt.day)
         date_str = date.isoformat()
         return XDate(date_str)
+
+    def add_days(self, days=1):
+        self._datetime = self.datetime() + datetime.timedelta(days=days)
+        return self
+
+    def add_hours(self, hours=1):
+        self._datetime = self.datetime() + datetime.timedelta(hours=hours)
+        return self
+
+    def add_minutes(self, minutes=1):
+        self._datetime = self.datetime() + datetime.timedelta(minutes=minutes)
+        return self
+
+    def add_seconds(self, seconds=1):
+        self._datetime = self.datetime() + datetime.timedelta(seconds=seconds)
+
+        return self
+
+    def sub_days(self, days=1):
+        self._datetime = self.datetime() - datetime.timedelta(days=days)
+        return self
+
+    def sub_hours(self, hours=1):
+        self._datetime = self.datetime() - datetime.timedelta(hours=hours)
+        return self
+
+    def sub_minutes(self, minutes=1):
+        self._datetime = self.datetime() - datetime.timedelta(minutes=minutes)
+        return self
+
+    def sub_seconds(self, seconds=1):
+        self._datetime = self.datetime() - datetime.timedelta(seconds=seconds)
+        return self

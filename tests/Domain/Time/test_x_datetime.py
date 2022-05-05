@@ -100,3 +100,12 @@ def test_指定月の月末日を取得できる() -> None:
     expected = "2022/01/31"
 
     assert acutual == expected
+
+
+def test_日時を加算できる_日() -> None:
+
+    x_date_time = XDateTime("2022-12-21 23:10:45")
+    acutual = x_date_time.add_days(2).format("%Y/%m/%d")
+    expected = "2022/12/23"
+
+    assert acutual == expected

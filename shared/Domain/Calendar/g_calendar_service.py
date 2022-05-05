@@ -35,13 +35,15 @@ class GCalendarService:
 
     def fetch_events(self, calendar_id: str, time_min, time_max) -> GCalendarEvents:
 
+        # TODO: エラーハンドリング
+
         items = (
             self.service()
             .events()
             .list(
                 calendarId=calendar_id,
                 timeMin=time_min,
-                timeMax=f"{time_max.isoformat()}Z",
+                timeMax=time_max,
                 singleEvents=True,
                 orderBy="startTime",
             )

@@ -1,9 +1,10 @@
-## 作業自動化用 Python ライブラリ
+## 各種作業自動化用 Python パッケージ
 
 - 勤怠等の各種ブラウザ操作自動化
 - Twitter 自動化
 - WordPress 自動化
 - LINE Notify による RSS 通知
+- LINE Notify による Google カレンダー予定/タスク通知
 
 ## 構成
 
@@ -20,6 +21,7 @@
   - Docker
 
 - 設計
+
   - オブジェクト指向・ドメイン駆動設計
     - Domain
       - ドメインオブジェクト(・・・.py)
@@ -31,6 +33,9 @@
     - Application
       - ユースケース(・・・usecase.py)
         - 上記ドメインクラスを使用して具体的な処理を実現する
+
+- CI/CD
+  - GithubActions による自動 pytest および Xserver への sftp デプロイ
 
 ## 使用パターン
 

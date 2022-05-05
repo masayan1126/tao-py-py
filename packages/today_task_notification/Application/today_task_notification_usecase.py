@@ -1,5 +1,7 @@
 from typing import List
+from packages.today_task_notification.env import ENV
 from shared.Domain.Calendar.g_calendar_event import GCalendarEvent
+from shared.Domain.Log.x_logger import XLogger
 from shared.Domain.Notification.line_notification_service import LineNotificationService
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.Calendar.g_calendar_service import GCalendarService
@@ -20,15 +22,24 @@ class TodayTaskNotificationUsecase:
         time_min = XDateTime.utc_now().format("%Y-%m-%dT%H:%M:%S%z")
         time_max = utc_now.add_hours(1).format("%Y-%m-%dT%H:%M:%S%z")
 
-        event_list = self.g_calendar_service.fetch_events(
-            calendar_id="masa199311266@gmail.com", time_min=time_min, time_max=time_max
-        ).all()
+        try:
+            event_list = self.g_calendar_service.fetch_events(
+                calendar_id="masa199311266@gmail.com",
+                time_min=time_min,
+                time_max=time_max,
+            ).all()
 
-        notification = self.notification.set_message(
-            self.build_message(event_list=event_list)
-        )
+            notification = self.notification.set_message(
+                self.build_message(event_list=event_list)
+            )
 
-        return LineNotificationService(notification).send()
+            return LineNotificationService(notification).send()
+        except Exception as e:
+            XLogger.exception_to_slack(
+                ENV["SLACK_WEBHOOK_URL_MY_TASK"],
+                e,
+            )
+            raise e
 
     def build_message(self, event_list: List[GCalendarEvent]) -> str:
 

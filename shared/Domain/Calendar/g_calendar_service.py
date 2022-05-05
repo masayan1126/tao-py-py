@@ -35,19 +35,22 @@ class GCalendarService:
 
     def fetch_events(self, calendar_id: str, time_min, time_max) -> GCalendarEvents:
 
-        # TODO: エラーハンドリング
+        # TODO: エラーハンドリング(一旦Exception)
 
-        items = (
-            self.service()
-            .events()
-            .list(
-                calendarId=calendar_id,
-                timeMin=time_min,
-                timeMax=time_max,
-                singleEvents=True,
-                orderBy="startTime",
+        try:
+            items = (
+                self.service()
+                .events()
+                .list(
+                    calendarId=calendar_id,
+                    timeMin=time_min,
+                    timeMax=time_max,
+                    singleEvents=True,
+                    orderBy="startTime",
+                )
+                .execute()["items"]
             )
-            .execute()["items"]
-        )
 
-        return GCalendarEventConverter.convert(items)
+            return GCalendarEventConverter.convert(items)
+        except Exception as e:
+            raise e

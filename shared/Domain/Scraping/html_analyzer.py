@@ -22,5 +22,8 @@ class HtmlAnalyzer(IHtmlAnalyzer):
             # "対象のhtml要素が見つかりませんでした"
             raise IndexError
 
+    def search_by_selector(self, selector: str) -> Optional[ResultSet]:
+        return self.beautiful_soup.select(selector)
+
     def search_by_class(self, class_name: str) -> Optional[ResultSet]:
         return self.beautiful_soup.find_all(class_=class_name)

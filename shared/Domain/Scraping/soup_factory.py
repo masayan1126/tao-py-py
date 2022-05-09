@@ -17,4 +17,5 @@ class SoupFactory(IFactory):
             )
         else:
             res = requests.get(xurl.href())
-            return BeautifulSoup(res.text, "html.parser")
+            # requestsのレスポンスオブジェクトのtextはunicode文字列を取得、一方contentではbytes文字列を取得できる
+            return BeautifulSoup(res.content, "html.parser")

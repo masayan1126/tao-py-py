@@ -17,5 +17,9 @@ class IHtmlAnalyzer(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def search_by_selector(self, selector: str) -> Optional[ResultSet]:
+        pass
+
+    @abstractmethod
     def search_by_class(self, class_name: str) -> Optional[ResultSet]:
         pass

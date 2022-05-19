@@ -1,3 +1,4 @@
+from time import sleep
 from typing import List
 from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
@@ -94,6 +95,7 @@ class TwitterOperator(ITwitterOperator):
                         )
                     else:
                         break
+                sleep(1)
         except (errors.TweepyException) as e:
             raise e
 

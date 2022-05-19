@@ -15,6 +15,8 @@ class HtmlAnalyzer(IHtmlAnalyzer):
             # "対象のhtml要素が見つかりませんでした"
             raise IndexError
 
+    # xpathはそこそこ頑張らないと実装できない
+
     def find_by_selector(self, selector: str) -> Tag:
         try:
             return self.beautiful_soup.select(selector)[0]

@@ -31,4 +31,4 @@ except (errors.TweepyException) as e:
         log_msg,
     )
 
-print(response)
+print("debug")

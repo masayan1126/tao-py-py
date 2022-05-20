@@ -8,8 +8,8 @@ on:
   push:
     branches: [ main ]
 
-concurrency:
-  tao_py_py_concurrency_workflow
+# concurrency:
+#   tao_py_py_concurrency_workflow
 
 jobs:
   test:

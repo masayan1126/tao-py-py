@@ -5,7 +5,7 @@
 - WordPress 自動化
 - LINE Notify による RSS 通知
 - LINE Notify による Google カレンダー予定/タスク通知
-- IP通知
+- 今日のIP通知
 
 ## 構成
 

@@ -1,47 +1,48 @@
-from shared.base_class import BaseClass
+from __future__ import annotations
+from dataclasses import dataclass
 from shared.Exception.empty_string_error import EmptyStringError
 
 
-class XStr(BaseClass):
-    def __init__(self, string: str):
-        if not isinstance(string, str):
-            raise TypeError
+@dataclass
+class XStr:
+    _value: str
+
+    def __init__(self, value: str):
         # 空文字の場合
-        if len(string) == 0:
-            raise EmptyStringError("空文字は指定できません")
+        if len(value) == 0:
+            raise EmptyStringError("Empty string cannot be specified")
 
-        self.string = string
+        self._value = value
 
-    def __str__(self):
-        return f"文字列: {self.string}"
+    def value(self) -> str:
+        return str.strip(self._value)
 
-    def __eq__(self, other):
-        if not isinstance(other, XStr):
-            return NotImplemented
-        return self.string == other.string
+    def is_contain(self, other: str) -> bool:
+        return other in self.value()
 
-    def __lt__(self, other):
-        if not isinstance(other, XStr):
-            return NotImplemented
-        return self.string < other.string
+    def has_begin(self, other: str) -> bool:
+        return self.value().startswith(other)
 
-    def get_string(self):
-        return str.strip(self.string)
+    def has_end(self, other: str) -> bool:
+        return self.value().endswith(other)
 
-    def is_contain(self, other):
-        return other in self.get_string()
+    def count(self) -> int:
+        return len(self.value())
 
-    def has_begin(self, other: str):
-        return self.get_string().startswith(other)
+    def to_list(self, sep: str = None) -> list[str]:
+        # セパレータが指定なしなら、単に文字列を1文字ずつ区切った配列にして返す
+        if sep is None:
+            return list(self.value())
+        else:
+            # セパレータあり("," など)
+            return self.value().split(sep)
 
-    def has_end(self, other: str):
-        return self.get_string().endswith(other)
+    def join(self, other: str = "\n") -> "XStr":
+        self._value = self._value + other
+        return self
 
-    def count(self):
-        return len(self.get_string())
+    def to_upper(self) -> "XStr":
+        return XStr(self.value().upper())
 
-    def to_list(self, sep=","):
-        return self.get_string().split(sep)
-
-    def join(self, s="\n"):
-        return XStr(self.get_string().join(s))
+    def to_lower(self) -> "XStr":
+        return XStr(self.value().lower())

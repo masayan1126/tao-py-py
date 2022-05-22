@@ -7,7 +7,7 @@ from shared.Domain.String.xstr import XStr
 class XFileSystemPath:
     def __init__(self, path_str: XStr):
         # 引数で受け取ったパス文字列(絶対・相対どちらでもOK)からパスオブジェクトを生成
-        self._path = pathlib.Path(path_str.get_string())
+        self._path = pathlib.Path(path_str.value())
 
     def path(self) -> pathlib.Path:
         return self._path

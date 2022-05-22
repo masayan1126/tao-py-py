@@ -39,7 +39,7 @@ for random_number in random_numbers:
 
         XLogger.notification_to_slack(
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
-            "Tweet was successful" "\n\n" f"{tweet_content.get_string()}",
+            "Tweet was successful" "\n\n" f"{tweet_content.value()}",
         )
     except (errors.TweepyException) as e:
         judgement = TwiErrorHandleJudgementService(e)

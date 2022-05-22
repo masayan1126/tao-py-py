@@ -23,7 +23,7 @@ class TwitterOperator(ITwitterOperator):
 
     def tweet(self, tweet_content: XStr):
         try:
-            return self._twi.update_status(tweet_content.get_string())
+            return self._twi.update_status(tweet_content.value())
         except (errors.TweepyException) as e:
             raise e
 
@@ -32,7 +32,7 @@ class TwitterOperator(ITwitterOperator):
         favorited_user_screen_names: List[str] = []
 
         try:
-            tweets = self._twi.search_tweets(q=hashtag.get_string(), count=50)
+            tweets = self._twi.search_tweets(q=hashtag.value(), count=50)
             black_list = ENV["BLACK_LIST"]
 
             for tweet in tweets:
@@ -52,7 +52,7 @@ class TwitterOperator(ITwitterOperator):
     def follow(self, hashtag: XStr):
         # 検索結果
         try:
-            tweets = self._twi.search_tweets(q=hashtag.get_string(), count=25)
+            tweets = self._twi.search_tweets(q=hashtag.value(), count=25)
             success_count = 0
             black_list = ENV["BLACK_LIST"]
             users_tried_to_follow = []
@@ -75,8 +75,8 @@ class TwitterOperator(ITwitterOperator):
             if 139 not in e.api_codes:
                 # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけでよい
                 raise e
-
-        return success_count, users_tried_to_follow
+        finally:
+            return success_count, users_tried_to_follow
 
     def unfollow(self):
 

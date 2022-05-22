@@ -11,3 +11,6 @@ build
 dist
 main.spec
 requirements.txt
+*.mp4*
+*.exe
+hoge.py

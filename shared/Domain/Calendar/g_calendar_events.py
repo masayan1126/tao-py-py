@@ -5,11 +5,11 @@ from shared.Domain.Calendar.g_calendar_event import GCalendarEvent
 class GCalendarEvents:
     def __init__(
         self,
-        g_calendar_events: List[GCalendarEvent],
+        g_calendar_events: list[GCalendarEvent],
     ):
         self._g_calendar_events = g_calendar_events
 
-    def all(self) -> List[GCalendarEvent]:
+    def all(self) -> list[GCalendarEvent]:
         return self._g_calendar_events
 
     def add(self, g_calendar_event: GCalendarEvent):

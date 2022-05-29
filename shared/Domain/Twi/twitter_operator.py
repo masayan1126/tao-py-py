@@ -29,7 +29,7 @@ class TwitterOperator(ITwitterOperator):
 
     def favorite(self, hashtag: XStr):
 
-        favorited_user_screen_names: List[str] = []
+        favorited_user_screen_names: list[str] = []
 
         try:
             tweets = self._twi.search_tweets(q=hashtag.value(), count=50)
@@ -81,25 +81,28 @@ class TwitterOperator(ITwitterOperator):
     def unfollow(self):
 
         total_unfollow_count = 0
-        unfollowed_user_screen_names: List[str] = []
+        unfollowed_user_screen_names: list[str] = []
 
         try:
             for friend_id in self.follow_ids(self.my_screen_name()):
+                sleep(2)
                 # 相互フォローでなければ
                 if friend_id not in self.follower_ids(self.my_screen_name()):
+                    sleep(2)
                     if total_unfollow_count <= 100:
                         self._twi.destroy_friendship(user_id=friend_id)
                         total_unfollow_count += 1
                         unfollowed_user_screen_names.append(
                             self._twi.get_user(user_id=friend_id).screen_name
                         )
+
                     else:
                         break
-                sleep(1)
+
         except (errors.TweepyException) as e:
             raise e
-
-        return unfollowed_user_screen_names
+        finally:
+            return unfollowed_user_screen_names
 
         # 参考
         # https://kia-tips.com/it/python/write-twitter-bot-python-tweepy-unfollow-non-followers#i-3

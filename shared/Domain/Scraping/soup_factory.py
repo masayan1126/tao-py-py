@@ -6,7 +6,7 @@ import requests
 
 
 class SoupFactory(IFactory):
-    def create(self, xurl: XUrl, cookie: Dict = None) -> BeautifulSoup:
+    def create(self, xurl: XUrl, cookie: dict = None) -> BeautifulSoup:
 
         if cookie:
             session = requests.session()

@@ -27,7 +27,7 @@ class TextFileService:
             if "f" in locals():
                 f.close()
 
-    def readlines(self, encoding: str) -> List[str]:
+    def readlines(self, encoding: str) -> list[str]:
         try:
             f = self._open(mode="r", encoding=encoding)
             return [s.strip() for s in f.readlines()]
@@ -38,7 +38,7 @@ class TextFileService:
                 f.close()
 
     def write(
-        self, content: List[str], is_overwrite: False, encoding, needs_indention: True
+        self, content: list[str], is_overwrite: False, encoding, needs_indention: True
     ) -> str:
         # 上書き
         if is_overwrite:

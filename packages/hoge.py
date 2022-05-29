@@ -1,25 +1,22 @@
-from youtube_transcript_api import YouTubeTranscriptApi
 import ffmpeg
-import youtube_dl
-
-transcript_list = YouTubeTranscriptApi.list_transcripts("V2SSVEmWGs8")
-
-all_translations = []
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.String.xstr import XStr
 
 
-for transcript in transcript_list:
-    for tr in transcript.fetch():
-        all_translations.append(tr)
+stream = ffmpeg.input(
+    XFileSystemPath(XStr("packages/clipping_yt/videos/【プロ野球 開幕戦】3_25 阪神タイガース VS 東京ヤクルトスワローズを一緒に観戦するライブ。【開幕戦2022】-V2SSVEmWGs8.mp4")).of_text(),
+    ss=9227.07,
+    t=6.64,
+)
 
-# 対象の動画をダウンロード
-ydl_opts = {}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    ydl.download(["https://www.youtube.com/watch?v=V2SSVEmWGs8"])
+audio_stream = stream.audio
 
-# {'text': '糸井の2ラン', 'start': 9227.07, 'duration': 7.64}
+stream.filter("fps", fps=15, round="up").output(
+    stream,
+    audio_stream,
+    XFileSystemPath(XStr("packages/clipping_yt/videos/cliped/output.mp4")).of_text(),
+    crf=30,
+).run(overwrite_output=True)
 
-# ffmpeg.input("input.mp4", ss=5, t=10).filter("fps", fps=15, round="up").output(
-#     "output.mp4", crf=30
-# ).run(overwrite_output=True)
 
 print("debug")

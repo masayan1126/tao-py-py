@@ -35,7 +35,7 @@ class XCsv:
     def output(
         self,
         filepath: XFileSystemPath,
-        dict: Dict,
+        dict: dict,
         index=False,
         encoding: str = "utf-8-sig",
     ):

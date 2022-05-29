@@ -8,15 +8,9 @@ from packages.notification_today_ip.Application.fetch_today_ip_address_usecase i
     FetchTodayIpAddressUsecase,
 )
 
-from packages.today_task_notification.Application.today_task_notification_usecase import (
-    TodayTaskNotificationUsecase,
-)
 
-from shared.Domain.Calendar.g_calendar_service import GCalendarService
 from shared.Domain.Log.x_logger import XLogger
-from shared.Domain.Notification.notification import Notification
 from packages.today_task_notification.env import ENV
-from packages.today_task_notification.config import CONFIG
 from packages.today_task_notification.env import ENV
 from shared.Domain.Log.x_logger import XLogger
 from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer

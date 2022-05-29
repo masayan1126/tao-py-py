@@ -21,7 +21,7 @@ class XFolderAggregate(IAggregate):
     def iterator(self) -> XFolderIterator:
         return XFolderIterator(self)
 
-    def map(self, callable: Callable) -> List:
+    def map(self, callable: Callable) -> list:
         return list(
             map(
                 lambda item: callable(item),

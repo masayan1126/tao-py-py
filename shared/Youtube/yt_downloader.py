@@ -19,8 +19,4 @@ class YtDownloader(IYtDownloader):
             with self.downloader as ydl:
                 ydl.download([download_path_from.href()])
         except Exception as e:
-            XLogger.exception_to_slack(
-                "https://hooks.slack.com/services/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",
-                download_path_from.href(),
-            )
             raise e

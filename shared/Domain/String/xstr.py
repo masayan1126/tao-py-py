@@ -37,12 +37,12 @@ class XStr:
             # セパレータあり("," など)
             return self.value().split(sep)
 
-    def join(self, other: str = "\n") -> "XStr":
+    def join(self, other: str = "\n") -> XStr:
         self._value = self._value + other
         return self
 
-    def to_upper(self) -> "XStr":
+    def to_upper(self) -> XStr:
         return XStr(self.value().upper())
 
-    def to_lower(self) -> "XStr":
+    def to_lower(self) -> XStr:
         return XStr(self.value().lower())

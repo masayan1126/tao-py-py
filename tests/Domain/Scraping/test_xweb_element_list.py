@@ -35,7 +35,7 @@ def setuped():
     xdriver.driver().quit()
 
 
-def test_first_1つめの要素を取得できる(setuped: Dict) -> None:
+def test_first_1つめの要素を取得できる(setuped: dict) -> None:
     xweb_element_list: XWebElementList = setuped["list"]
     acutual = xweb_element_list.first()
     expected = setuped["operator"].find_by_id("header-in")
@@ -48,7 +48,7 @@ def test_first_空のリストから要素を取り出そうとした場合は�
         XWebElementList([]).first()
 
 
-def test_add_要素を追加できる(setuped: Dict) -> None:
+def test_add_要素を追加できる(setuped: dict) -> None:
 
     xweb_element_list: XWebElementList = setuped["list"]
     xweb_element_list = xweb_element_list.add(
@@ -60,7 +60,7 @@ def test_add_要素を追加できる(setuped: Dict) -> None:
     assert acutual == expected
 
 
-def test_all_全ての要素を取得できる(setuped: Dict) -> None:
+def test_all_全ての要素を取得できる(setuped: dict) -> None:
     xweb_element_list: XWebElementList = setuped["list"]
     expected = 2
     acutual = xweb_element_list.count()
@@ -68,7 +68,7 @@ def test_all_全ての要素を取得できる(setuped: Dict) -> None:
     assert acutual == expected
 
 
-def test_map_個々の要素に関数を適用できる(setuped: Dict) -> None:
+def test_map_個々の要素に関数を適用できる(setuped: dict) -> None:
 
     xweb_element_list: XWebElementList = setuped["list"]
 
@@ -85,7 +85,7 @@ def test_map_個々の要素に関数を適用できる(setuped: Dict) -> None:
     assert acutual == expected
 
 
-def test_is_empty_空かどうかチェックできる(setuped: Dict) -> None:
+def test_is_empty_空かどうかチェックできる(setuped: dict) -> None:
 
     xweb_element_list: XWebElementList = XWebElementList([])
     # 空

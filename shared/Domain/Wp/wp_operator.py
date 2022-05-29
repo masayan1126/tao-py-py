@@ -48,7 +48,7 @@ class WpOperator(IWpOperator):
         except requests.exceptions.HTTPError as e:
             raise e
 
-    def fetch_posts(self, page_number: int = None) -> List[dict]:
+    def fetch_posts(self, page_number: int = None) -> list[dict]:
         try:
             posts = []
 

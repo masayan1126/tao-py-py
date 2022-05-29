@@ -10,8 +10,8 @@ class GCalendarEvent:
         id: str,
         summary: str,
         link: str,
-        start: Dict[str, XDate],
-        end: Dict[str, XDate],
+        start: dict[str, XDate],
+        end: dict[str, XDate],
         created: XDateTime,
         updated: XDateTime,
     ):
@@ -32,10 +32,10 @@ class GCalendarEvent:
     def link(self) -> str:
         return self._link
 
-    def start(self) -> Dict[str, XDate]:
+    def start(self) -> dict[str, XDate]:
         return self._start
 
-    def end(self) -> Dict[str, XDate]:
+    def end(self) -> dict[str, XDate]:
         return self._end
 
     def created(self) -> XDateTime:

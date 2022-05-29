@@ -5,8 +5,8 @@ from functools import total_ordering
 
 @total_ordering
 class XWebElementList:
-    def __init__(self, xweb_elements: List[XWebElement]):
-        self._xweb_element_list: List[XWebElement] = []
+    def __init__(self, xweb_elements: list[XWebElement]):
+        self._xweb_element_list: list[XWebElement] = []
 
         if len(xweb_elements) != 0:
             for xweb_element in xweb_elements:
@@ -29,7 +29,7 @@ class XWebElementList:
         self._xweb_element_list.append(xweb_element)
         return self
 
-    def all(self) -> List[XWebElement]:
+    def all(self) -> list[XWebElement]:
         return self._xweb_element_list
 
     def count(self) -> int:

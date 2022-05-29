@@ -41,7 +41,7 @@ class TodayTaskNotificationUsecase:
             )
             raise e
 
-    def build_message(self, event_list: List[GCalendarEvent]) -> str:
+    def build_message(self, event_list: list[GCalendarEvent]) -> str:
 
         message = ""
 

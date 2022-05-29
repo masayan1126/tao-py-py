@@ -4,7 +4,7 @@ from shared.Domain.Calendar.g_calendar_events import GCalendarEvents
 
 
 class GCalendarEventConverter:
-    def convert(row_events: List) -> GCalendarEvents:
+    def convert(row_events: list) -> GCalendarEvents:
 
         result = []
 

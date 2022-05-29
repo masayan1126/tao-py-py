@@ -38,7 +38,7 @@ class XExcel:
             raise PermissionError
 
     # dfをエクセルに出力します
-    def output(self, filepath: XFileSystemPath, data: Dict) -> None:
+    def output(self, filepath: XFileSystemPath, data: dict) -> None:
 
         # {"id": [1, 2, 3,4], "name": ["PHP", "Java", "Python", "Ruby"], "type": ["動的型付け", "静的型付け","動的型付け","動的型付け"]}
         # 辞書のキーをdataframeのカラムにしたいので、orientにindexを指定

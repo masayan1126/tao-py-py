@@ -26,9 +26,7 @@ from shared.i_factory import IFactory
 LINE_NOTIFY_URL = ENV["LINE_NOTIFY_URL"]
 LINE_NOTIFY_TOKEN = CONFIG["LINE_NOTIFY_TOKEN"]
 
-notification = Notification(
-    destination_url=LINE_NOTIFY_URL, message="", token=LINE_NOTIFY_TOKEN
-)
+notification = Notification(LINE_NOTIFY_URL, "", LINE_NOTIFY_TOKEN)
 
 TodayTaskNotificationUsecase(
     notification=notification,

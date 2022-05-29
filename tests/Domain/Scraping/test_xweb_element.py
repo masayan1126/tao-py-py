@@ -35,7 +35,7 @@ def setuped():
     xdriver.driver().quit()
 
 
-def test_webelementを取得できる(setuped: Dict) -> None:
+def test_webelementを取得できる(setuped: dict) -> None:
 
     xweb_element: XWebElement = setuped["operator"].find_by_id("header-in")
     xweb_element_list: XWebElementList = setuped["list"]

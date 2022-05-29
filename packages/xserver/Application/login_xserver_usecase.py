@@ -1,6 +1,6 @@
 from time import sleep
-from packages.twi_automation.env import ENV
 from packages.xserver.Application.login_xserver_reciver import LoginXserverReciver
+from packages.xserver.env import ENV
 from shared.Application.Scraping.boot_up_chrome_browser_usecase import (
     BootUpChromeBrowserUsecase,
 )

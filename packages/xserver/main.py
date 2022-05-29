@@ -1,7 +1,7 @@
 from packages.xserver.Application.login_xserver_usecase import LoginXserverUsecase
+from packages.xserver.env import ENV
 from shared.Domain.Log.x_logger import XLogger
-from packages.today_task_notification.env import ENV
-from packages.today_task_notification.env import ENV
+
 from shared.Domain.Log.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
 

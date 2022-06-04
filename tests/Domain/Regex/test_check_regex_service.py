@@ -32,6 +32,19 @@ def test_正規表現に一致する文字列を返すこと_match():
         == "https://zozo.jp/men-category/jacket-outerwear/tailored-jacket/"
     )
 
+def test_正規表現に一致する文字列を返すこと_IPv4():
+
+
+    xstr = XStr(
+        "192.168.0.2"
+    )
+    xregex = XRegex('^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')
+    
+    assert (
+        CheckRegexService().check(xregex, xstr=xstr)
+        == "192.168.0.2"
+    )
+
 
 def test_正規表現に一致する文字列を返すこと_search():
 

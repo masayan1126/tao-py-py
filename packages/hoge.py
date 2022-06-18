@@ -1,22 +1,11 @@
-import ffmpeg
-from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.String.xstr import XStr
 
+int_array =[1,2,3,4,5,6,7,8,9,10]
 
-stream = ffmpeg.input(
-    XFileSystemPath(XStr("packages/clipping_yt/videos/【プロ野球 開幕戦】3_25 阪神タイガース VS 東京ヤクルトスワローズを一緒に観戦するライブ。【開幕戦2022】-V2SSVEmWGs8.mp4")).of_text(),
-    ss=9227.07,
-    t=6.64,
-)
+# 何個ずつに分割するか
+n=4
 
-audio_stream = stream.audio
+# リスト内包表記
+# rangeの第3引数(step)に数値を指定すると、stepずつ増加する等差数列が生成される([0, 4, 8]の1つずつがiに入る)
+splited = [int_array[i: i+n] for i in range(0, len(int_array), n)]
 
-stream.filter("fps", fps=15, round="up").output(
-    stream,
-    audio_stream,
-    XFileSystemPath(XStr("packages/clipping_yt/videos/cliped/output.mp4")).of_text(),
-    crf=30,
-).run(overwrite_output=True)
-
-
-print("debug")
+print(splited) # [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10]]

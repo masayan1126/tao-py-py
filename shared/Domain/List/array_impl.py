@@ -26,5 +26,3 @@ class ArrayImpl(ArrayInterface):
                 raise TypeError(f"{s} is not str type")
             joined+=s
         return XStr(joined)
-        # XStr.join()
-        # return XStr("".join(self.all()))

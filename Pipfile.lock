@@ -481,6 +481,7 @@
                 "sha256:45a4475f5b76cb05666fa68b4d51a527b883d9044eb649176714991d7ff313ec",
                 "sha256:72917dfb2cf138c06464c25ccf0b528877b997bbf0fd9854ce0523e7e739d955"
             ],
+            "markers": "platform_system == 'Darwin'",
             "version": "==8.5"
         },
         "pyobjc-core": {
@@ -493,6 +494,7 @@
                 "sha256:c0071686976d7ea8c14690950e504a13cb22b4ebb2bc7b5ec47c1c1c0f6eff41",
                 "sha256:eeafe21f879666ab7f57efcc6b007c9f5f8733d367b7e380c925203ed83f000d"
             ],
+            "markers": "platform_system == 'Darwin'",
             "version": "==8.5"
         },
         "pyobjc-framework-accessibility": {
@@ -502,6 +504,7 @@
                 "sha256:9e892ee41554a2f504fd19e39f316bf60ad5bc98a86de4c9fa73bcf0191a5d4a",
                 "sha256:cfe60c131891ff43fc2b2a94f8135f2d6c42800eb027d1b70886bae249eb77da"
             ],
+            "markers": "platform_release >= '20.0'",
             "version": "==8.5"
         },
         "pyobjc-framework-accounts": {

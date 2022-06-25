@@ -5,16 +5,13 @@ from shared.array_interface import ArrayInterface
 
 
 def test_リストをn個に分割したリストを生成できる() -> None:
-    array: ArrayInterface = ArrayImpl([1,2,3,4,5,6,7,8,9,10])
+    array: ArrayInterface = ArrayImpl([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
     acutual = array.split(4)
-    expected = ArrayImpl([
-        [1,2,3,4],
-        [5,6,7,8],
-        [9,10]
-    ])
+    expected = ArrayImpl([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10]])
 
     assert acutual == expected
+
 
 def test_リスト内の文字列を結合して1つの文字列にできる() -> None:
     array: ArrayInterface = ArrayImpl(["m", "a", "s", "a", "y", "a", "n"])
@@ -30,5 +27,3 @@ def test_リスト内の文字列を結合して1つの文字列にできる_文
         array: ArrayInterface = ArrayImpl(["m", 1, "s", False, "y", {}, "n"])
 
         acutual = array.to_str()
-
-

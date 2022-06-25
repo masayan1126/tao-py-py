@@ -13,3 +13,7 @@ class XRegex:
     def partial_match(self, target: XStr):
         match = re.search(self.pattern(), target.value())
         return match.group()
+
+    # targetをreplacementで置換した結果を返します
+    def substitute(self, target: XStr, replacement: str):
+        return re.sub(self.pattern(), replacement, target.value())

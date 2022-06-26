@@ -46,7 +46,8 @@ jobs:
         python -m pip install pipenv
     - name: Install dependencies
       run: |
-        pipenv install --skip-lock
+        # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
+        pipenv install --dev --skip-lock
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

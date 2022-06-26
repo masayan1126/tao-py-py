@@ -46,7 +46,7 @@ jobs:
         python -m pip install pipenv
     - name: Install dependencies
       run: |
-        pipenv sync --dev
+        pipenv install --skip-lock
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

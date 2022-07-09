@@ -28,7 +28,5 @@ class LoginReciver(ICommand):
         sleep(1)
 
         i_web_browser_operator.find_by_xpath(
-            xpath="//*[@id='jbc-app-links']/ul/li[2]/a"
+            xpath="/html/body/div[1]/header/nav/div/div[2]/ul/li[3]/a"
         ).web_element().click()
-
-        

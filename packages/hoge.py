@@ -1,22 +1,17 @@
-import ffmpeg
-from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.String.xstr import XStr
+from shared.Domain.ProgressBar.progress_bar import ProgressBar
+
+l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+# l = 10
+
+result = []
 
 
-stream = ffmpeg.input(
-    XFileSystemPath(XStr("packages/clipping_yt/videos/【プロ野球 開幕戦】3_25 阪神タイガース VS 東京ヤクルトスワローズを一緒に観戦するライブ。【開幕戦2022】-V2SSVEmWGs8.mp4")).of_text(),
-    ss=9227.07,
-    t=6.64,
-)
+def push():
+    result.append(1)
 
-audio_stream = stream.audio
 
-stream.filter("fps", fps=15, round="up").output(
-    stream,
-    audio_stream,
-    XFileSystemPath(XStr("packages/clipping_yt/videos/cliped/output.mp4")).of_text(),
-    crf=30,
-).run(overwrite_output=True)
+ProgressBar(l, "〇〇の処理中です").run(push)
 
+print(result)
 
 print("debug")

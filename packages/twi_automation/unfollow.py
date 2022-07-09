@@ -10,7 +10,7 @@ import tweepy
 
 try:
     twitter_operator = TwitterOperator()
-    unfollowed_user_screen_names = twitter_operator.unfollow()
+    total_unfollow_count, unfollowed_user_screen_names = twitter_operator.unfollow()
 
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
     judgement = TwiErrorHandleJudgementService(e)
@@ -21,10 +21,13 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
         log_msg,
     )
 finally:
-    if "unfollowed_user_screen_names" in locals():
+    if (
+        "total_unfollow_count" in locals()
+        and "unfollowed_user_screen_names" in locals()
+    ):
         XLogger.notification_to_slack(
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
-            "{0}のフォローを解除しました。".format(unfollowed_user_screen_names),
+            f"{total_unfollow_count}人のフォローを解除しました。\n {unfollowed_user_screen_names}",
         )
 
 print("debug")

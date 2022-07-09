@@ -2,6 +2,7 @@ from time import sleep
 from typing import List
 from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
+from shared.Domain.ProgressBar.progress_bar import ProgressBar
 from shared.Domain.Time.x_date_time import XDateTime
 from shared.Domain.Twi.i_twitter_operator import ITwitterOperator
 from shared.Domain.String.xstr import XStr
@@ -49,7 +50,7 @@ class TwitterOperator(ITwitterOperator):
 
         return favorited_user_screen_names
 
-    def follow(self, hashtag: XStr):
+    def follow(self, hashtag: XStr) -> tuple[int, list[str]]:
         # 検索結果
         try:
             tweets = self._twi.search_tweets(q=hashtag.value(), count=25)
@@ -76,24 +77,29 @@ class TwitterOperator(ITwitterOperator):
                 # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけでよい
                 raise e
         finally:
-            return success_count, users_tried_to_follow
+            if "success_count" in locals():
+                return success_count, users_tried_to_follow
 
-    def unfollow(self):
+    def unfollow(self) -> tuple[int, list[str]]:
 
         total_unfollow_count = 0
         unfollowed_user_screen_names: list[str] = []
 
         try:
+            follower_ids = self.follower_ids(self.my_screen_name())
+
             for friend_id in self.follow_ids(self.my_screen_name()):
-                sleep(2)
                 # 相互フォローでなければ
-                if friend_id not in self.follower_ids(self.my_screen_name()):
-                    sleep(2)
-                    if total_unfollow_count <= 100:
+                if friend_id not in follower_ids:
+                    sleep(1)
+                    if total_unfollow_count < 100:
                         self._twi.destroy_friendship(user_id=friend_id)
                         total_unfollow_count += 1
                         unfollowed_user_screen_names.append(
                             self._twi.get_user(user_id=friend_id).screen_name
+                        )
+                        print(
+                            f"{self._twi.get_user(user_id=friend_id).screen_name}のフォローを解除しました"
                         )
 
                     else:
@@ -102,7 +108,7 @@ class TwitterOperator(ITwitterOperator):
         except (errors.TweepyException) as e:
             raise e
         finally:
-            return unfollowed_user_screen_names
+            return total_unfollow_count, unfollowed_user_screen_names
 
         # 参考
         # https://kia-tips.com/it/python/write-twitter-bot-python-tweepy-unfollow-non-followers#i-3

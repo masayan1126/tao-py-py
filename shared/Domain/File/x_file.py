@@ -2,7 +2,7 @@ import os
 
 from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Regex.xregex import XRegex
-from shared.Domain.Regex.check_regex_service import CheckRegexService
+from shared.Domain.Regex.regex_service import RegexService
 from shared.Domain.String.xstr import XStr
 
 
@@ -16,7 +16,7 @@ class XFile:
     # ファイル名を返します(拡張子あり、クエリストリングは含まない)
     def filename(self) -> str:
 
-        file_name = CheckRegexService().check(
+        file_name = RegexService().check(
             XRegex(".+?(?=\?)"), xstr=XStr(self.x_url().href())
         )
 

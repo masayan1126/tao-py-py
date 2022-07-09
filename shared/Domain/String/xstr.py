@@ -46,3 +46,16 @@ class XStr:
 
     def to_lower(self) -> XStr:
         return XStr(self.value().lower())
+
+    # 文字も位置も一致している文字の数を返します
+    def compare(self, other: str) -> int:
+        if self.count() != len(other):
+            raise ValueError
+
+        result = 0
+
+        for char in self.value():
+            if char in self.value() and self.value().find(char) == other.find(char):
+                result += 1
+
+        return result

@@ -1,17 +1,13 @@
-from shared.Domain.ProgressBar.progress_bar import ProgressBar
+# 文字列の近似値
 
-l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-# l = 10
+string1 = "lemon"
+string2 = "almne"
 
-result = []
+result = 0
 
+for st in string1:
+    if st in string1 and string1.find(st) == string2.find(st):
+        result += 1
+        print(st)
 
-def push():
-    result.append(1)
-
-
-ProgressBar(l, "〇〇の処理中です").run(push)
-
-print(result)
-
-print("debug")
+length = len(string1)

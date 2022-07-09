@@ -95,3 +95,27 @@ def test_対象の文字列を小文字に変換できる() -> None:
 
     xstr = XStr("MASAYAN")
     assert xstr.to_lower() == XStr("masayan")
+
+
+def test_対象の文字列について文字も位置も一致している文字の数を取得できる_1() -> None:
+
+    xstr = XStr("MASAYAN")
+    assert xstr.compare("NAZALAB") == 3
+
+
+def test_対象の文字列について文字も位置も一致している文字の数を取得できる_2() -> None:
+
+    xstr = XStr("MASAYAN")
+    assert xstr.compare("XXXXXXX") == 0
+
+
+def test_対象の文字列について文字も位置も一致している文字の数を取得できる_3() -> None:
+
+    xstr = XStr("MASAYAN")
+    assert xstr.compare("XXXXXXX") == 0
+
+
+def test_対象の文字列について文字も位置も一致している文字の数を取得できる_文字列長が異なる文字列を指定した場合は例外() -> None:
+    with pytest.raises(ValueError):
+        xstr = XStr("abc")
+        xstr.compare("z")

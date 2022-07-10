@@ -8,16 +8,19 @@ from shared.Youtube.yt_transcript_list import YtTranscriptList
 @dataclass
 class BuildYoutubeTranscriptUsecase:
 
-    yt_transcript_list: YtTranscriptList
+    _yt_transcript_list: YtTranscriptList
 
     def to_csv(self, save_path_to: XFileSystemPath):
 
-        for d in self.yt_transcript_list.all():
+        for d in self._yt_transcript_list.all():
             print(d)
 
         XCsv().output(
             save_path_to,
-            self.yt_transcript_list.all(),
+            self._yt_transcript_list.all(),
             index="vide_id",
             encoding="utf-8-sig",
         )
+
+    def yt_transcript_list(self):
+        return self._yt_transcript_list

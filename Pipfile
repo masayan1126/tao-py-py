@@ -23,6 +23,7 @@ ffmpeg-python = "*"
 pyautogui = "*"
 pyperclip = "*"
 tqdm = "*"
+atomicwrites = "*"
 
 [dev-packages]
 flake8 = "*"

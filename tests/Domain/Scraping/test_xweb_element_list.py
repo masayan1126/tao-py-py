@@ -1,4 +1,3 @@
-from typing import Dict
 import pytest
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
@@ -11,7 +10,7 @@ from shared.di_container import DiContainer
 
 
 @pytest.fixture
-def setuped():
+def setuped() -> tuple[XWebElementList, IWebBrowserOperator]:
     xdriver = XDriverFactory().create(
         BrowserType.CHROME, is_headless=True, on_docker=True
     )
@@ -22,25 +21,35 @@ def setuped():
     )
     i_web_browser_operator.boot(xbrowser)
 
-    yield {
-        "list": XWebElementList(
-            [
-                i_web_browser_operator.find_by_id("header-in"),
-                i_web_browser_operator.find_by_id("go-to-top"),
-            ]
-        ),
-        "operator": i_web_browser_operator,
-    }
+    yield XWebElementList(
+        [
+            i_web_browser_operator.find_by_id("header-in"),
+            i_web_browser_operator.find_by_id("go-to-top"),
+        ]
+    ), i_web_browser_operator
 
     xdriver.driver().quit()
 
 
-def test_first_1つめの要素を取得できる(setuped: dict) -> None:
-    xweb_element_list: XWebElementList = setuped["list"]
-    acutual = xweb_element_list.first()
-    expected = setuped["operator"].find_by_id("header-in")
+def test_all_全要素を取得できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
+    xweb_element_list: XWebElementList = setuped[0]
+    actual = xweb_element_list.all()
+    expected = [
+        setuped[1].find_by_id("header-in"),
+        setuped[1].find_by_id("go-to-top"),
+    ]
 
-    assert acutual == expected
+    assert expected == actual
+
+
+def test_first_1つめの要素を取得できる(
+    setuped: tuple[XWebElementList, IWebBrowserOperator]
+) -> None:
+    xweb_element_list: XWebElementList = setuped[0]
+    actual = xweb_element_list.first()
+    expected = setuped[1].find_by_id("header-in")
+
+    assert expected == actual
 
 
 def test_first_空のリストから要素を取り出そうとした場合は例外() -> None:
@@ -48,29 +57,29 @@ def test_first_空のリストから要素を取り出そうとした場合は�
         XWebElementList([]).first()
 
 
-def test_add_要素を追加できる(setuped: dict) -> None:
+def test_add_要素を追加できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
 
-    xweb_element_list: XWebElementList = setuped["list"]
-    xweb_element_list = xweb_element_list.add(
-        setuped["operator"].find_by_id("index-tab-wrap")
-    )
+    xweb_element_list: XWebElementList = setuped[0]
+    xweb_element_list = xweb_element_list.add(setuped[1].find_by_id("index-tab-wrap"))
     expected = 3
-    acutual = xweb_element_list.count()
+    actual = xweb_element_list.count()
 
-    assert acutual == expected
+    assert expected == actual
 
 
-def test_all_全ての要素を取得できる(setuped: dict) -> None:
-    xweb_element_list: XWebElementList = setuped["list"]
+def test_all_全ての要素を取得できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
+    xweb_element_list: XWebElementList = setuped[0]
     expected = 2
-    acutual = xweb_element_list.count()
+    actual = xweb_element_list.count()
 
-    assert acutual == expected
+    assert expected == actual
 
 
-def test_map_個々の要素に関数を適用できる(setuped: dict) -> None:
+def test_map_個々の要素に関数を適用できる(
+    setuped: tuple[XWebElementList, IWebBrowserOperator]
+) -> None:
 
-    xweb_element_list: XWebElementList = setuped["list"]
+    xweb_element_list: XWebElementList = setuped[0]
 
     def callable(xweb_element: XWebElement):
         value = 1
@@ -80,25 +89,25 @@ def test_map_個々の要素に関数を適用できる(setuped: dict) -> None:
     xweb_element_list = xweb_element_list.map(callable)
 
     expected = 1
-    acutual = xweb_element_list.first().value()
+    actual = xweb_element_list.first().value()
 
-    assert acutual == expected
+    assert expected == actual
 
 
-def test_is_empty_空かどうかチェックできる(setuped: dict) -> None:
+def test_is_empty_空かどうかチェックできる(
+    setuped: tuple[XWebElementList, IWebBrowserOperator]
+) -> None:
 
     xweb_element_list: XWebElementList = XWebElementList([])
     # 空
     expected = True
-    acutual = xweb_element_list.is_empty()
-    assert acutual == expected
+    actual = xweb_element_list.is_empty()
+    assert expected == actual
 
     # 要素有り
 
-    xweb_element_list = xweb_element_list.add(
-        setuped["operator"].find_by_id("index-tab-wrap")
-    )
+    xweb_element_list = xweb_element_list.add(setuped[1].find_by_id("index-tab-wrap"))
 
     expected = False
-    acutual = xweb_element_list.is_empty()
-    assert acutual == expected
+    actual = xweb_element_list.is_empty()
+    assert expected == actual

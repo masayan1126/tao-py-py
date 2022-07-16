@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Callable, List
+from typing import Callable
 from shared.Domain.List.array_impl import ArrayImpl
 from shared.Youtube.yt_transcript import YtTranscript
 

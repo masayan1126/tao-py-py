@@ -8,55 +8,55 @@ from shared.Domain.String.xstr import XStr
 
 def test_OSに依存しないパス文字列からパスオブジェクトを生成できる() -> None:
 
-    acutual = XFileSystemPath(XStr("tests/x_file_system_path.py")).of_text()
+    actual = XFileSystemPath(XStr("tests/x_file_system_path.py")).of_text()
     expected = str(pathlib.Path("tests/x_file_system_path.py"))
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_現在の作業ディレクトリを取得できる() -> None:
-    acutual = XFileSystemPath.cwd().of_text()
+    actual = XFileSystemPath.cwd().of_text()
     expected = str(pathlib.Path.cwd())
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_絶対パスから相対パスへ変換できる() -> None:
     cwd_str = str(pathlib.Path.cwd())
     abs_path_str = str(pathlib.Path(cwd_str, "tests/x_file_system_path.py"))
-    acutual = XFileSystemPath(XStr(abs_path_str)).to_relative().of_text()
+    actual = XFileSystemPath(XStr(abs_path_str)).to_relative().of_text()
     expected = str(pathlib.Path("tests/x_file_system_path.py"))
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_絶対パスから相対パスへ変換できる_基底パスを動的に切り替え可能() -> None:
     abs_path = XFileSystemPath.home_dir().join("git")
 
-    acutual = (
+    actual = (
         XFileSystemPath(XStr(abs_path.of_text()))
         .to_relative(base_path=XFileSystemPath.home_dir().of_text())
         .of_text()
     )
     expected = "git"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_相対パスから絶対パスへ変換できる() -> None:
     relative_path_str = str(pathlib.Path("tests/x_file_system_path.py"))
-    acutual = XFileSystemPath(XStr(relative_path_str)).to_absolute().of_text()
+    actual = XFileSystemPath(XStr(relative_path_str)).to_absolute().of_text()
     expected = str(pathlib.Path(pathlib.Path.cwd(), relative_path_str))
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_ホームディレクトリを取得できる() -> None:
 
-    acutual = XFileSystemPath.home_dir().of_text()
+    actual = XFileSystemPath.home_dir().of_text()
     expected = str(pathlib.Path.home())
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_実際に存在するパスかチェックできる_True() -> None:

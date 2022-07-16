@@ -24,13 +24,12 @@ class ArrayInterface:
         pass
 
     @abc.abstractmethod
-    def count(self) -> int:
+    def count(self, callback: Callable = None) -> int:
         pass
 
     @abc.abstractmethod
     def is_empty(self) -> bool:
         pass
-
 
     @abc.abstractmethod
     # 元のリストをn個に分割したリストにして返します

@@ -41,5 +41,5 @@ def test_webelementを取得できる(setuped: dict) -> None:
     xweb_element_list: XWebElementList = setuped["list"]
 
     expected = xweb_element.web_element()
-    acutual = xweb_element_list.first().web_element()
-    assert acutual == expected
+    actual = xweb_element_list.first().web_element()
+    assert expected == actual

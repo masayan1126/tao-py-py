@@ -1,50 +1,27 @@
-from typing import Callable, List
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Callable
+from shared.Domain.List.array_impl import ArrayImpl
 from shared.Domain.Scraping.xweb_element import XWebElement
-from functools import total_ordering
 
 
-@total_ordering
-class XWebElementList:
-    def __init__(self, xweb_elements: list[XWebElement]):
-        self._xweb_element_list: list[XWebElement] = []
+@dataclass
+class XWebElementList(ArrayImpl):
+    def __init__(self, xweb_element_list: list[XWebElement]):
+        super().__init__(xweb_element_list)
 
-        if len(xweb_elements) != 0:
-            for xweb_element in xweb_elements:
-                self.add(xweb_element)
-
-    def __eq__(self, other):
-        if not isinstance(other, XWebElementList):
-            return NotImplemented
-        return (self._xweb_element_list) == (other._xweb_element_list)
-
-    def __lt__(self, other):
-        if not isinstance(other, XWebElementList):
-            return NotImplemented
-        return (self._xweb_element_list) < (other._xweb_element_list)
-
-    def xweb_element_list(self):
+    def add(self, xweb_element: XWebElement) -> XWebElementList:
+        super().add(xweb_element)
         return self
 
-    def add(self, xweb_element):
-        self._xweb_element_list.append(xweb_element)
+    def map(self, callable: Callable) -> XWebElementList:
+
+        super().map(callable)
         return self
-
-    def all(self) -> list[XWebElement]:
-        return self._xweb_element_list
-
-    def count(self) -> int:
-        return len(self._xweb_element_list)
-
-    def map(self, callable: Callable):
-        list(map(lambda xweb_element: callable(xweb_element), self.all()))
-        return self
-
-    def is_empty(self) -> bool:
-        return self.count() == 0
 
     def first(self) -> XWebElement:
         try:
-            return self.all()[0]
+            return super().first()
         except IndexError:
 
             raise IndexError

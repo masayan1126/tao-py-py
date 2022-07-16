@@ -27,7 +27,10 @@ class ArrayImpl(ArrayInterface):
 
             raise IndexError
 
-    def count(self) -> int:
+    def count(self, callback: Callable = None) -> int:
+        if callback:
+            return sum(map(callback, self.array))
+
         return len(self.array)
 
     def is_empty(self) -> bool:

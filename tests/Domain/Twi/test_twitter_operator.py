@@ -18,14 +18,14 @@ def test_tweet() -> None:
     m = unittest.mock.MagicMock()
     m.tweet.return_value = tweepy_models_status
 
-    acutual = m.tweet()
+    actual = m.tweet()
     expected = {
         "id": 1111111111111111111,
         "followers_count": 6172196,
         "friends_count": 12,
     }
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_tweet_http例外() -> None:
@@ -42,10 +42,10 @@ def test_fav() -> None:
     m = unittest.mock.MagicMock()
     m.favorite.return_value = screen_name
 
-    acutual = m.favorite()
+    actual = m.favorite()
     expected = "ふぁぼしたユーザーのスクリーンネーム"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_fav_http例外() -> None:
@@ -62,10 +62,10 @@ def test_follow() -> None:
     m = unittest.mock.MagicMock()
     m.follow.return_value = success_count
 
-    acutual = m.follow()
+    actual = m.follow()
     expected = 10
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_follow_http例外() -> None:
@@ -85,13 +85,13 @@ def test_unfollow() -> None:
     m = unittest.mock.MagicMock()
     m.unfollow.return_value = unfollowed_user_screen_names
 
-    acutual = m.unfollow()
+    actual = m.unfollow()
     expected = [
         "unfollowed_user_screen_name1",
         "unfollowed_user_screen_name2",
     ]
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_unfollow_http例外() -> None:
@@ -107,10 +107,10 @@ def test_analyze() -> None:
     m = unittest.mock.MagicMock()
     m.analyze.return_value = word_count
 
-    acutual = m.analyze()
+    actual = m.analyze()
     expected = 10
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_analyze_例外() -> None:

@@ -26,7 +26,7 @@ def test_WordPressの記事を取得できる() -> None:
     m = unittest.mock.MagicMock()
     m.fetch_posts.return_value = posts
 
-    acutual = m.fetch_posts()
+    actual = m.fetch_posts()
     expected = [
         {
             "id": 1,
@@ -42,7 +42,7 @@ def test_WordPressの記事を取得できる() -> None:
         },
     ]
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_WordPressの記事を取得できる_無効なurlは例外() -> None:
@@ -63,7 +63,7 @@ def test_レスポンスヘッダを取得できる() -> None:
         "X-WP-TotalPages": "26",
     }
 
-    acutual = m.response_headers()
+    actual = m.response_headers()
     expected = {
         "Server": "nginx",
         "Content-Type": "application/json; charset=UTF-8",
@@ -71,7 +71,7 @@ def test_レスポンスヘッダを取得できる() -> None:
         "X-WP-TotalPages": "26",
     }
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_全公開記事数を取得できる() -> None:
@@ -86,10 +86,10 @@ def test_全公開記事数を取得できる() -> None:
     m = unittest.mock.MagicMock()
     m.total_posts_count.return_value = response_headers["X-WP-Total"]
 
-    acutual = m.total_posts_count()
+    actual = m.total_posts_count()
     expected = "258"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_全ページ数を取得できる() -> None:
@@ -104,7 +104,7 @@ def test_全ページ数を取得できる() -> None:
     m = unittest.mock.MagicMock()
     m.total_page_count.return_value = response_headers["X-WP-TotalPages"]
 
-    acutual = m.total_page_count()
+    actual = m.total_page_count()
     expected = "26"
 
-    assert acutual == expected
+    assert expected == actual

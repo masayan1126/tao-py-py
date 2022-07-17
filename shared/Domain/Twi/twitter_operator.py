@@ -1,13 +1,15 @@
 from time import sleep
-from typing import List
 from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
 from shared.Domain.ProgressBar.progress_bar import ProgressBar
 from shared.Domain.Time.x_date_time import XDateTime
 from shared.Domain.Twi.i_twitter_operator import ITwitterOperator
 from shared.Domain.String.xstr import XStr
+from shared.Domain.Twi.tweet import Tweet
+from shared.Domain.Twi.tweet_converter import TweetConverter
 import tweepy
 from tweepy import errors
+from tweepy import models
 
 
 class TwitterOperator(ITwitterOperator):
@@ -112,6 +114,19 @@ class TwitterOperator(ITwitterOperator):
 
         # 参考
         # https://kia-tips.com/it/python/write-twitter-bot-python-tweepy-unfollow-non-followers#i-3
+
+    def fetch_timeline(
+        self, screen_name: XStr, count: int, since_id: int = None
+    ) -> list[Tweet]:
+        statuses: list[models.Status] = self._twi.user_timeline(
+            screen_name=screen_name.value(),
+            count=count,
+            include_rts=False,
+            exclude_replies=True,
+            since_id=since_id,
+        )
+
+        return list(map(lambda status: TweetConverter().convert(status), statuses))
 
     def analyze(self) -> str:
         # TODO: 前日比など

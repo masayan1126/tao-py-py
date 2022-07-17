@@ -6,3 +6,5 @@ analytics.txt
 .DS_Store
 posts.csv
 error-log.txt
+since_tweet_id.txt
+screen_name.txt

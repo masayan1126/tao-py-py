@@ -2,6 +2,7 @@ import unittest.mock
 from requests import Response
 import pytest
 from requests import Response
+from shared.Domain.Twi.tweet import Tweet
 import tweepy
 from tweepy import errors
 
@@ -99,6 +100,23 @@ def test_unfollow_http例外() -> None:
         m = unittest.mock.MagicMock()
         m.unfollow.side_effect = errors.TweepyException(Response())
         m.unfollow()
+
+
+def test_fetch_timeline() -> None:
+    tweet = Tweet(
+        1,
+        "ツイート内容",
+        False,
+        [],
+    )
+
+    m = unittest.mock.MagicMock()
+    m.fetch_timeline.return_value = tweet
+
+    acutual = m.fetch_timeline()
+    expected = tweet
+
+    assert acutual == expected
 
 
 def test_analyze() -> None:

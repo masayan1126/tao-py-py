@@ -1,46 +1,27 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Callable, List
+from typing import Callable
+from shared.Domain.List.array_impl import ArrayImpl
 from shared.Youtube.yt_transcript import YtTranscript
-from youtube_transcript_api import YouTubeTranscriptApi
 
 
 @dataclass
-class YtTranscriptList:
-    yt_transcript_list: list[YtTranscript]
-
-    def __init__(self, video_id: str):
-        self.yt_transcript_list = []
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-
-        for transcript in transcript_list:
-            for script in transcript.fetch():
-                self.add(
-                    YtTranscript(
-                        video_id, script["text"], script["start"], script["duration"]
-                    )
-                )
-
-    def all(self) -> list[YtTranscript]:
-        return self.yt_transcript_list
+class YtTranscriptList(ArrayImpl):
+    def __init__(self, yt_transcript_list: list[YtTranscript]):
+        super().__init__(yt_transcript_list)
 
     def add(self, yt_transcript: YtTranscript) -> YtTranscriptList:
-        self.yt_transcript_list.append(yt_transcript)
+        super().add(yt_transcript)
         return self
-
-    def count(self) -> int:
-        return len(self.yt_transcript_list)
 
     def map(self, callable: Callable) -> YtTranscriptList:
-        list(map(lambda yt_transcript: callable(yt_transcript), self.all()))
-        return self
 
-    def is_empty(self) -> bool:
-        return self.count() == 0
+        super().map(callable)
+        return self
 
     def first(self) -> YtTranscript:
         try:
-            return self.all()[0]
+            return super().first()
         except IndexError:
 
             raise IndexError

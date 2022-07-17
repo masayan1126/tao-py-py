@@ -9,10 +9,10 @@ def setuped_xstr() -> XStr:
 
 
 def test_文字列を管理するオブジェクトを生成できる(setuped_xstr: XStr) -> None:
-    acutual = setuped_xstr
+    actual = setuped_xstr
     expected = XStr("masayan")
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_空文字を指定した場合は例外() -> None:

@@ -17,10 +17,10 @@ def setuped_x_text() -> XText:
 
 
 def test_テキストファイルを文字列として読み取ることができる(setuped_x_text: XText) -> None:
-    acutual = TextFileService(setuped_x_text[0]).read("UTF-8")
+    actual = TextFileService(setuped_x_text[0]).read("UTF-8")
     expected = "ruby,python\njava,php\njavascript"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_ファイルが見つからない場合は例外_read() -> None:
@@ -31,10 +31,10 @@ def test_ファイルが見つからない場合は例外_read() -> None:
 
 
 def test_テキストファイルをリストとして読み取ることができる(setuped_x_text: XText) -> None:
-    acutual = TextFileService(setuped_x_text[0]).readlines("UTF-8")
+    actual = TextFileService(setuped_x_text[0]).readlines("UTF-8")
     expected = ["ruby,python", "java,php", "javascript"]
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_ファイルが見つからない場合は例外_readlines() -> None:
@@ -45,7 +45,7 @@ def test_ファイルが見つからない場合は例外_readlines() -> None:
 
 
 def test_テキストファイルに書き込むことができる_write_改行あり(setuped_x_text: XText) -> None:
-    acutual = TextFileService(setuped_x_text[1]).write(
+    actual = TextFileService(setuped_x_text[1]).write(
         content=["python", "java", "php"],
         is_overwrite=True,
         encoding="UTF-8",
@@ -53,11 +53,11 @@ def test_テキストファイルに書き込むことができる_write_改行�
     )
     expected = "python\njava\nphp"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_テキストファイルに書き込むことができる_write_改行なし(setuped_x_text: XText) -> None:
-    acutual = TextFileService(setuped_x_text[1]).write(
+    actual = TextFileService(setuped_x_text[1]).write(
         content=["python", "java", "php"],
         is_overwrite=True,
         encoding="UTF-8",
@@ -65,7 +65,7 @@ def test_テキストファイルに書き込むことができる_write_改行�
     )
     expected = "pythonjavaphp"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_ファイルが見つからない場合は例外_write() -> None:

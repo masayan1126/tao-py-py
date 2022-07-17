@@ -28,19 +28,19 @@ def setuped_i_web_browser_operator():
 
 def test_ID名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
     # ヘッダメニューのタイトル
-    acutual = setuped_i_web_browser_operator.find_by_id("header-in").web_element().text
+    actual = setuped_i_web_browser_operator.find_by_id("header-in").web_element().text
     expected = "masayanblog"
 
-    assert acutual == expected
+    assert expected == actual
 
 
 def test_xpath名でhtml要素を取得できること(setuped_i_web_browser_operator: IWebBrowserOperator):
     # ヘッダメニューのタイトル
-    acutual = (
+    actual = (
         setuped_i_web_browser_operator.find_by_xpath("//*[@id='header-in']/h1/a/span")
         .web_element()
         .text
     )
     expected = "masayanblog"
 
-    assert acutual == expected
+    assert expected == actual

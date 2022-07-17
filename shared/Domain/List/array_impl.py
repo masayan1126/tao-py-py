@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import random
+from typing import Any, Callable
 from shared.Domain.String.xstr import XStr
 from shared.array_interface import ArrayInterface
 
@@ -12,6 +12,29 @@ class ArrayImpl(ArrayInterface):
     # 元のリストを返します
     def all(self) -> list:
         return self.array
+
+    def add(self, item: Any) -> ArrayImpl:
+        self.array.append(item)
+        return self
+
+    def map(self, callable: Callable) -> ArrayImpl:
+        return ArrayImpl(list(map(lambda item: callable(item), self.all())))
+
+    def first(self) -> Any:
+        try:
+            return self.all()[0]
+        except IndexError:
+
+            raise IndexError
+
+    def count(self, callback: Callable = None) -> int:
+        if callback:
+            return sum(map(callback, self.array))
+
+        return len(self.array)
+
+    def is_empty(self) -> bool:
+        return self.count() == 0
 
     # 元のリストをn個に分割したリストにして返します
     def split(self, n: int) -> ArrayInterface:

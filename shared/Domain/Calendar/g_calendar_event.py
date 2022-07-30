@@ -1,27 +1,17 @@
-from typing import Dict
+from dataclasses import dataclass
 from shared.Domain.Time.x_date import XDate
-
 from shared.Domain.Time.x_date_time import XDateTime
 
 
+@dataclass
 class GCalendarEvent:
-    def __init__(
-        self,
-        id: str,
-        summary: str,
-        link: str,
-        start: dict[str, XDate],
-        end: dict[str, XDate],
-        created: XDateTime,
-        updated: XDateTime,
-    ):
-        self._id = id
-        self._summary = summary
-        self._link = link
-        self._start = start
-        self._end = end
-        self._created = created
-        self._updated = updated
+    _id: str
+    _summary: str
+    _link: str
+    _start: dict[str, XDate]
+    _end: dict[str, XDate]
+    _created_at: XDateTime
+    _updated_at: XDateTime
 
     def id(self) -> str:
         return self._id
@@ -38,8 +28,8 @@ class GCalendarEvent:
     def end(self) -> dict[str, XDate]:
         return self._end
 
-    def created(self) -> XDateTime:
-        return self._created
+    def created_at(self) -> XDateTime:
+        return self._created_at
 
-    def updated(self) -> XDateTime:
-        return self._updated
+    def updated_at(self) -> XDateTime:
+        return self._updated_at

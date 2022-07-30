@@ -8,13 +8,13 @@ class GCalendarEventConverter:
         return GCalendarEvents(list(
             map(
                 lambda row_event: GCalendarEvent(
-                    id=row_event["id"],
-                    summary=row_event["summary"],
-                    link=row_event["htmlLink"],
-                    start=row_event["start"],
-                    end=row_event["end"],
-                    created_at=row_event["created"],
-                    updated_at=row_event["updated"],
+                    _id=row_event["id"],
+                    _summary=row_event["summary"],
+                    _link=row_event["htmlLink"],
+                    _start=row_event["start"],
+                    _end=row_event["end"],
+                    _created_at=row_event["created"],
+                    _updated_at=row_event["updated"],
                 ),
                 row_events,
             )

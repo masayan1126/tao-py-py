@@ -1,7 +1,7 @@
 import pytest
 from shared.Domain.List.array_impl import ArrayImpl
 from shared.Domain.String.xstr import XStr
-from shared.array_interface import ArrayInterface
+from shared.Domain.List.array_interface import ArrayInterface
 
 
 def test_リスト内の全要素を取得できる() -> None:

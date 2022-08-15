@@ -1,17 +1,15 @@
+from pandas import DataFrame
 from packages.my_rss.Application.rss_notification_usecase import RssNotificationUsecase
-from shared.Domain.Notification.notification import Notification
-from packages.my_rss.env import ENV
-from packages.my_rss.config import CONFIG
+from shared.Domain.Converter.data_frame_converter import DataFrameConverter
+from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.String.xstr import XStr
 
-LINE_NOTIFY_URL = ENV["LINE_NOTIFY_URL"]
-site_url = ENV["SITE_URL"]
-message = "サイトが更新されました。" "\n" f"{site_url}"
-LINE_NOTIFY_TOKEN = CONFIG["LINE_NOTIFY_TOKEN"]
+site_list_df: DataFrame = XCsv().read(
+    XFileSystemPath(XStr("packages/my_rss/site_list.csv")),
+    encoding="UTF-8",
+    header=0,
+)
 
-notification = Notification(LINE_NOTIFY_URL, message, LINE_NOTIFY_TOKEN)
-
-RssNotificationUsecase(
-    notification=Notification(LINE_NOTIFY_URL, message, LINE_NOTIFY_TOKEN)
-).notify_to_line()
-
-print("debug")
+site_list = DataFrameConverter.to_list(site_list_df)
+RssNotificationUsecase(site_list).notify_to_line()

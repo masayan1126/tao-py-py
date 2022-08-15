@@ -10,6 +10,9 @@ class XWebElementList(ArrayImpl):
     def __init__(self, xweb_element_list: list[XWebElement]):
         super().__init__(xweb_element_list)
 
+    def all(self) -> list[XWebElement]:
+        return super().all()
+
     def add(self, xweb_element: XWebElement) -> XWebElementList:
         super().add(xweb_element)
         return self

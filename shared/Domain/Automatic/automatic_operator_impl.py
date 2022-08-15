@@ -25,6 +25,12 @@ class AutomaticOperatorImpl:
         if wait_time:
             self.wait(wait_time)
 
+    def pressKey(self, key_name: str) -> None:
+        pgui.press(key_name)
+
+    def scroll(self, amount: int) -> None:
+        pgui.scroll(amount)
+
     def shortcut(
         self,
         key1: str,

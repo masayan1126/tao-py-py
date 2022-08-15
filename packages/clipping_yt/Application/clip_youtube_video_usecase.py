@@ -1,7 +1,7 @@
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
+from shared.Youtube.yt_video_streamer import YtVideoStreamer
 
-from shared.Yt.yt_video_streamer import YtVideoStreamer
 
 
 class ClipYoutubeVideoUsecase:

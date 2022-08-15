@@ -2,7 +2,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
 from shared.Domain.String.xstr import XStr
-from shared.array_interface import ArrayInterface
+from shared.Domain.List.array_interface import ArrayInterface
+
+# 返り値の型情報等が必要な場合は、このクラスを継承するクラス側で該当のメソッドを別途実装すること
 
 
 @dataclass

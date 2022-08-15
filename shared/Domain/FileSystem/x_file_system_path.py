@@ -1,4 +1,3 @@
-from os import unlink
 import pathlib
 
 from shared.Domain.String.xstr import XStr
@@ -25,7 +24,7 @@ class XFileSystemPath:
             return XFileSystemPath(
                 XStr(str(self.to_absolute().path().relative_to(base_path)))
             )
-        except:
+        except Exception:
             # 相対パスに変換しようとしたパスに、起点となるcwdが含まれていない場合例外(つまり、もとの絶対パスに起点となるcwdが含まれている必要がある)
             raise ValueError
 

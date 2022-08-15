@@ -1,16 +1,15 @@
-import abc
-from functools import total_ordering
+from abc import ABCMeta, abstractmethod
 
 
-class BaseClass(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
+class BaseClass(metaclass=ABCMeta):
+    @abstractmethod
     def __str__(self, other) -> str:
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def __eq__(self, other):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def __lt__(self, other):
         pass

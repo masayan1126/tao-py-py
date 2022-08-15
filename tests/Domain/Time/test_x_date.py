@@ -14,7 +14,7 @@ def test_日付オブジェクトを生成できる() -> None:
 
 def test_日付オブジェクトを生成できる_ISO8601でない場合は例外() -> None:
     with pytest.raises(ValueError):
-        x_date = XDate("2022/12/29").date()
+        XDate("2022/12/29").date()
 
 
 def test_日付オブジェクトをフォーマットできる() -> None:

@@ -1,6 +1,4 @@
-from typing import List
 from pandas import DataFrame
-
 from shared.Domain.Excel.xworksheet import XWorksheet
 
 

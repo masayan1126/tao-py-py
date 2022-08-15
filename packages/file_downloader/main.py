@@ -17,7 +17,7 @@ try:
 except ValueError as e:
     XLogger.exception_to_slack(
         ENV["SLACK_WEBHOOK_URL_JOBCAN"],
-        "相対パスに変換しようとしたパスに、起点となるcwdが含まれていないため、変換に失敗しました",
+        e,
     )
 
 

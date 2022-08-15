@@ -1,4 +1,3 @@
-from typing import Dict
 import pytest
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList

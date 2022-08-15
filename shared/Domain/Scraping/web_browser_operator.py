@@ -1,6 +1,3 @@
-from abc import *
-import sys
-from typing import List
 from selenium.webdriver.common.by import By
 from injector import inject
 from shared.Domain.Converter.web_element_converter import WebElementConverter

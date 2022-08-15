@@ -1,8 +1,5 @@
-from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 import youtube_dl
-from shared.Domain.Log.x_logger import XLogger
 from shared.Domain.Url.x_url import XUrl
-
 from shared.Youtube.i_yt_downloader import IYtDownloader
 
 

@@ -1,9 +1,7 @@
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
 
-from shared.Domain.FileSystem.software_process_operator import SoftWareProcessOperator
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
 

@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.Url.x_url import XUrl
 from shared.Youtube.yt_transcript_list import YtTranscriptList
 
 

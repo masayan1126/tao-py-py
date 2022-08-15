@@ -1,12 +1,11 @@
 import pytest
 from shared.Domain.Excel.xexcel import XExcel
-from shared.Domain.Excel.xworksheet import XWorksheet
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 
 
 @pytest.fixture
-def setuped_filepath() -> None:
+def setuped_filepath() -> XFileSystemPath:
     filepath = XFileSystemPath(
         XStr("tests/Domain/Excel/output_sample.xlsx")
     ).to_absolute()
@@ -38,7 +37,7 @@ def test_エクセルを出力できる(setuped_filepath: XFileSystemPath):
 def test_read_存在しないファイルを指定した場合は例外():
     with pytest.raises(FileNotFoundError):
         filepath = XFileSystemPath(XStr("tests/Domain/Hoge/sample.xlsx")).to_absolute()
-        xworkbook = XExcel().read(filepath, sheet_name=None)
+        XExcel().read(filepath, sheet_name=None)
 
 
 # def test_output_存在しないファイルを指定した場合は例外():

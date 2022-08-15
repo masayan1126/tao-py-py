@@ -17,42 +17,42 @@ def test_文字列を管理するオブジェクトを生成できる(setuped_xs
 
 def test_空文字を指定した場合は例外() -> None:
     with pytest.raises(EmptyStringError):
-        xstr = XStr("")
+        XStr("")
 
 
 def test_文字列型以外を指定した場合は例外() -> None:
     with pytest.raises(TypeError):
-        xstr = XStr(1)
+        XStr(1)
 
 
 def test_対象の文字列に特定の文字が含まれているかチェックできる_含まれていない場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.is_contain("hoge") == False
+    assert setuped_xstr.is_contain("hoge") is False
 
 
 def test_対象の文字列に特定の文字が含まれているかチェックできる_含まれている場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.is_contain("yan") == True
+    assert setuped_xstr.is_contain("yan") is True
 
 
 def test_対象の文字列が特定の文字で始まっているかチェックできる_始まっている場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.has_begin("ma") == True
+    assert setuped_xstr.has_begin("ma") is True
 
 
 def test_対象の文字列が特定の文字で始まっているかチェックできる_始まっていない場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.has_begin("ze") == False
+    assert setuped_xstr.has_begin("ze") is False
 
 
 def test_対象の文字列が特定の文字で終わっているかチェックできる_終わっている場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.has_end("an") == True
+    assert setuped_xstr.has_end("an") is True
 
 
 def test_対象の文字列が特定の文字で終わっているかチェックできる_終わっていない場合(setuped_xstr: XStr) -> None:
 
-    assert setuped_xstr.has_end("pc") == False
+    assert setuped_xstr.has_end("pc") is False
 
 
 def test_対象の文字列数をカウントできる(setuped_xstr: XStr) -> None:

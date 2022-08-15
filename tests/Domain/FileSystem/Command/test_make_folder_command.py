@@ -1,4 +1,3 @@
-import os
 import pytest
 from shared.Domain.FileSystem.Command.make_folder_command import MakeFolderCommand
 from shared.Domain.FileSystem.make_folder_reciver import MakeFolderReciver

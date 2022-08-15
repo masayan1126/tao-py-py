@@ -11,7 +11,6 @@ from shared.Domain.Number.number_randomizer import NumberRandomizer
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Log.x_logger import XLogger
-import tweepy
 from tweepy import errors
 
 # 毎日30分おきにランダムで1記事をツイート(csvのリストから取得)

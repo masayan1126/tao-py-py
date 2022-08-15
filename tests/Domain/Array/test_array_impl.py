@@ -25,8 +25,7 @@ def test_リスト内に要素を追加できる() -> None:
 def test_リスト内の各要素に処理を適用できる() -> None:
     array: ArrayInterface = ArrayImpl([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-    callback = lambda item: item * 2
-    actual = array.map(callback)
+    actual = array.map(lambda item: item * 2)
     expected = ArrayImpl([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
 
     assert expected == actual
@@ -45,7 +44,7 @@ def test_リスト内の先頭の要素を取得できる_要素が存在しな�
     with pytest.raises(IndexError):
         array: ArrayInterface = ArrayImpl([])
 
-        actual = array.first()
+        array.first()
 
 
 def test_リスト内の要素数を取得できる() -> None:
@@ -60,9 +59,7 @@ def test_リスト内の要素数を取得できる() -> None:
 def test_条件に一致するリスト内の要素数を取得できる() -> None:
     array: ArrayInterface = ArrayImpl([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-    callback = lambda val: val <= 5
-
-    actual = array.count(callback)
+    actual = array.count(lambda val: val <= 5)
     expected = 5
 
     assert expected == actual
@@ -72,8 +69,8 @@ def test_リストが空かどうかチェックできる() -> None:
     array1: ArrayInterface = ArrayImpl([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     array2: ArrayInterface = ArrayImpl([])
 
-    assert array1.is_empty() == False
-    assert array2.is_empty() == True
+    assert array1.is_empty() is False
+    assert array2.is_empty() is True
 
 
 def test_リストをn個に分割したリストを生成できる() -> None:
@@ -97,5 +94,4 @@ def test_リスト内の文字列を結合して1つの文字列にできる() -
 def test_リスト内の文字列を結合して1つの文字列にできる_文字列以外が含まれている場合は例外() -> None:
     with pytest.raises(TypeError):
         array: ArrayInterface = ArrayImpl(["m", 1, "s", False, "y", {}, "n"])
-
-        actual = array.to_str()
+        array.to_str()

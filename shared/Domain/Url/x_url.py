@@ -5,6 +5,8 @@ from retry import retry
 
 # URLを6つの構成要素に分解(返り値は6つの構成要素のタプル)
 # [scheme]:// [netloc] / [path] ; [parameters] ? [query] # [fragment]
+
+
 class XUrl:
     @retry(exceptions=(urllib.error.HTTPError), tries=10)
     def __init__(self, encoded_href: str):

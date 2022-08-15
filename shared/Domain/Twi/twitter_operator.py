@@ -1,7 +1,6 @@
 from time import sleep
 from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
-from shared.Domain.ProgressBar.progress_bar import ProgressBar
 from shared.Domain.Time.x_date_time import XDateTime
 from shared.Domain.Twi.i_twitter_operator import ITwitterOperator
 from shared.Domain.String.xstr import XStr

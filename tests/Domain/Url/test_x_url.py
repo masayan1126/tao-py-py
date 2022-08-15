@@ -16,27 +16,21 @@ def test_対象のurlオブジェクトからスキーマのみ取得できる�
 # 404
 def test_対象のurlが存在しない場合は例外() -> None:
     with pytest.raises(HTTPError):
-        xurl = XUrl("https://maasaablog.com/development/hoge")
+        XUrl("https://maasaablog.com/development/hoge")
 
 
 # 403
 def test_対象のurlが存在しても権限がない等の場合は例外() -> None:
     with pytest.raises(HTTPError):
-        xurl = XUrl(
-            "https://www.meti.go.jp/press/2021/06/20210616004/20210616004-1.pdf"
-        )
+        XUrl("https://www.meti.go.jp/press/2021/06/20210616004/20210616004-1.pdf")
 
 
 #
 def test_対象のurlが存在してもマルチバイトを含む場合は例外() -> None:
     with pytest.raises(UnicodeEncodeError):
-        xurl = XUrl(
+        XUrl(
             "https://www.amazon.co.jp/アイリスオーヤマ-カラーマスク-DAILY-ふつうサイズ-RK-D5MG/dp/B099ZP5LBY/ref=zg-bs_industrial_5/356-8867929-7764050?pd_rd_w=PRDtk&pf_rd_p=061993fb-1a08-486a-9bea-d772d463ba7a&pf_rd_r=3JFJKTEWTA4908KTBXS8&pd_rd_r=b8df20d8-3ec3-451b-8ef7-3cde2a821296&pd_rd_wg=qgkij&pd_rd_i=B09SX36HPS&psc=1"
         )
-
-
-def test_対象のurlオブジェクトからスキーマのみ取得できること(setuped_xurl: XUrl) -> None:
-    assert setuped_xurl.scheme() == "https"
 
 
 def test_対象のurlオブジェクトからnetlocのみ取得できること(setuped_xurl: XUrl) -> None:

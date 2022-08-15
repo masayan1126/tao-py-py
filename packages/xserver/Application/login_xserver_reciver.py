@@ -19,8 +19,8 @@ class LoginXserverReciver(ICommand):
         i_web_browser_operator.send_value(
             XWebElementList(
                 [
-                    user_email.set_value(self.login_info()[0]),
-                    user_password.set_value(self.login_info()[1]),
+                    user_email.set_value(self.auth_info()[0]),
+                    user_password.set_value(self.auth_info()[1]),
                 ]
             )
         )
@@ -30,11 +30,11 @@ class LoginXserverReciver(ICommand):
 
         sleep(1)
 
-    def login_info(self) -> tuple[str, str]:
-        login_info = TextFileService(
-            XText(XFileSystemPath(XStr("packages/xserver/password.txt")))
+    def auth_info(self) -> tuple[str, str]:
+        auth_info = TextFileService(
+            XText(XFileSystemPath(XStr("packages/xserver/auth_info.txt")))
         ).readlines(encoding="UTF-8")
-        email = login_info[0]
-        password = login_info[1]
+        email = auth_info[0]
+        password = auth_info[1]
 
         return email, password

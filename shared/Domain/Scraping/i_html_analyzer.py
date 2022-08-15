@@ -1,8 +1,10 @@
-from abc import *
-from typing import List, Optional
+from abc import abstractmethod, ABCMeta
+from typing import Optional
 from bs4 import BeautifulSoup, ResultSet, Tag
 
 # ブラウザ自動操作用インターフェース
+
+
 class IHtmlAnalyzer(metaclass=ABCMeta):
     @abstractmethod
     def bind(self, beautiful_soup: BeautifulSoup) -> None:

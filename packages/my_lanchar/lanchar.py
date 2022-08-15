@@ -7,7 +7,7 @@ from shared.Domain.i_widget import IWidget
 class Lanchar(IWidget):
     def __init__(self, root) -> None:
         self.root = root
-        frame = tkinter.Frame(root)
+        tkinter.Frame(root)
 
         # # 各列の引き伸ばし設定
         root.grid_columnconfigure(0, weight=1)

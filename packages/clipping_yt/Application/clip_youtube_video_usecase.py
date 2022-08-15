@@ -3,7 +3,6 @@ from shared.Domain.String.xstr import XStr
 from shared.Youtube.yt_video_streamer import YtVideoStreamer
 
 
-
 class ClipYoutubeVideoUsecase:
     def clip(self):
 

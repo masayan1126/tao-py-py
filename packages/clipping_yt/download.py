@@ -7,6 +7,6 @@ from shared.Domain.String.xstr import XStr
 download_path_to = XFileSystemPath(XStr("packages/clipping_yt/videos"))
 options = {"outtmpl": download_path_to.of_text()}
 
-video_id = "vudjymfhl3A"
+video_id = "vudjymfhl3A"  # TODO: CSVから読み込む
 
 DownloadYoutubeVideoUsecase().download(video_id=video_id, options=options)

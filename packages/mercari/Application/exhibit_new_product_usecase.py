@@ -7,6 +7,8 @@ from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
 
+# memo: 一旦保留
+
 
 class ExhibitNewProductUsecase:
     def exhibit(self, detail_filepath: XFileSystemPath):

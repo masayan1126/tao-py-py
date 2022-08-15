@@ -1,5 +1,4 @@
 from abc import *
-from typing import List, Optional
 
 
 class AutomaticOperator(metaclass=ABCMeta):
@@ -7,6 +6,14 @@ class AutomaticOperator(metaclass=ABCMeta):
     def click(
         self, x: int, y: int, duration: int, wait_time: float, loop_count: int = 1
     ) -> None:
+        pass
+
+    @abstractmethod
+    def pressKey(self, key_name: str) -> None:
+        pass
+
+    @abstractmethod
+    def scroll(self, amount: int) -> None:
         pass
 
     @abstractmethod

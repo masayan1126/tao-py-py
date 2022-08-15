@@ -25,6 +25,8 @@ class DownloadTwiTimelineMediaUsecase:
     ) -> None:
         try:
 
+            print(self.tweets())
+
             last_tweet_id = 0  # ループの一番最後のツイートIDをセットする
 
             for tweet in self.tweets():
@@ -54,10 +56,6 @@ class DownloadTwiTimelineMediaUsecase:
             self.update_last_tweet_id(last_tweet_id)
 
         except Exception as e:
-            XLogger.exception_to_slack(
-                ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
-                e,
-            )
             raise e
 
     def tweets(self) -> list[Tweet]:

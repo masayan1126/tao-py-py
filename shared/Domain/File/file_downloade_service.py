@@ -11,12 +11,12 @@ class FileDownloadeService:
         # 対象の拡張子が含まれていれば
         if XStr(x_file.filename()).has_end(extension):
 
-            download_path_to = download_path_to.join(x_file.filename()).of_text()
+            path_str = download_path_to.join(x_file.filename()).of_text()
 
             try:
                 urllib.request.urlretrieve(
                     x_file.x_url().href(),
-                    download_path_to,
+                    path_str,
                 )
             except ValueError:
                 raise ValueError

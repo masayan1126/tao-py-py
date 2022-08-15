@@ -1,9 +1,7 @@
 import unittest.mock
-from requests import Response
 import pytest
 from requests import Response
 from shared.Domain.Twi.tweet import Tweet
-import tweepy
 from tweepy import errors
 
 # return_valueとside_effectが両方指定されていると、後者が優先

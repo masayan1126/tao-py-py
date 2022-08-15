@@ -1,4 +1,4 @@
-from abc import *
+from abc import abstractmethod, ABCMeta
 
 
 class IWidget(metaclass=ABCMeta):

@@ -3,8 +3,6 @@ from packages.xserver.env import ENV
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
 from shared.Domain.Log.x_logger import XLogger
-
-from shared.Domain.Log.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
 
 

@@ -2,11 +2,9 @@ from dataclasses import dataclass
 from packages.twi_automation.Application.fetch_twi_timeline_usecase import (
     FetchTwiTimelineUsecase,
 )
-from packages.twi_automation.env import ENV
 from shared.Domain.File.file_downloade_service import FileDownloadeService
 from shared.Domain.File.x_file import XFile
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.Log.x_logger import XLogger
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText

@@ -10,16 +10,13 @@ from packages.notification_today_ip.Application.fetch_today_ip_address_usecase i
 
 
 from shared.Domain.Log.x_logger import XLogger
-from packages.today_task_notification.env import ENV
-from packages.today_task_notification.env import ENV
-from shared.Domain.Log.x_logger import XLogger
+from packages.today_task_notification.env import ENV as ENV_TODAY_IP
+from packages.jobcan.env import ENV as ENV_JOBCAN
 from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 from time import sleep
-from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.Domain.Url.x_url import XUrl
 from shared.di_container import DiContainer
-from selenium.common.exceptions import SessionNotCreatedException
 
 from shared.i_factory import IFactory
 
@@ -40,19 +37,16 @@ try:
     ip_address = FetchTodayIpAddressUsecase(i_html_analyzer).fetch()
 
     XLogger.notification_to_slack(
-        ENV["SLACK_WEBHOOK_URL_MY_TASK"],
+        ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"],
         f"Notify today task to line is successed !!\n And Today Your IP is {ip_address.value()}",
     )
 
-except SessionNotCreatedException as e:
+    web_browser_operator = LoginJobcanUsecase().handle()
+    RegisterManhourUseCase().handle(web_browser_operator)
+    PickUpNeedsFixRecordsUsecase().handle(web_browser_operator)
+
+except Exception as e:
     XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_MY_TASK"],
+        ENV_JOBCAN["SLACK_WEBHOOK_URL_JOBCAN"],
         e,
     )
-    raise e
-
-web_browser_operator = LoginJobcanUsecase().handle()
-RegisterManhourUseCase().handle(web_browser_operator)
-PickUpNeedsFixRecordsUsecase().handle(web_browser_operator)
-
-print("debug")

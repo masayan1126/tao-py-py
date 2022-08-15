@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import urllib.parse
 from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 from shared.Domain.String.ip_address import IpAddress
 

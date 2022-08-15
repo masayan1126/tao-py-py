@@ -1,5 +1,4 @@
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.Domain.Url.x_url import XUrl
@@ -15,7 +14,9 @@ class BootUpChromeBrowserUsecase:
 
     def handle(self) -> IWebBrowserOperator:
         try:
-            xdriver = XDriverFactory().create(browser_type=BrowserType.CHROME, is_headless=self.is_headless)
+            xdriver = XDriverFactory().create(
+                browser_type=BrowserType.CHROME, is_headless=self.is_headless
+            )
             xbrowser = XBrowserFactory().create(xdriver, self.x_url)
             web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
                 IWebBrowserOperator

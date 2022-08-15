@@ -2,7 +2,7 @@
 # 書き込み(w または wt)
 # 追記(a または at)
 
-from typing import IO, List
+from typing import IO
 from shared.Domain.Text.x_text import XText
 
 

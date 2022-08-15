@@ -17,7 +17,7 @@ def setuped_html_analyzer() -> None:
 
 def test_id名で要素が見つからない場合は例外(setuped_html_analyzer: IHtmlAnalyzer) -> None:
     with pytest.raises(IndexError):
-        tag = setuped_html_analyzer.find_by_id(id_name="nothing_id")
+        setuped_html_analyzer.find_by_id(id_name="nothing_id")
 
 
 def test_id名で要素を取得できること(setuped_html_analyzer: IHtmlAnalyzer) -> None:
@@ -27,7 +27,7 @@ def test_id名で要素を取得できること(setuped_html_analyzer: IHtmlAnal
 
 def test_cssセレクタで要素が見つからない場合は例外(setuped_html_analyzer: IHtmlAnalyzer) -> None:
     with pytest.raises(IndexError):
-        tag = setuped_html_analyzer.find_by_selector(selector=".c > b > #c")
+        setuped_html_analyzer.find_by_selector(selector=".c > b > #c")
 
 
 def test_cssセレクタで要素を取得できること(setuped_html_analyzer: IHtmlAnalyzer) -> None:

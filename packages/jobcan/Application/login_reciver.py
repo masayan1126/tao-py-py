@@ -1,7 +1,11 @@
-import os
 from time import sleep
+
+from shared.Domain.String.xstr import XStr
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
+from shared.Domain.Text.x_text import XText
+from shared.Domain.Text.text_file_service import TextFileService
 from shared.i_command import ICommand
 
 
@@ -16,8 +20,8 @@ class LoginReciver(ICommand):
         i_web_browser_operator.send_value(
             XWebElementList(
                 [
-                    user_email.set_value(os.environ.get("AIVICK_EMAIL")),
-                    user_password.set_value(os.environ.get("JOBCAN_PASSWORD")),
+                    user_email.set_value(self.auth_info()[0]),
+                    user_password.set_value(self.auth_info()[1]),
                 ]
             )
         )
@@ -30,3 +34,11 @@ class LoginReciver(ICommand):
         i_web_browser_operator.find_by_xpath(
             xpath="/html/body/div[1]/header/nav/div/div[2]/ul/li[3]/a"
         ).web_element().click()
+
+    def auth_info(self) -> list[str]:
+
+        return TextFileService(
+            x_text=XText(
+                XFileSystemPath(XStr("packages/jobcan/auth_info.txt")).to_absolute()
+            )
+        ).readlines(encoding="UTF-8")

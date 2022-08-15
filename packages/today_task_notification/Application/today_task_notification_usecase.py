@@ -15,7 +15,6 @@ class TodayTaskNotificationUsecase:
         self.g_calendar_service = g_calendar_service
 
     def notify_to_line(self) -> int:
-        
         notification = self.notification.set_message(
             self.build_message(calendar_events=self.calendar_events())
         )

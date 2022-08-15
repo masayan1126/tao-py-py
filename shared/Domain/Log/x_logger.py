@@ -1,5 +1,4 @@
-from logging import DEBUG, FileHandler, Formatter, Logger, StreamHandler, getLogger
-import os
+from logging import DEBUG, FileHandler, Formatter, StreamHandler, getLogger
 from slack_log_handler import SlackLogHandler
 
 

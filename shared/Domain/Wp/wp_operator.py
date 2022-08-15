@@ -1,6 +1,3 @@
-from typing import List
-
-import urllib.request, urllib.error
 from shared.Domain.Wp.i_wp_operator import IWpOperator
 import requests
 from shared.Domain.Url.x_url import XUrl
@@ -30,13 +27,13 @@ class WpOperator(IWpOperator):
     def total_page_count(self) -> int:
         try:
             return int(self.response_headers()["X-WP-TotalPages"])
-        except KeyError as e:
+        except KeyError:
             raise WpError("This url is valid. But may not be a wordpress api url")
 
     def total_posts_count(self) -> int:
         try:
             return int(self.response_headers()["X-WP-Total"])
-        except KeyError as e:
+        except KeyError:
             raise WpError("This url is valid. But may not be a wordpress api url")
 
     def fetch_post(self):

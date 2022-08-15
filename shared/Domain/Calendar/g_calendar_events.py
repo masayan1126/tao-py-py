@@ -11,4 +11,3 @@ class GCalendarEvents(ArrayImpl):
 
     def all(self) -> list[GCalendarEvent]:
         return super().all()
-        

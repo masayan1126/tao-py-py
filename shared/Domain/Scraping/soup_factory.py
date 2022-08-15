@@ -1,4 +1,3 @@
-from typing import Dict
 from bs4 import BeautifulSoup
 from shared.i_factory import IFactory
 from shared.Domain.Url.x_url import XUrl

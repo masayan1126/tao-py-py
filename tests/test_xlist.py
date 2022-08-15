@@ -11,8 +11,7 @@ def setuped_list():
 
 def test_配列の各要素をmapで2倍にできる(setuped_list):
 
-    multiplication = lambda x: x * 2
-    actual = XList.map(multiplication, setuped_list)
+    actual = XList.map(lambda x: x * 2, setuped_list)
 
     expected = [2, 4, 6, 20]
     assert actual == expected

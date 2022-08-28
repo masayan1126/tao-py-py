@@ -95,7 +95,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
           port: 10022
           local_path: './'
-          remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/tao-pypy'
+          remote_path: ${{ secrets.SFTP_REMOTE_PATH }} 
     
       - name: Slack Notification on Success
         uses: rtCamp/action-slack-notify@v2.2.0

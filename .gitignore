@@ -5,6 +5,7 @@ trash
 .mypy_cache
 .pytest_cache
 .vscode
+.idea
 logs
 mypy.ini
 build

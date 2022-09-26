@@ -12,7 +12,7 @@ from packages.notification_today_ip.Application.fetch_today_ip_address_usecase i
 from shared.Domain.Log.x_logger import XLogger
 from packages.today_task_notification.env import ENV as ENV_TODAY_IP
 from packages.jobcan.env import ENV as ENV_JOBCAN
-from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
+from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from time import sleep
 from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.Domain.Url.x_url import XUrl
@@ -29,12 +29,12 @@ try:
     site_url = "https://www.ugtop.com/spill.shtml"
     factory: IFactory = SoupFactory()
     soup = factory.create(XUrl(site_url))
-    i_html_analyzer: IHtmlAnalyzer = DiContainer().resolve(IHtmlAnalyzer)
-    i_html_analyzer.bind(soup)
+    html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
+    html_analyzer.bind(soup)
     sleep(1)
 
     # IPを取得する
-    ip_address = FetchTodayIpAddressUsecase(i_html_analyzer).fetch()
+    ip_address = FetchTodayIpAddressUsecase(html_analyzer).fetch()
 
     XLogger.notification_to_slack(
         ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"],

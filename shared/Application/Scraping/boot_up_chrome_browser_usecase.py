@@ -13,16 +13,13 @@ class BootUpChromeBrowserUsecase:
         self.is_headless = is_headless
 
     def handle(self) -> IWebBrowserOperator:
-        try:
-            xdriver = XDriverFactory().create(
-                browser_type=BrowserType.CHROME, is_headless=self.is_headless
-            )
-            xbrowser = XBrowserFactory().create(xdriver, self.x_url)
-            web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
-                IWebBrowserOperator
-            )
-            web_browser_operator.boot(xbrowser)
+        xdriver = XDriverFactory().create(
+            browser_type=BrowserType.CHROME, is_headless=self.is_headless
+        )
+        xbrowser = XBrowserFactory().create(xdriver, self.x_url)
+        web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
+            IWebBrowserOperator
+        )
+        web_browser_operator.boot(xbrowser)
 
-            return web_browser_operator
-        except SessionNotCreatedException as e:
-            raise e
+        return web_browser_operator

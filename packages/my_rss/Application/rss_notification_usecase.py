@@ -3,7 +3,6 @@ from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.Notification.line_notification_service import LineNotificationService
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
-from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
@@ -61,10 +60,10 @@ class RssNotificationUsecase:
 
         return Notification(LINE_NOTIFY_URL, message, LINE_NOTIFY_TOKEN)
 
-    def build_html_analyzer(self, site_info, cookie=None) -> IHtmlAnalyzer:
+    def build_html_analyzer(self, site_info, cookie=None) -> HtmlAnalyzer:
         factory: IFactory = SoupFactory()
         soup = factory.create(XUrl(site_info["url"]), cookie)
-        html_analyzer: IHtmlAnalyzer = DiContainer().resolve(IHtmlAnalyzer)
+        html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
         html_analyzer.bind(soup)
         return html_analyzer
 

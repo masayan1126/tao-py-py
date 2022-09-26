@@ -1,6 +1,6 @@
 import injector
+from shared.Domain.Scraping.html_analyzer_impl import HtmlAnalyzerImpl
 from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
-from shared.Domain.Scraping.i_html_analyzer import IHtmlAnalyzer
 
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
@@ -11,7 +11,7 @@ class DiContainer:
         binder.bind(
             IWebBrowserOperator, to=injector.InstanceProvider(WebBrowserOperator())
         )
-        binder.bind(IHtmlAnalyzer, to=injector.InstanceProvider(HtmlAnalyzer()))
+        binder.bind(HtmlAnalyzer, to=injector.InstanceProvider(HtmlAnalyzerImpl()))
 
     def resolve(self, c):
         return injector.Injector(self.mappings).get(c)

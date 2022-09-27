@@ -1,3 +1,4 @@
+from __future__ import annotations
 from abc import ABCMeta, abstractmethod
 
 
@@ -5,7 +6,7 @@ class AutomaticOperator(metaclass=ABCMeta):
     @abstractmethod
     def click(
         self, x: int, y: int, duration: int, wait_time: float, loop_count: int = 1
-    ) -> None:
+    ) -> AutomaticOperator:
         pass
 
     @abstractmethod

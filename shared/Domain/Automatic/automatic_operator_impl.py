@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from time import sleep
 import pyautogui as pgui
 import pyperclip
+from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 
 
 @dataclass
@@ -14,7 +15,7 @@ class AutomaticOperatorImpl:
         duration: int,
         wait_time: float = None,
         loop_count: int = 1,
-    ) -> None:
+    ) -> AutomaticOperator:
 
         if loop_count > 1:
             for i in range(loop_count):
@@ -24,6 +25,8 @@ class AutomaticOperatorImpl:
 
         if wait_time:
             self.wait(wait_time)
+
+        return self
 
     def pressKey(self, key_name: str) -> None:
         pgui.press(key_name)

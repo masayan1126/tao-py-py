@@ -6,10 +6,9 @@ from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.Text.x_text import XText
 from shared.Domain.Text.text_file_service import TextFileService
-from shared.i_command import ICommand
 
 
-class LoginReciver(ICommand):
+class LoginReciver:
     def __str__(self):
         pass
 
@@ -27,13 +26,13 @@ class LoginReciver(ICommand):
         )
         i_web_browser_operator.find_by_xpath(
             xpath="//*[@id='new_user']/input[2]"
-        ).web_element().click()
+        ).click()
 
         sleep(1)
 
         i_web_browser_operator.find_by_xpath(
             xpath="/html/body/div[1]/header/nav/div/div[2]/ul/li[3]/a"
-        ).web_element().click()
+        ).click()
 
     def auth_info(self) -> list[str]:
 

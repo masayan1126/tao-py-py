@@ -75,3 +75,6 @@ class WebBrowserOperator:
 
     def webdriver(self):
         return self._webdriver
+
+    def switch_new_tab(self):
+        return self.webdriver().switch_to.window(self.webdriver().window_handles[-1])

@@ -6,7 +6,7 @@ from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Domain.FileSystem.x_folder_aggregate import XFolderAggregate
 from shared.Domain.String.xstr import XStr
 from shared.i_aggregate import IAggregate
-from shared.i_command import ICommand
+from shared.command import Command
 from shared.i_iterator import IIterator
 
 
@@ -15,7 +15,7 @@ class MakeFolderUsecase:
         self.folder_list_path = folder_list_path
 
     def make(self):
-        command: ICommand = MakeFolderCommand()
+        command: Command = MakeFolderCommand()
         command.set_reciver(MakeFolderReciver())
         aggregate: IAggregate = XFolderAggregate()
 

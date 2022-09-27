@@ -39,3 +39,7 @@ class IWebBrowserOperator(metaclass=ABCMeta):
     @abstractmethod
     def webdriver(self) -> WebDriver:
         pass
+
+    @abstractmethod
+    def switch_new_tab(self) -> None:
+        pass

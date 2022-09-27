@@ -47,5 +47,5 @@ class RegisterManhourUseCase:
         sleep(3)
         # 一度タブキーを押さないと保存ボタンが押せない
         working_time_input.send_keys(Keys.TAB)
-        web_browser_operator.find_by_id("save").web_element().click()
+        web_browser_operator.find_by_id("save").click()
         sleep(3)

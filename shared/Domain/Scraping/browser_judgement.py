@@ -26,26 +26,28 @@ class BrowserJudgement(IJudgement):
 
         # 本番のpythonがanacondaの関係で3.9.4のためmatch～case文ではなくif文を使用する
         if self.browser_type == BrowserType.CHROME:
-            chrome_options = webdriver.ChromeOptions()
-
-            # Chrome は自動テストソフトウェアによって制御されています。の表示とログ出力を非表示に
-            chrome_options.add_experimental_option(
-                "excludeSwitches", ["enable-automation", "enable-logging"]
-            )
-
-            # 処理完了後もブラウザが起動している状態を保持する
-            chrome_options.add_experimental_option("detach", True)
-
-            if self.is_headless:
-                chrome_options.add_argument("--headless")
-                chrome_options.add_argument("--no-sandbox")
-
             chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
 
-            try:
-                return webdriver.Chrome(service=chrome_service, options=chrome_options)
-            except SessionNotCreatedException as e:
-                raise e
+            return webdriver.Chrome(
+                service=chrome_service, options=self.chrome_options()
+            )
         # TODO:firefox
         else:
             pass
+
+    def chrome_options(self):
+        chrome_options = webdriver.ChromeOptions()
+
+        # Chrome は自動テストソフトウェアによって制御されています。の表示とログ出力を非表示に
+        chrome_options.add_experimental_option(
+            "excludeSwitches", ["enable-automation", "enable-logging"]
+        )
+
+        # 処理完了後もブラウザが起動している状態を保持する
+        chrome_options.add_experimental_option("detach", True)
+
+        if self.is_headless:
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--no-sandbox")
+
+        return chrome_options

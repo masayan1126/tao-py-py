@@ -1,9 +1,9 @@
 from shared.Domain.FileSystem.x_folder import XFolder
-from shared.i_command import ICommand
+from shared.command import Command
 from shared.i_reciver import IReceiver
 
 
-class MakeFolderCommand(ICommand):
+class MakeFolderCommand(Command):
     def __init__(self):
         pass
 

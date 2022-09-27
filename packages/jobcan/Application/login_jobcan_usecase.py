@@ -4,10 +4,10 @@ from shared.Application.Scraping.boot_up_chrome_browser_usecase import (
     BootUpChromeBrowserUsecase,
 )
 from shared.Domain.Log.x_logger import XLogger
-from shared.Domain.Scraping.Command.login_command import LoginCommand
+from packages.xserver.Domain.login_xserver_command import LoginXserverCommand
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Url.x_url import XUrl
-from shared.i_command import ICommand
+from shared.command import Command
 from selenium.common.exceptions import SessionNotCreatedException
 
 
@@ -18,7 +18,7 @@ class LoginJobcanUsecase:
                 x_url=XUrl("https://id.jobcan.jp/"), is_headless=False
             ).handle()
 
-            command: ICommand = LoginCommand(web_browser_operator)
+            command: Command = LoginXserverCommand(web_browser_operator)
             command.set_reciver(LoginReciver())
             command.execute()
 

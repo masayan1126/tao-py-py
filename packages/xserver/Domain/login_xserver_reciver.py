@@ -1,22 +1,17 @@
-from time import sleep
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
-from shared.i_command import ICommand
 
 
-class LoginXserverReciver(ICommand):
-    def __str__(self):
-        pass
+class LoginXserverReciver:
+    def action(self, web_browser_operator: IWebBrowserOperator) -> None:
+        user_email = web_browser_operator.find_by_id(id_name="memberid")
+        user_password = web_browser_operator.find_by_id(id_name="user_password")
 
-    def action(self, i_web_browser_operator: IWebBrowserOperator) -> None:
-        user_email = i_web_browser_operator.find_by_id(id_name="memberid")
-        user_password = i_web_browser_operator.find_by_id(id_name="user_password")
-
-        i_web_browser_operator.send_value(
+        web_browser_operator.send_value(
             XWebElementList(
                 [
                     user_email.set_value(self.auth_info()[0]),
@@ -24,11 +19,12 @@ class LoginXserverReciver(ICommand):
                 ]
             )
         )
-        i_web_browser_operator.find_by_xpath(
-            xpath="/html/body/main/div[1]/div/form/div[2]/div[1]/input[2]"
-        ).web_element().click()
 
-        sleep(1)
+        login_btn = web_browser_operator.find_by_xpath(
+            xpath="/html/body/main/div[1]/div/form/div[2]/div[1]/input[2]"
+        )
+
+        login_btn.click()
 
     def auth_info(self) -> tuple[str, str]:
         auth_info = TextFileService(

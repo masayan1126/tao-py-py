@@ -1,27 +1,29 @@
-from packages.xserver.Application.login_xserver_usecase import LoginXserverUsecase
-from packages.xserver.env import ENV
+from time import sleep
+from packages.xserver.Application.open_xserver_filemanager_usecase import (
+    OpenXserverFilemanagerUsecase,
+)
+from shared.Application.Scraping.boot_up_chrome_browser_usecase import (
+    BootUpChromeBrowserUsecase,
+)
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
-from shared.Domain.Log.x_logger import XLogger
-from selenium.common.exceptions import SessionNotCreatedException
+from shared.Domain.Url.x_url import XUrl
+from packages.xserver.Domain.login_xserver_reciver import LoginXserverReciver
+from packages.xserver.Domain.login_xserver_command import LoginXserverCommand
+from shared.command import Command
 
 
-def open_folder():
-    # xserverのフォルダ開く
-    automatic_operator: AutomaticOperator = AutomaticOperatorImpl()
-    automatic_operator.click(x=127, y=466, duration=1, wait_time=2)
-    automatic_operator.click(x=163, y=623, duration=1, wait_time=2)
-    automatic_operator.click(x=124, y=759, duration=1, wait_time=2)
-    automatic_operator.click(x=141, y=791, duration=1, wait_time=2)
-    automatic_operator.click(x=181, y=884, duration=1, wait_time=2)
+web_browser_operator = BootUpChromeBrowserUsecase(
+    x_url=XUrl("https://secure.xserver.ne.jp/xapanel/login/xserver/"),
+    is_headless=False,
+).handle()
 
+command: Command = LoginXserverCommand(web_browser_operator)
+command.set_reciver(LoginXserverReciver())
 
-try:
-    LoginXserverUsecase().login(open_folder)
+sleep(3)
 
-except SessionNotCreatedException as e:
-    XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_COMMON"],
-        e,
-    )
-    raise e
+automatic_operator: AutomaticOperator = AutomaticOperatorImpl()
+OpenXserverFilemanagerUsecase(
+    automatic_operator, web_browser_operator, command
+).open_filemanager()

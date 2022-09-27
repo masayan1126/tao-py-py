@@ -31,3 +31,6 @@ class XWebElement(BaseClass):
     def set_value(self, value):
         self._value = value
         return self
+
+    def click(self):
+        self.web_element().click()

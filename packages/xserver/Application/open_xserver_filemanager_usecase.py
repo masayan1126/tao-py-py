@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from time import sleep
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
 from shared.command import Command
@@ -16,12 +17,15 @@ class OpenXserverFilemanagerUsecase:
     def open_filemanager(self):
         try:
             self.login_xserver_command.execute()
+            sleep(2)
+
             self.web_browser_operator.switch_new_tab()
 
             btn_to_filemanager = self.web_browser_operator.find_by_xpath(
                 "/html/body/main/div/section[1]/table/tbody/tr[2]/td[6]/a[1]"
             )
             btn_to_filemanager.click()
+            sleep(2)
 
             self.automatic_operator.click(x=127, y=466, duration=1, wait_time=1).click(
                 x=163, y=623, duration=1, wait_time=1

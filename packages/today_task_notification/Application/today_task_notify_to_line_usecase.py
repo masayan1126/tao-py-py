@@ -1,20 +1,21 @@
+from dataclasses import dataclass
 from packages.today_task_notification.config import CONFIG
 from shared.Domain.Calendar.g_calendar_events import GCalendarEvents
-from shared.Domain.Notification.line_notification_service import LineNotificationService
+from shared.Domain.Notification.line.line_notification_service import (
+    LineNotificationService,
+)
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.Calendar.g_calendar_service import GCalendarService
 from shared.Domain.Time.x_date_time import XDateTime
 
 
 # グーグルカレンダーから取得した予定をメッセージとして作成し、通知します
-class TodayTaskNotificationUsecase:
-    def __init__(
-        self, notification: Notification, g_calendar_service: GCalendarService
-    ):
-        self.notification = notification
-        self.g_calendar_service = g_calendar_service
+@dataclass
+class TodayTaskNotifyToLineUsecase:
+    g_calendar_service: GCalendarService
+    notification: Notification
 
-    def notify_to_line(self) -> int:
+    def to_line(self) -> int:
         notification = self.notification.set_message(
             self.build_message(calendar_events=self.calendar_events())
         )

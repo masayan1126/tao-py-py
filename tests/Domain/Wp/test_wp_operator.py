@@ -140,4 +140,4 @@ def test_WordPressの記事を取得できる_全記事(mock_requests) -> None:
         ),
     ]
 
-    assert expected == operator.fetch_posts(per_page=2)
+    assert expected == operator.fetch_posts()

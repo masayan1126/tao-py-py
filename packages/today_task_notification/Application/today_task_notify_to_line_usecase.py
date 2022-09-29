@@ -7,7 +7,7 @@ from shared.Domain.Notification.line.line_notification_service import (
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.Calendar.g_calendar_service import GCalendarService
 from shared.Domain.Time.x_date_time import XDateTime
-
+from packages.today_task_notification.config import CONFIG
 
 # グーグルカレンダーから取得した予定をメッセージとして作成し、通知します
 @dataclass
@@ -20,7 +20,7 @@ class TodayTaskNotifyToLineUsecase:
             self.build_message(calendar_events=self.calendar_events())
         )
 
-        return LineNotificationService(notification).send()
+        return LineNotificationService(notification).send(CONFIG["LINE_NOTIFY_TOKEN"])
 
     def calendar_events(self) -> GCalendarEvents:
         # 世界協定時刻（UTC）のISOフォーマットで取得する

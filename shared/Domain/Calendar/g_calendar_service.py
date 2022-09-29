@@ -7,15 +7,10 @@ from packages.today_task_notification.config import CONFIG
 
 
 class GCalendarService:
-    def __init__(
-        self,
-        credential_json_file: XFileSystemPath
-    ):
+    def __init__(self, credential_json_file: XFileSystemPath):
 
         gapi_creds = google.auth.load_credentials_from_file(
-            credential_json_file
-            .to_absolute()
-            .of_text(),
+            credential_json_file.to_absolute().of_text(),
             [CONFIG["CALENDAR_AUTH_ENDPOINT"]],
         )[0]
 

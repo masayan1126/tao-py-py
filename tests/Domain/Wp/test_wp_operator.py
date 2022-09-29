@@ -1,109 +1,143 @@
-import unittest.mock
-import pytest
-
+from unittest.mock import MagicMock, patch
+from shared.Domain.Url.x_url import XUrl
+from shared.Domain.Wp.post import Post
 from shared.Domain.Wp.wp_operator import WpOperator
-from shared.Exception.wp_error import WpError
+from shared.Domain.Wp.wp_operator_impl import WpOperatorImpl
+import json
 
 
-def test_WordPressの記事を取得できる() -> None:
+@patch("shared.Domain.Wp.wp_operator_impl.requests")
+def test_レスポンスヘッダを取得できる(mock_requests) -> None:
+    mock_requests.head.return_value = MagicMock(
+        status_code=200,
+        headers={
+            "Server": "nginx",
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-WP-Total": "100",
+            "X-WP-TotalPages": "10",
+        },
+    )
+
+    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+
+    expected = {
+        "Server": "nginx",
+        "Content-Type": "application/json; charset=UTF-8",
+        "X-WP-Total": "100",
+        "X-WP-TotalPages": "10",
+    }
+
+    assert expected == operator.response_headers()
+
+
+@patch("shared.Domain.Wp.wp_operator_impl.requests")
+def test_全ページ数を取得できる(mock_requests) -> None:
+
+    mock_requests.head.return_value = MagicMock(
+        status_code=200,
+        headers={
+            "Server": "nginx",
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-WP-Total": "200",
+            "X-WP-TotalPages": "20",
+        },
+    )
+
+    expected = 20
+    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+
+    assert expected == operator.total_page_count()
+
+
+@patch("shared.Domain.Wp.wp_operator_impl.requests")
+def test_全記事数を取得できる(mock_requests) -> None:
+
+    mock_requests.head.return_value = MagicMock(
+        status_code=200,
+        headers={
+            "Server": "nginx",
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-WP-Total": "150",
+            "X-WP-TotalPages": "15",
+        },
+    )
+
+    expected = 150
+    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+
+    assert expected == operator.total_posts_count()
+
+
+@patch("shared.Domain.Wp.wp_operator_impl.requests")
+def test_WordPressの記事を取得できる_全記事(mock_requests) -> None:
 
     posts = [
         {
             "id": 1,
             "status": "publish",
-            "link": "https://hoge.com",
-            "title": "pythonでwordpressの記事を取得する方法",
+            "link": "https://hogefoobar.com",
+            "title": {"rendered": "title1"},
         },
         {
             "id": 2,
             "status": "publish",
-            "link": "https://maasaablog.com/development/python/4506/",
-            "title": "pythonで日時オブジェクトを扱う方法",
+            "link": "https://hogefoobar.com",
+            "title": {"rendered": "title2"},
+        },
+        {
+            "id": 3,
+            "status": "publish",
+            "link": "https://hogefoobar.com",
+            "title": {"rendered": "title3"},
+        },
+        {
+            "id": 4,
+            "status": "publish",
+            "link": "https://hogefoobar.com",
+            "title": {"rendered": "title4"},
         },
     ]
 
-    m = unittest.mock.MagicMock()
-    m.fetch_posts.return_value = posts
+    mock_requests.get.return_value = MagicMock(
+        status_code=200, text=f"{json.dumps(posts)}"
+    )
+    mock_requests.head.return_value = MagicMock(
+        status_code=200,
+        headers={
+            "Server": "nginx",
+            "Content-Type": "application/json; charset=UTF-8",
+            "X-WP-Total": "4",
+            "X-WP-TotalPages": "1",
+        },
+    )
 
-    actual = m.fetch_posts()
+    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+
     expected = [
-        {
-            "id": 1,
-            "status": "publish",
-            "link": "https://hoge.com",
-            "title": "pythonでwordpressの記事を取得する方法",
-        },
-        {
-            "id": 2,
-            "status": "publish",
-            "link": "https://maasaablog.com/development/python/4506/",
-            "title": "pythonで日時オブジェクトを扱う方法",
-        },
+        Post(
+            posts[0]["id"],
+            posts[0]["status"],
+            posts[0]["link"],
+            posts[0]["title"]["rendered"],
+        ),
+        Post(
+            posts[1]["id"],
+            posts[1]["status"],
+            posts[1]["link"],
+            posts[1]["title"]["rendered"],
+        ),
+        Post(
+            posts[2]["id"],
+            posts[2]["status"],
+            posts[2]["link"],
+            posts[2]["title"]["rendered"],
+        ),
+        Post(
+            posts[3]["id"],
+            posts[3]["status"],
+            posts[3]["link"],
+            posts[3]["title"]["rendered"],
+        ),
     ]
 
-    assert expected == actual
-
-
-def test_WordPressの記事を取得できる_無効なurlは例外() -> None:
-    with pytest.raises(WpError):
-        wrong_url = "https://hoge.com"
-
-        wp = WpOperator(api_url=wrong_url)
-        wp.fetch_posts()
-
-
-def test_レスポンスヘッダを取得できる() -> None:
-
-    m = unittest.mock.MagicMock()
-    m.response_headers.return_value = {
-        "Server": "nginx",
-        "Content-Type": "application/json; charset=UTF-8",
-        "X-WP-Total": "258",
-        "X-WP-TotalPages": "26",
-    }
-
-    actual = m.response_headers()
-    expected = {
-        "Server": "nginx",
-        "Content-Type": "application/json; charset=UTF-8",
-        "X-WP-Total": "258",
-        "X-WP-TotalPages": "26",
-    }
-
-    assert expected == actual
-
-
-def test_全公開記事数を取得できる() -> None:
-
-    response_headers = {
-        "Server": "nginx",
-        "Content-Type": "application/json; charset=UTF-8",
-        "X-WP-Total": "258",
-        "X-WP-TotalPages": "26",
-    }
-
-    m = unittest.mock.MagicMock()
-    m.total_posts_count.return_value = response_headers["X-WP-Total"]
-
-    actual = m.total_posts_count()
-    expected = "258"
-
-    assert expected == actual
-
-
-def test_全ページ数を取得できる() -> None:
-
-    response_headers = {
-        "Server": "nginx",
-        "Content-Type": "application/json; charset=UTF-8",
-        "X-WP-Total": "258",
-        "X-WP-TotalPages": "26",
-    }
-
-    m = unittest.mock.MagicMock()
-    m.total_page_count.return_value = response_headers["X-WP-TotalPages"]
-
-    actual = m.total_page_count()
-    expected = "26"
-
-    assert expected == actual
+    assert expected == operator.fetch_posts(per_page=2)

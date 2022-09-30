@@ -1,7 +1,7 @@
 import abc
 
 
-class IFactory:
+class Factory:
     @abc.abstractmethod
     def create(self):
         pass

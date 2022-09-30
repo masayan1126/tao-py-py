@@ -1,6 +1,6 @@
 from pandas import DataFrame
-from packages.twi_automation.Domain.twi_error_handle_judgement_service import (
-    TwiErrorHandleJudgementService,
+from shared.Domain.Twi.twi_error_judgement import (
+    TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
@@ -41,7 +41,7 @@ for random_number in random_numbers:
             "Tweet was successful" "\n\n" f"{tweet_content.value()}",
         )
     except (errors.TweepyException) as e:
-        judgement = TwiErrorHandleJudgementService(e)
+        judgement = TwiErrorJudgement(e)
         log_msg = judgement.judge()
 
         XLogger.exception_to_slack(

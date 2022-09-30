@@ -1,9 +1,9 @@
 import platform
 from shared.Enums.os_type import OsType
-from shared.i_judgement import IJudgement
+from shared.judgement import Judgement
 
 
-class OsTypeJudgement(IJudgement):
+class OsTypeJudgement(Judgement):
     def judge(self):
         if platform.system() == "Windows":
             return OsType.WINDOWS

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import os
 
 from shared.Domain.Url.x_url import XUrl
@@ -6,6 +7,7 @@ from shared.Domain.Regex.regex_service import RegexService
 from shared.Domain.String.xstr import XStr
 
 
+@dataclass
 class XFile:
     def __init__(self, x_url: XUrl):
         self._x_url = x_url
@@ -21,9 +23,6 @@ class XFile:
         )
 
         return os.path.basename(file_name)
-
-    def filename_with_queryst(self) -> str:
-        return os.path.basename(self.x_url().href())
 
     # 拡張子を返します
     def extension(self) -> str:

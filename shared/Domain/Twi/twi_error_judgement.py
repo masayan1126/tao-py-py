@@ -1,10 +1,11 @@
-from shared.i_judgement import IJudgement
+from dataclasses import dataclass
+from shared.judgement import Judgement
 from tweepy import errors
 
 
-class TwiErrorHandleJudgementService(IJudgement):
-    def __init__(self, e: errors.TweepyException) -> None:
-        self.e = e
+@dataclass
+class TwiErrorJudgement(Judgement):
+    e: errors.TweepyException
 
     def judge(self) -> str:
 

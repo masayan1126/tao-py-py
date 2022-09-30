@@ -1,5 +1,5 @@
-from packages.twi_automation.Domain.twi_error_handle_judgement_service import (
-    TwiErrorHandleJudgementService,
+from shared.Domain.Twi.twi_error_judgement import (
+    TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
 from shared.Domain.Twi.twitter_operator import TwitterOperator
@@ -20,7 +20,7 @@ try:
     )
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
 
-    judgement = TwiErrorHandleJudgementService(e)
+    judgement = TwiErrorJudgement(e)
     log_msg = judgement.judge()
 
     XLogger.exception_to_slack(

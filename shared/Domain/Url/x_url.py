@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from urllib.parse import urlparse
 from urllib.parse import urljoin
 import urllib.request, urllib.error
@@ -7,22 +8,11 @@ from retry import retry
 # [scheme]:// [netloc] / [path] ; [parameters] ? [query] # [fragment]
 
 
+@dataclass
 class XUrl:
     @retry(exceptions=(urllib.error.HTTPError), tries=10)
     def __init__(self, encoded_href: str):
-        # 無効なurlないし、マルチバイトが含まれていれば(呼び出し側でエンコード必須)例外
-        # encoded_hrefとしているが、マルチバイトがそもそも含まれていなければそのままでOK
-        try:
-            response = urllib.request.urlopen(encoded_href)
-            self._href = encoded_href
-        except urllib.error.URLError as e:
-            raise e
-        # 対象のurlが存在してもマルチバイトを含む場合は例外
-        except UnicodeEncodeError as e:
-            raise e
-        finally:
-            if "response" in locals():
-                response.close()
+        self._href = encoded_href
 
     def href(self) -> str:
         return self._href

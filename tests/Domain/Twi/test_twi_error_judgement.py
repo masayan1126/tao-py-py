@@ -1,5 +1,5 @@
-from packages.twi_automation.Domain.twi_error_handle_judgement_service import (
-    TwiErrorHandleJudgementService,
+from shared.Domain.Twi.twi_error_judgement import (
+    TwiErrorJudgement,
 )
 from tweepy import errors
 from requests import Response
@@ -12,7 +12,7 @@ def test_ツイート_認証エラー() -> None:
     e = errors.Unauthorized(response)
     e.api_codes.append(32)
 
-    judgement = TwiErrorHandleJudgementService(e)
+    judgement = TwiErrorJudgement(e)
     log_msg = judgement.judge()
 
     assert (

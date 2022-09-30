@@ -1,9 +1,9 @@
-from shared.i_factory import IFactory
+from shared.factory import Factory
 from shared.Domain.Scraping.xbrowser import XBrowser
 from shared.Domain.Scraping.xdriver import XDriver
 from shared.Domain.Url.x_url import XUrl
 
 
-class XBrowserFactory(IFactory):
+class XBrowserFactory(Factory):
     def create(self, xdriver: XDriver, xurl: XUrl) -> XBrowser:
         return XBrowser(xdriver, xurl)

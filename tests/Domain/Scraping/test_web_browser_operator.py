@@ -4,16 +4,16 @@ from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.i_factory import IFactory
+from shared.factory import Factory
 from shared.di_container import DiContainer
 
 
 @pytest.fixture
 def setuped_i_web_browser_operator():
-    factory: IFactory = XDriverFactory()
+    factory: Factory = XDriverFactory()
     xdriver = factory.create(BrowserType.CHROME, is_headless=True, on_docker=True)
 
-    factory: IFactory = XBrowserFactory()
+    factory: Factory = XBrowserFactory()
     xbrowser = factory.create(xdriver, XUrl("https://maasaablog.com/"))
 
     i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(

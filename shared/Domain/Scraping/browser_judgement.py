@@ -1,5 +1,5 @@
 from shared.Enums.browser_type import BrowserType
-from shared.i_judgement import IJudgement
+from shared.judgement import Judgement
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome import service as fs
@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import SessionNotCreatedException
 
 
-class BrowserJudgement(IJudgement):
+class BrowserJudgement(Judgement):
     def __init__(self, browser_type, is_headless, on_docker):
         self.browser_type = browser_type
         self.is_headless = is_headless

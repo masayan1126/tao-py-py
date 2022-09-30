@@ -3,13 +3,13 @@ from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from bs4 import BeautifulSoup, ResultSet, Tag
 
 
+# memo: 要素が見つからない場合は例外を出すようにする(デフォルトはNoneが返るため)
 class HtmlAnalyzerImpl(HtmlAnalyzer):
     def bind(self, beautiful_soup: BeautifulSoup) -> None:
         self.beautiful_soup = beautiful_soup
 
     def find_by_id(self, id_name: str) -> Tag:
         try:
-            # 要素が見つからない場合は例外を出したいので、find_allで配列で取得し、キーを指定する
             return self.beautiful_soup.find_all(id=id_name)[0]
         except IndexError:
             raise IndexError

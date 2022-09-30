@@ -1,19 +1,18 @@
 from dataclasses import dataclass
-from packages.twi_automation.Application.fetch_twi_timeline_usecase import (
-    FetchTwiTimelineUsecase,
-)
-from shared.Domain.File.file_downloade_service import FileDownloadeService
+
+from shared.Domain.File.file_download_service import FileDownloadeService
 from shared.Domain.File.x_file import XFile
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
 from shared.Domain.Twi.tweet import Tweet
+from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.Url.x_url import XUrl
 
 
 @dataclass
-class DownloadTwiTimelineMediaUsecase:
+class TwiTimelineMediaGetUsecase:
     screen_name: XStr
     fetch_count: int
     since_tweet_id: int
@@ -57,10 +56,10 @@ class DownloadTwiTimelineMediaUsecase:
             raise e
 
     def tweets(self) -> list[Tweet]:
-        return FetchTwiTimelineUsecase().fetch(
+        return TwitterOperator().fetch_timeline(
             screen_name=self.screen_name,
-            fetch_count=self.fetch_count,
-            since_tweet_id=self.since_tweet_id,
+            count=self.fetch_count,
+            since_id=self.since_tweet_id,
         )
 
     def update_last_tweet_id(self, last_tweet_id: int) -> None:

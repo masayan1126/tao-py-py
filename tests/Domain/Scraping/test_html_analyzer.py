@@ -3,12 +3,12 @@ from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from shared.Domain.Scraping.soup_factory import SoupFactory
 from shared.di_container import DiContainer
 from shared.Domain.Url.x_url import XUrl
-from shared.i_factory import IFactory
+from shared.factory import Factory
 
 
 @pytest.fixture
 def setuped_html_analyzer() -> None:
-    factory: IFactory = SoupFactory()
+    factory: Factory = SoupFactory()
     soup = factory.create(XUrl("https://maasaablog.com/"))
     html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
     html_analyzer.bind(soup)

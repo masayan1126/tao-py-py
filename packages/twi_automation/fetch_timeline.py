@@ -1,5 +1,5 @@
-from packages.twi_automation.Application.download_twi_timeline_media_usecase import (
-    DownloadTwiTimelineMediaUsecase,
+from packages.twi_automation.Application.twi_timeline_media_get_usecase import (
+    TwiTimelineMediaGetUsecase,
 )
 from packages.twi_automation.env import ENV
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
@@ -42,9 +42,8 @@ try:
         "desktop", "collections", "images"
     )
 
-    DownloadTwiTimelineMediaUsecase(
+    TwiTimelineMediaGetUsecase(
         screen_name=screen_name(),
-        fetch_count=10,
         since_tweet_id=since_tweet_id(),
     ).download(download_path_to=download_path_to)
 

@@ -29,5 +29,3 @@ finally:
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
             f"{total_unfollow_count}人のフォローを解除しました。\n {unfollowed_user_screen_names}",
         )
-
-print("debug")

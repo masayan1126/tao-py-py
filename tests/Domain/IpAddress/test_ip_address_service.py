@@ -1,12 +1,13 @@
 from unittest.mock import MagicMock, patch
 from shared.Domain.IpAddress.ip_address_service import IpAddressService
 from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
-from shared.Domain.Scraping.soup_factory import SoupFactory
+from shared.Domain.Scraping.html_analyzer_factory import (
+    HtmlAnalyzerFactory,
+)
 from shared.Domain.Url.x_url import XUrl
-from shared.di_container import DiContainer
 
 
-@patch("shared.Domain.Scraping.soup_factory.requests")
+@patch("shared.Domain.Scraping.html_analyzer_factory.requests")
 @patch("shared.Domain.Scraping.html_analyzer_impl.BeautifulSoup.select")
 def test_今日のIPアドレスを取得できる(mock_bs4_select_method, mock_requests) -> None:
 
@@ -19,9 +20,9 @@ def test_今日のIPアドレスを取得できる(mock_bs4_select_method, mock_
         MagicMock(text="Copyright (C) 1997-"),
     ]
 
-    soup = SoupFactory().create(XUrl("https://maasaablog.com"))
-    html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
-    html_analyzer.bind(soup)
+    html_analyzer: HtmlAnalyzer = HtmlAnalyzerFactory().create(
+        XUrl("https://maasaablog.com")
+    )
 
     ip = IpAddressService(html_analyzer).get_today_ip()
 

@@ -21,6 +21,3 @@ try:
     )
 except Exception as e:
     XLogger.exception_to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"], e)
-
-
-print("debug")

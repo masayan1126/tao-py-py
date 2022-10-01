@@ -5,18 +5,14 @@ from packages.jobcan.Application.pick_up_needs_fix_records_usecase import (
 
 from packages.jobcan.Application.register_manhour_usecase import RegisterManhourUseCase
 from shared.Domain.IpAddress.ip_address_service import IpAddressService
-
-
 from shared.Domain.Log.x_logger import XLogger
 from packages.today_task_notification.env import ENV as ENV_TODAY_IP
 from packages.jobcan.env import ENV as ENV_JOBCAN
-from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from time import sleep
-from shared.Domain.Scraping.soup_factory import SoupFactory
+from shared.Domain.Scraping.html_analyzer_factory import (
+    HtmlAnalyzerFactory,
+)
 from shared.Domain.Url.x_url import XUrl
-from shared.di_container import DiContainer
-
-from shared.factory import Factory
 
 # ログイン
 # jobcanを起動し、昨日分の工数レコードを開き、テンプレートから工数を入力
@@ -25,10 +21,7 @@ from shared.factory import Factory
 try:
     # サイトは確認くん固定
     site_url = "https://www.ugtop.com/spill.shtml"
-    factory: Factory = SoupFactory()
-    soup = factory.create(XUrl(site_url))
-    html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
-    html_analyzer.bind(soup)
+    html_analyzer = HtmlAnalyzerFactory().create(XUrl(site_url))
     sleep(1)
 
     ip_address = IpAddressService(html_analyzer).get_today_ip()

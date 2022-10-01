@@ -1,9 +1,11 @@
+from dataclasses import dataclass
 from typing import Optional
 from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from bs4 import BeautifulSoup, ResultSet, Tag
 
 
 # memo: 要素が見つからない場合は例外を出すようにする(デフォルトはNoneが返るため)
+@dataclass
 class HtmlAnalyzerImpl(HtmlAnalyzer):
     def bind(self, beautiful_soup: BeautifulSoup) -> None:
         self.beautiful_soup = beautiful_soup

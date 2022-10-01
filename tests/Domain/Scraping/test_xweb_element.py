@@ -1,44 +1,35 @@
-import pytest
+from unittest.mock import MagicMock
 from shared.Domain.Scraping.xweb_element import XWebElement
-from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.Domain.Url.x_url import XUrl
-from shared.Enums.browser_type import BrowserType
-from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
-from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.di_container import DiContainer
 
 
-@pytest.fixture
-def setuped():
-    xdriver = XDriverFactory().create(
-        BrowserType.CHROME, is_headless=True, on_docker=True
-    )
-    xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
+def test_webelementを取得できる() -> None:
+    web_element = MagicMock(text="hoge", tag_name="p")
+    x_web_element = XWebElement(web_element)
 
-    i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
-        IWebBrowserOperator
-    )
-    i_web_browser_operator.boot(xbrowser)
-
-    yield {
-        "list": XWebElementList(
-            [
-                i_web_browser_operator.find_by_id("header-in"),
-                i_web_browser_operator.find_by_id("go-to-top"),
-            ]
-        ),
-        "operator": i_web_browser_operator,
-    }
-
-    xdriver.driver().quit()
+    expected1 = "hoge"
+    actual1 = x_web_element.web_element().text
+    expected2 = "p"
+    actual2 = x_web_element.web_element().tag_name
+    assert expected1 == actual1 and expected2 == actual2
 
 
-def test_webelementを取得できる(setuped: dict) -> None:
+def test_webelementに値をセットできる() -> None:
+    web_element = MagicMock(text="hoge", tag_name="input")
+    x_web_element = XWebElement(web_element)
 
-    xweb_element: XWebElement = setuped["operator"].find_by_id("header-in")
-    xweb_element_list: XWebElementList = setuped["list"]
+    assert x_web_element.value() == ""
 
-    expected = xweb_element.web_element()
-    actual = xweb_element_list.first().web_element()
+    x_web_element.set_value("大阪太郎")
+
+    expected = "大阪太郎"
+    actual = x_web_element.value()
+
     assert expected == actual
+
+
+# FIXME: クリックテスト
+def test_クリックできる() -> None:
+    web_element = MagicMock(text="ボタン", tag_name="button")
+    x_web_element = XWebElement(web_element)
+
+    assert x_web_element.click() is None

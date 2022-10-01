@@ -54,5 +54,3 @@ finally:
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
             "フォロー・いいね数:" f"{success_count}/25" "\n" f"{users_tried_to_follow}/25",
         )
-
-print("debug")

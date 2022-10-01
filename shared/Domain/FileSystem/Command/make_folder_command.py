@@ -1,5 +1,5 @@
 from shared.Domain.FileSystem.x_folder import XFolder
-from shared.command import Command
+from shared.Core.command import Command
 from shared.i_reciver import IReceiver
 
 

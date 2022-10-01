@@ -1,9 +1,10 @@
+from dataclasses import dataclass
 from selenium.webdriver.remote.webdriver import WebDriver
 
 
+@dataclass
 class XDriver:
-    def __init__(self, webdriver: WebDriver) -> None:
-        self.webdriver = webdriver
+    webdriver: WebDriver
 
     def driver(self) -> WebDriver:
         return self.webdriver

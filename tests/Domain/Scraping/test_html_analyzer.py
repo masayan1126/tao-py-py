@@ -1,18 +1,14 @@
 import pytest
 from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
-from shared.Domain.Scraping.soup_factory import SoupFactory
-from shared.di_container import DiContainer
+from shared.Domain.Scraping.html_analyzer_factory import (
+    HtmlAnalyzerFactory,
+)
 from shared.Domain.Url.x_url import XUrl
-from shared.factory import Factory
 
 
 @pytest.fixture
 def setuped_html_analyzer() -> None:
-    factory: Factory = SoupFactory()
-    soup = factory.create(XUrl("https://maasaablog.com/"))
-    html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
-    html_analyzer.bind(soup)
-    return html_analyzer
+    return HtmlAnalyzerFactory().create(XUrl("https://maasaablog.com"))
 
 
 def test_id名で要素が見つからない場合は例外(setuped_html_analyzer: HtmlAnalyzer) -> None:

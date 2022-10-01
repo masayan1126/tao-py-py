@@ -1,37 +1,35 @@
 import pytest
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Url.x_url import XUrl
 from shared.Enums.browser_type import BrowserType
 from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
 from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.di_container import DiContainer
+from shared.Core.di_container import DiContainer
 
 
 @pytest.fixture
-def setuped() -> tuple[XWebElementList, IWebBrowserOperator]:
+def setuped() -> tuple[XWebElementList, WebBrowserOperator]:
     xdriver = XDriverFactory().create(
         BrowserType.CHROME, is_headless=True, on_docker=True
     )
     xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
 
-    i_web_browser_operator: IWebBrowserOperator = DiContainer().resolve(
-        IWebBrowserOperator
-    )
-    i_web_browser_operator.boot(xbrowser)
+    web_browser_operator: WebBrowserOperator = DiContainer().resolve(WebBrowserOperator)
+    web_browser_operator.boot(xbrowser)
 
     yield XWebElementList(
         [
-            i_web_browser_operator.find_by_id("header-in"),
-            i_web_browser_operator.find_by_id("go-to-top"),
+            web_browser_operator.find_by_id("header-in"),
+            web_browser_operator.find_by_id("go-to-top"),
         ]
-    ), i_web_browser_operator
+    ), web_browser_operator
 
     xdriver.driver().quit()
 
 
-def test_all_全要素を取得できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
+def test_all_全要素を取得できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
     xweb_element_list: XWebElementList = setuped[0]
     actual = xweb_element_list.all()
     expected = [
@@ -43,7 +41,7 @@ def test_all_全要素を取得できる(setuped: tuple[XWebElementList, IWebBro
 
 
 def test_first_1つめの要素を取得できる(
-    setuped: tuple[XWebElementList, IWebBrowserOperator]
+    setuped: tuple[XWebElementList, WebBrowserOperator]
 ) -> None:
     xweb_element_list: XWebElementList = setuped[0]
     actual = xweb_element_list.first()
@@ -57,7 +55,7 @@ def test_first_空のリストから要素を取り出そうとした場合は�
         XWebElementList([]).first()
 
 
-def test_add_要素を追加できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
+def test_add_要素を追加できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
 
     xweb_element_list: XWebElementList = setuped[0]
     xweb_element_list = xweb_element_list.add(setuped[1].find_by_id("index-tab-wrap"))
@@ -67,7 +65,7 @@ def test_add_要素を追加できる(setuped: tuple[XWebElementList, IWebBrowse
     assert expected == actual
 
 
-def test_all_全ての要素を取得できる(setuped: tuple[XWebElementList, IWebBrowserOperator]) -> None:
+def test_all_全ての要素を取得できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
     xweb_element_list: XWebElementList = setuped[0]
     expected = 2
     actual = xweb_element_list.count()
@@ -76,7 +74,7 @@ def test_all_全ての要素を取得できる(setuped: tuple[XWebElementList, I
 
 
 def test_map_個々の要素に関数を適用できる(
-    setuped: tuple[XWebElementList, IWebBrowserOperator]
+    setuped: tuple[XWebElementList, WebBrowserOperator]
 ) -> None:
 
     xweb_element_list: XWebElementList = setuped[0]
@@ -95,7 +93,7 @@ def test_map_個々の要素に関数を適用できる(
 
 
 def test_is_empty_空かどうかチェックできる(
-    setuped: tuple[XWebElementList, IWebBrowserOperator]
+    setuped: tuple[XWebElementList, WebBrowserOperator]
 ) -> None:
 
     xweb_element_list: XWebElementList = XWebElementList([])

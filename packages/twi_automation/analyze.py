@@ -26,5 +26,3 @@ except FileNotFoundError:
 finally:
     if "f" in locals():
         f.close()
-
-print("degug")

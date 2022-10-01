@@ -22,8 +22,6 @@ class TwiTimelineMediaGetUsecase:
     ) -> None:
         try:
 
-            print(self.tweets())
-
             last_tweet_id = 0  # ループの一番最後のツイートIDをセットする
 
             for tweet in self.tweets():

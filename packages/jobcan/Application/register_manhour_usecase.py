@@ -1,7 +1,7 @@
 from time import sleep
 
 from selenium.webdriver.support.ui import Select
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Regex.xregex import XRegex
 from selenium.webdriver.common.by import By
 from shared.Domain.String.xstr import XStr
@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 
 class RegisterManhourUseCase:
-    def handle(self, web_browser_operator: IWebBrowserOperator):
+    def handle(self, web_browser_operator: WebBrowserOperator):
         records = web_browser_operator.search_by_css_selector(css_selector="tbody > tr")
         today_record_index = 0
 

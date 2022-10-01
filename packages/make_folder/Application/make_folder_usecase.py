@@ -6,7 +6,7 @@ from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Domain.FileSystem.x_folder_aggregate import XFolderAggregate
 from shared.Domain.String.xstr import XStr
 from shared.i_aggregate import IAggregate
-from shared.command import Command
+from shared.Core.command import Command
 from shared.i_iterator import IIterator
 
 

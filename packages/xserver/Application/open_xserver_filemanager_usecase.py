@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from time import sleep
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.command import Command
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
+from shared.Core.command import Command
 from packages.xserver.env import ENV
 from shared.Domain.Log.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
@@ -11,7 +11,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 @dataclass
 class OpenXserverFilemanagerUsecase:
     automatic_operator: AutomaticOperator
-    web_browser_operator: IWebBrowserOperator
+    web_browser_operator: WebBrowserOperator
     login_xserver_command: Command
 
     def open_filemanager(self):

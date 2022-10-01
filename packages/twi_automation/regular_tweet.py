@@ -30,5 +30,3 @@ except (errors.TweepyException) as e:
         ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
         log_msg,
     )
-
-print("debug")

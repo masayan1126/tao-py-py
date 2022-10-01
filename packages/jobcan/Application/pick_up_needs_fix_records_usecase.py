@@ -1,13 +1,13 @@
 from packages.jobcan.env import ENV
 
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.String.xstr import XStr
 
 from shared.Domain.Log.x_logger import XLogger
 
 
 class PickUpNeedsFixRecordsUsecase:
-    def handle(self, web_browser_operator: IWebBrowserOperator):
+    def handle(self, web_browser_operator: WebBrowserOperator):
         trs = web_browser_operator.search_by_css_selector(css_selector="tbody tr")
         # すでに工数が入力されているが、総労働時間と工数合計が等しくない(つまり修正が必要なレコード)
         target_rows = []

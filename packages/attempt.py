@@ -1,16 +1,8 @@
-from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
-from shared.Domain.Scraping.soup_factory import SoupFactory
+from shared.Domain.Scraping.web_browser_factory import WebBrowserFactory
 from shared.Domain.Url.x_url import XUrl
-from shared.di_container import DiContainer
-from shared.factory import Factory
-from shared.Domain.IpAddress.ip_address_service import IpAddressService
+from shared.Enums.browser_type import BrowserType
 
 
-site_url = "https://www.ugtop.com/spill.shtml"
-factory: Factory = SoupFactory()
-soup = factory.create(XUrl(site_url))
-html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
-html_analyzer.bind(soup)
-ip_address = IpAddressService(html_analyzer).get_today_ip()
-
-print(ip_address.value())
+chorme_browser_operator = WebBrowserFactory().create(
+    BrowserType.CHROME, XUrl("https://maasaablog.com"), False
+)

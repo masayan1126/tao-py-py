@@ -11,6 +11,6 @@ class WebElementConverter:
         xweb_element_list = XWebElementList([])
 
         for web_element in web_element_list:
-            xweb_element_list.add(XWebElement(web_element, ""))
+            xweb_element_list.add(XWebElement(web_element))
 
         return xweb_element_list

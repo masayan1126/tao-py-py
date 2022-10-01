@@ -1,5 +1,5 @@
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
@@ -7,7 +7,7 @@ from shared.Domain.Text.x_text import XText
 
 
 class LoginXserverReciver:
-    def action(self, web_browser_operator: IWebBrowserOperator) -> None:
+    def action(self, web_browser_operator: WebBrowserOperator) -> None:
         user_email = web_browser_operator.find_by_id(id_name="memberid")
         user_password = web_browser_operator.find_by_id(id_name="user_password")
 

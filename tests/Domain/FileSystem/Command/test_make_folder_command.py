@@ -5,7 +5,7 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 
 from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Domain.String.xstr import XStr
-from shared.command import Command
+from shared.Core.command import Command
 
 
 @pytest.fixture

@@ -48,5 +48,3 @@ for random_number in random_numbers:
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
             log_msg,
         )
-
-print("debug")

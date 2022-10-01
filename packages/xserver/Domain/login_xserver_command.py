@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from shared.Domain.Scraping.i_web_browser_operator import IWebBrowserOperator
-from shared.command import Command
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
+from shared.Core.command import Command
 from shared.i_reciver import IReceiver
 
 
 @dataclass
 class LoginXserverCommand(Command):
-    web_browser_operator: IWebBrowserOperator
+    web_browser_operator: WebBrowserOperator
 
     def set_reciver(self, receiver: IReceiver):
         self.reciver = receiver

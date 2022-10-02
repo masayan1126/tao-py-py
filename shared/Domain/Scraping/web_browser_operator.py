@@ -3,13 +3,17 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from shared.Domain.Scraping.xbrowser import XBrowser
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
+from shared.Domain.Url.x_url import XUrl
+
 
 # ブラウザ自動操作用インターフェース
 
 
 class WebBrowserOperator(metaclass=ABCMeta):
     @abstractmethod
-    def boot(self, xbrowser: XBrowser, needs_multiple_tags: bool = False) -> None:
+    def boot(
+        self, webdriver: WebDriver, x_url: XUrl, needs_multiple_tags: bool = False
+    ) -> None:
         pass
 
     @abstractmethod
@@ -37,9 +41,9 @@ class WebBrowserOperator(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def x_browser(self) -> XBrowser:
+    def switch_new_tab(self) -> None:
         pass
 
     @abstractmethod
-    def switch_new_tab(self) -> None:
+    def web_driver(self) -> WebDriver:
         pass

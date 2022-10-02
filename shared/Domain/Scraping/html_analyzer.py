@@ -15,10 +15,6 @@ class HtmlAnalyzer(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def find_by_selector(self, selector: str) -> Tag:
-        pass
-
-    @abstractmethod
     def search_by_selector(self, selector: str) -> Optional[ResultSet]:
         pass
 

@@ -1,111 +1,86 @@
+from unittest.mock import MagicMock
 import pytest
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
-from shared.Domain.Url.x_url import XUrl
-from shared.Enums.browser_type import BrowserType
-from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
-from shared.Domain.Scraping.x_driver_factory import XDriverFactory
-from shared.Core.di_container import DiContainer
 
 
 @pytest.fixture
-def setuped() -> tuple[XWebElementList, WebBrowserOperator]:
-    xdriver = XDriverFactory().create(
-        BrowserType.CHROME, is_headless=True, on_docker=True
+def xweb_elements() -> list[XWebElement]:
+    xweb_element_mock1 = MagicMock(name="x_web_element1")
+    xweb_element_mock1.value.return_value = "a"
+    xweb_element_mock2 = MagicMock(name="x_web_element2")
+    xweb_element_mock2.value.return_value = ""
+    xweb_element_mock3 = MagicMock(name="x_web_element3")
+    xweb_element_mock3.value.return_value = "u"
+
+    return [xweb_element_mock1, xweb_element_mock2, xweb_element_mock3]
+
+
+def test_all_全要素を取得できる(xweb_elements: list[XWebElement]) -> None:
+    sut = XWebElementList([xweb_elements[0], xweb_elements[1], xweb_elements[2]])
+    assert xweb_elements == sut.all()
+
+
+def test_add_要素を追加できる(xweb_elements: list[XWebElement]) -> None:
+    new = MagicMock(name="mock4")
+    sut = XWebElementList(xweb_elements)
+
+    expected = XWebElementList(
+        [xweb_elements[0], xweb_elements[1], xweb_elements[2], new]
     )
-    xbrowser = XBrowserFactory().create(xdriver, XUrl("https://maasaablog.com/"))
-
-    web_browser_operator: WebBrowserOperator = DiContainer().resolve(WebBrowserOperator)
-    web_browser_operator.boot(xbrowser)
-
-    yield XWebElementList(
-        [
-            web_browser_operator.find_by_id("header-in"),
-            web_browser_operator.find_by_id("go-to-top"),
-        ]
-    ), web_browser_operator
-
-    xdriver.driver().quit()
-
-
-def test_all_全要素を取得できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
-    xweb_element_list: XWebElementList = setuped[0]
-    actual = xweb_element_list.all()
-    expected = [
-        setuped[1].find_by_id("header-in"),
-        setuped[1].find_by_id("go-to-top"),
-    ]
+    actual = sut.add(new)
 
     assert expected == actual
 
 
-def test_first_1つめの要素を取得できる(
-    setuped: tuple[XWebElementList, WebBrowserOperator]
-) -> None:
-    xweb_element_list: XWebElementList = setuped[0]
-    actual = xweb_element_list.first()
-    expected = setuped[1].find_by_id("header-in")
+def test_map_個々の要素に関数を適用できる(xweb_elements: list[XWebElement]) -> None:
+    # xweb_elementをxweb_elementの値に変換して返す
+    def callback(xweb_element: XWebElement):
+        return xweb_element.value()
+
+    sut = XWebElementList(xweb_elements).map(callback)
+
+    expected = ["a", "", "u"]
+    actual = sut.all()
 
     assert expected == actual
 
 
-def test_first_空のリストから要素を取り出そうとした場合は例外() -> None:
+def test_first_1つめの要素を取得できる(xweb_elements: list[XWebElement]) -> None:
+
+    sut = XWebElementList(xweb_elements)
+    xweb_element = sut.first()
+
+    expected = xweb_elements[0]
+    actual = xweb_element
+
+    assert expected == actual
+
+
+def test_first_空の場合は例外() -> None:
     with pytest.raises(IndexError):
-        XWebElementList([]).first()
+        XWebElementList().first()
 
 
-def test_add_要素を追加できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
-
-    xweb_element_list: XWebElementList = setuped[0]
-    xweb_element_list = xweb_element_list.add(setuped[1].find_by_id("index-tab-wrap"))
-    expected = 3
-    actual = xweb_element_list.count()
-
-    assert expected == actual
+def test_count_要素数を取得できる(xweb_elements: list[XWebElement]) -> None:
+    sut = XWebElementList(xweb_elements)
+    assert sut.count() == 3
 
 
-def test_all_全ての要素を取得できる(setuped: tuple[XWebElementList, WebBrowserOperator]) -> None:
-    xweb_element_list: XWebElementList = setuped[0]
-    expected = 2
-    actual = xweb_element_list.count()
+def test_count_要素数を取得できる_callbackあり(xweb_elements: list[XWebElement]) -> None:
+    # 空文字の要素数
+    def callback(item: XWebElement):
+        return item.value() == ""
 
-    assert expected == actual
-
-
-def test_map_個々の要素に関数を適用できる(
-    setuped: tuple[XWebElementList, WebBrowserOperator]
-) -> None:
-
-    xweb_element_list: XWebElementList = setuped[0]
-
-    def callable(xweb_element: XWebElement):
-        value = 1
-        xweb_element.set_value(value)
-        value += 1
-
-    xweb_element_list = xweb_element_list.map(callable)
-
-    expected = 1
-    actual = xweb_element_list.first().value()
-
-    assert expected == actual
+    sut = XWebElementList(xweb_elements)
+    assert sut.count(callback) == 1
 
 
-def test_is_empty_空かどうかチェックできる(
-    setuped: tuple[XWebElementList, WebBrowserOperator]
-) -> None:
+def test_is_empty_空かどうかチェックできる_空の場合(xweb_elements: list[XWebElement]) -> None:
+    sut = XWebElementList()
+    assert sut.is_empty()
 
-    xweb_element_list: XWebElementList = XWebElementList([])
-    # 空
-    expected = True
-    actual = xweb_element_list.is_empty()
-    assert expected == actual
 
-    # 要素有り
-
-    xweb_element_list = xweb_element_list.add(setuped[1].find_by_id("index-tab-wrap"))
-
-    expected = False
-    actual = xweb_element_list.is_empty()
-    assert expected == actual
+def test_is_empty_空かどうかチェックできる_空ではない場合(xweb_elements: list[XWebElement]) -> None:
+    sut = XWebElementList(xweb_elements)
+    assert not sut.is_empty()

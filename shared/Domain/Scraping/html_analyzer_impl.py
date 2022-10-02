@@ -16,13 +16,7 @@ class HtmlAnalyzerImpl(HtmlAnalyzer):
         except IndexError:
             raise IndexError
 
-    # memo: xpathはそこそこ頑張らないと実装できない
-
-    def find_by_selector(self, selector: str) -> Tag:
-        try:
-            return self.beautiful_soup.select(selector)[0]
-        except IndexError:
-            raise IndexError
+    # TODO: xpathはそこそこ頑張らないと実装できない
 
     def search_by_selector(self, selector: str) -> Optional[ResultSet]:
         return self.beautiful_soup.select(selector)

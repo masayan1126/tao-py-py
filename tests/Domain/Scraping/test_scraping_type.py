@@ -1,18 +1,18 @@
 import pytest
-from shared.Enums.browser_type import BrowserType
+from shared.Domain.Scraping.browser_type import BrowserType
 
 
-def test_数字からスクレイピング種別を取得できる() -> None:
+def test_数字からブラウザ種別を取得できる() -> None:
     assert BrowserType(1) == BrowserType.CHROME
 
 
 # enumの識別子
-def test_スクレイピング種別の識別子を取得できる() -> None:
+def test_ブラウザ種別の識別子を取得できる() -> None:
     assert BrowserType.FIREFOX.name == "FIREFOX"
 
 
 # enumの値
-def test_スクレイピング種別の値を取得できる() -> None:
+def test_ブラウザ種別の値を取得できる() -> None:
     assert BrowserType.CHROME.value == 1
 
 

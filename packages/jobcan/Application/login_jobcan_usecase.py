@@ -1,22 +1,25 @@
 from packages.jobcan.Application.login_reciver import LoginReciver
 from packages.jobcan.env import ENV
-from shared.Application.Scraping.chrome_browser_boot_up_usecase import (
-    ChromeBrowserBootUpUsecase,
-)
+
 from shared.Domain.Log.x_logger import XLogger
 from packages.xserver.Domain.login_xserver_command import LoginXserverCommand
+from shared.Domain.Scraping.web_browser_factory import WebBrowserFactory
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Url.x_url import XUrl
 from shared.Core.command import Command
 from selenium.common.exceptions import SessionNotCreatedException
+from shared.Domain.Scraping.browser_type import BrowserType
 
 
 class LoginJobcanUsecase:
     def handle(self) -> WebBrowserOperator:
         try:
-            web_browser_operator = ChromeBrowserBootUpUsecase(
-                x_url=XUrl("https://id.jobcan.jp/"), is_headless=False
-            ).handle()
+
+            web_browser_operator = WebBrowserFactory().create(
+                BrowserType.CHROME,
+                x_url=XUrl("https://id.jobcan.jp/"),
+                is_headless=False,
+            )
 
             command: Command = LoginXserverCommand(web_browser_operator)
             command.set_reciver(LoginReciver())

@@ -1,4 +1,4 @@
-from shared.Enums.browser_type import BrowserType
+from shared.Domain.Scraping.browser_type import BrowserType
 from shared.judgement import Judgement
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import SessionNotCreatedException
 
 
-class BrowserJudgement(Judgement):
+class BrowserTypeJudgement(Judgement):
     def __init__(self, browser_type, is_headless, on_docker):
         self.browser_type = browser_type
         self.is_headless = is_headless
@@ -28,9 +28,9 @@ class BrowserJudgement(Judgement):
         if self.browser_type == BrowserType.CHROME:
             chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
 
-            return webdriver.Chrome(
-                service=chrome_service, options=self.chrome_options()
-            )
+            w = webdriver.Chrome(service=chrome_service, options=self.chrome_options())
+
+            return w
         # TODO:firefox
         else:
             pass

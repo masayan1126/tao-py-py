@@ -3,7 +3,7 @@ from time import sleep
 
 from shared.Domain.FileSystem.os_type_judgement import OsTypeJudgement
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Enums.os_type import OsType
+from shared.Domain.FileSystem.os_type import OsType
 
 
 class SoftWareProcessOperator:

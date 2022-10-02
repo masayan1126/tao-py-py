@@ -1,12 +1,12 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
-from shared.Domain.List.array_impl import ArrayImpl
+from shared.Domain.Array.abstract_array import AbstractArray
 from shared.Youtube.yt_transcript import YtTranscript
 
 
 @dataclass
-class YtTranscriptList(ArrayImpl):
+class YtTranscriptList(AbstractArray):
     def __init__(self, yt_transcript_list: list[YtTranscript]):
         super().__init__(yt_transcript_list)
 

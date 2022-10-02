@@ -1,19 +1,23 @@
 from unittest.mock import MagicMock, patch
+from shared.Core.di_container import DiContainer
 from shared.Domain.Scraping.web_browser_factory import WebBrowserFactory
-from shared.Domain.Scraping.xbrowser import XBrowser
-from shared.Domain.Scraping.xdriver import XDriver
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Url.x_url import XUrl
-from shared.Enums.browser_type import BrowserType
+from shared.Domain.Scraping.browser_type import BrowserType
 
 
-@patch("shared.Domain.Scraping.browser_judgement.webdriver.Chrome")
-def test_ブラウザオブジェクトを生成できる(chorme_webdriver_mock) -> None:
-    chorme_webdriver_mock.return_value = MagicMock()
+@patch("shared.Domain.Scraping.web_browser_factory.BrowserTypeJudgement")
+def test_ブラウザオブジェクトを生成できる(browser_judement_mock) -> None:
+    web_driver_mock = MagicMock()
+    browser_judement_mock.judge.return_value = web_driver_mock
 
-    chorme_browser_operator = WebBrowserFactory().create(
-        BrowserType.CHROME, XUrl("https://hogefoovar.com")
+    browser_operator_from_mock = WebBrowserFactory().create(
+        XUrl("https://hogefoovar.com"), BrowserType.CHROME
     )
 
-    expected = XBrowser(XDriver(chorme_webdriver_mock), XUrl("https://hogefoovar.com"))
-    actual = chorme_browser_operator.x_browser()
+    web_browser_operator = DiContainer().resolve(WebBrowserOperator)
+    web_browser_operator.boot(web_driver_mock, XUrl("https://hogefoovar.com"))
+
+    expected = web_browser_operator
+    actual = browser_operator_from_mock
     assert expected == actual

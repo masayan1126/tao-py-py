@@ -1,8 +1,8 @@
 from shared.Domain.Calendar.g_calendar_event import GCalendarEvent
-from shared.Domain.List.array_impl import ArrayImpl
+from shared.Domain.Array.abstract_array import AbstractArray
 
 
-class GCalendarEvents(ArrayImpl):
+class GCalendarEvents(AbstractArray):
     def __init__(
         self,
         g_calendar_events: list[GCalendarEvent],

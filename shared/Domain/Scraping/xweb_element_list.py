@@ -1,13 +1,13 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
-from shared.Domain.List.array_impl import ArrayImpl
+from shared.Domain.Array.abstract_array import AbstractArray
 from shared.Domain.Scraping.xweb_element import XWebElement
 
 
 @dataclass
-class XWebElementList(ArrayImpl):
-    def __init__(self, xweb_element_list: list[XWebElement]):
+class XWebElementList(AbstractArray):
+    def __init__(self, xweb_element_list: list[XWebElement] = []):
         super().__init__(xweb_element_list)
 
     def all(self) -> list[XWebElement]:
@@ -18,13 +18,7 @@ class XWebElementList(ArrayImpl):
         return self
 
     def map(self, callable: Callable) -> XWebElementList:
-
-        super().map(callable)
-        return self
+        return XWebElementList(list(map(lambda item: callable(item), self.all())))
 
     def first(self) -> XWebElement:
-        try:
-            return super().first()
-        except IndexError:
-
-            raise IndexError
+        return super().first()

@@ -1,5 +1,5 @@
 import platform
-from shared.Enums.os_type import OsType
+from shared.Domain.FileSystem.os_type import OsType
 from shared.judgement import Judgement
 
 

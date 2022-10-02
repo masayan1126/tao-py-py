@@ -1,28 +1,30 @@
 from shared.Core.di_container import DiContainer
 from shared.Core.factory import Factory
-from shared.Domain.Log.x_logger import XLogger
+from shared.Domain.Scraping.browser_type_judgement import BrowserTypeJudgement
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
-from shared.Domain.Scraping.x_browser_factory import XBrowserFactory
-from shared.Domain.Scraping.x_driver_factory import XDriverFactory
 from shared.Domain.Url.x_url import XUrl
-from shared.Enums.browser_type import BrowserType
+from shared.Domain.Scraping.browser_type import BrowserType
+from selenium.webdriver.remote.webdriver import WebDriver
 
 
 class WebBrowserFactory(Factory):
     def create(
-        self, browser_type: BrowserType, x_url: XUrl, is_headless=True, on_docker=False
+        self,
+        x_url: XUrl,
+        browser_type: BrowserType = BrowserType.CHROME,
+        is_headless=True,
+        on_docker=False,
     ) -> WebBrowserOperator:
 
-        xdriver = XDriverFactory().create(
-            browser_type, is_headless=is_headless, on_docker=on_docker
-        )
+        judgement = BrowserTypeJudgement(browser_type, is_headless, on_docker)
+        webdriver: WebDriver = judgement.judge()
 
-        xbrowser = XBrowserFactory().create(xdriver, x_url)
+        print(webdriver)
 
         web_browser_operator: WebBrowserOperator = DiContainer().resolve(
             WebBrowserOperator
         )
 
-        web_browser_operator.boot(xbrowser)
+        web_browser_operator.boot(webdriver, x_url)
 
         return web_browser_operator

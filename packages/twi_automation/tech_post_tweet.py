@@ -1,4 +1,6 @@
 from pandas import DataFrame
+from shared.Core.operator_factory import OperatorFactory
+from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
@@ -6,7 +8,6 @@ from packages.twi_automation.env import ENV
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 
 from shared.Domain.Excel.xcsv import XCsv
-from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.Number.number_randomizer import NumberRandomizer
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
@@ -26,7 +27,7 @@ posts = DataFrameConverter.to_list(posts_df)
 randomizer = NumberRandomizer()
 random_numbers = randomizer.generate(0, len(posts), 1)
 
-twitter_operator = TwitterOperator()
+twitter_operator = OperatorFactory().create(OperatorType.TWI)
 
 for random_number in random_numbers:
     selected_post = posts[random_number]
@@ -34,7 +35,7 @@ for random_number in random_numbers:
     link = selected_post["link"]
     tweet_content = XStr(f"{title}" "\n\n" f"{link}")
     try:
-        twitter_operator.tweet(tweet_content)
+        twitter_operator.do_tweet(tweet_content)
 
         XLogger.notification_to_slack(
             ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],

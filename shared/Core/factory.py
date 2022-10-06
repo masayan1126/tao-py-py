@@ -1,7 +1,7 @@
-import abc
+from abc import ABCMeta, abstractmethod
 
 
-class Factory:
-    @abc.abstractmethod
+class Factory(metaclass=ABCMeta):
+    @abstractmethod
     def create(self):
         pass

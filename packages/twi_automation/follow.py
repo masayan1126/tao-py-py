@@ -1,3 +1,5 @@
+from shared.Core.operator_factory import OperatorFactory
+from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
@@ -5,7 +7,6 @@ from shared.Domain.Twi.twi_error_judgement import (
 from packages.twi_automation.env import ENV
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
-from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Log.x_logger import XLogger
@@ -31,7 +32,7 @@ if api_code == "88" or api_code == "283":
 
 
 try:
-    twitter_operator = TwitterOperator()
+    twitter_operator = OperatorFactory().create(OperatorType.TWI)
     success_count, users_tried_to_follow = twitter_operator.follow(
         hashtag=XStr(ENV["HASH_TAG"])
     )

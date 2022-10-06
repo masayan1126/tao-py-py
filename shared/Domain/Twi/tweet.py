@@ -1,13 +1,13 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
 class Tweet:
     _id: int
     _text: str
-    _is_contain_media: bool
-    _media_list: list
+    _is_contain_media: bool = False
+    _media_list: list = field(default_factory=list)
 
     def id(self) -> int:
         return self._id

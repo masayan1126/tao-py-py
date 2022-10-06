@@ -44,6 +44,7 @@ try:
 
     TwiTimelineMediaGetUsecase(
         screen_name=screen_name(),
+        fetch_count=5,
         since_tweet_id=since_tweet_id(),
     ).download(download_path_to=download_path_to)
 

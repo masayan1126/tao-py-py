@@ -1,13 +1,14 @@
+from shared.Core.operator_factory import OperatorFactory
+from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
-from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Log.x_logger import XLogger
 import tweepy
 
-twitter_operator = TwitterOperator()
+twitter_operator = OperatorFactory().create(OperatorType.TWI)
 
 try:
     favorited_user_screen_names = twitter_operator.favorite(

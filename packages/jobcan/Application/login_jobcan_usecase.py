@@ -16,8 +16,8 @@ class LoginJobcanUsecase:
         try:
 
             web_browser_operator = WebBrowserFactory().create(
-                BrowserType.CHROME,
                 x_url=XUrl("https://id.jobcan.jp/"),
+                browser_type=BrowserType.CHROME,
                 is_headless=False,
             )
 

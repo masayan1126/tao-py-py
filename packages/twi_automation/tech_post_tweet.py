@@ -1,4 +1,6 @@
 from pandas import DataFrame
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Core.operator_factory import OperatorFactory
 from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
@@ -11,7 +13,6 @@ from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.Number.number_randomizer import NumberRandomizer
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Log.x_logger import XLogger
 from tweepy import errors
 
 # 毎日30分おきにランダムで1記事をツイート(csvのリストから取得)
@@ -37,15 +38,16 @@ for random_number in random_numbers:
     try:
         twitter_operator.do_tweet(tweet_content)
 
-        XLogger.notification_to_slack(
-            ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        LogHandler(
+            LogType.NOTIFICATION,
             "Tweet was successful" "\n\n" f"{tweet_content.value()}",
-        )
+        ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
+
     except (errors.TweepyException) as e:
         judgement = TwiErrorJudgement(e)
         log_msg = judgement.judge()
 
-        XLogger.exception_to_slack(
-            ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        LogHandler(
+            LogType.EXCEPTION,
             log_msg,
-        )
+        ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

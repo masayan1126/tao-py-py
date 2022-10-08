@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 from time import sleep
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Core.command import Command
 from packages.xserver.env import ENV
-from shared.Domain.Log.x_logger import XLogger
 from selenium.common.exceptions import SessionNotCreatedException
 
 
@@ -36,7 +37,7 @@ class OpenXserverFilemanagerUsecase:
             )
 
         except SessionNotCreatedException:
-            XLogger.exception_to_slack(
-                ENV["SLACK_WEBHOOK_URL_COMMON"],
-                "Chrome browser version may not be up to date .",
-            )
+            LogHandler(
+                LogType.EXCEPTION,
+                "Browser version may not be up to date .",
+            ).to_slack(ENV["SLACK_WEBHOOK_URL_COMMON"])

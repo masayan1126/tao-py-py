@@ -1,15 +1,15 @@
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Core.operator_factory import OperatorFactory
 from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
-
 from packages.twi_automation.env import ENV
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Log.x_logger import XLogger
 import tweepy
 
 error_log_filepath = XFileSystemPath(
@@ -19,10 +19,10 @@ api_code = TextFileService(x_text=XText(error_log_filepath)).read(encoding="UTF-
 
 # Rate limit もしくはspam認定ならそもそも1回分処理を中止して、エラーログ用のテキストを空にする
 if api_code == "88" or api_code == "283":
-    XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+    LogHandler(
+        LogType.EXCEPTION,
         "Rate limit もしくはspam認定を受けているため、処理開始前にキャンセルしました",
-    )
+    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
     TextFileService(x_text=XText(error_log_filepath)).write(
         "", is_overwrite=True, encoding="UTF-8", needs_indention=True
@@ -41,17 +41,17 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
     judgement = TwiErrorJudgement(e)
     log_msg = judgement.judge()
 
-    XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+    LogHandler(
+        LogType.EXCEPTION,
         log_msg,
-    )
+    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
     TextFileService(x_text=XText(error_log_filepath)).write(
         e.api_codes[0], is_overwrite=True, encoding="UTF-8"
     )
 finally:
     if "success_count" in locals() and "users_tried_to_follow" in locals():
-        XLogger.notification_to_slack(
-            ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+        LogHandler(
+            LogType.NOTIFICATION,
             "フォロー・いいね数:" f"{success_count}/25" "\n" f"{users_tried_to_follow}/25",
-        )
+        ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

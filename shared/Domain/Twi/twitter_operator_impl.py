@@ -1,6 +1,6 @@
 from time import sleep
-from packages.twi_automation.config import CONFIG
 from packages.twi_automation.env import ENV
+from packages.twi_automation.config import CONFIG
 from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Twi.tweet import Tweet
@@ -14,6 +14,7 @@ from tweepy import models
 
 class TwitterOperatorImpl(TwitterOperator):
     def __init__(self):
+
         CONSUMER_KEY = CONFIG["CONSUMER_KEY"]
         CONSUMER_SECRET = CONFIG["CONSUMER_SECRET"]
         ACCESS_TOKEN = CONFIG["ACCESS_TOKEN"]

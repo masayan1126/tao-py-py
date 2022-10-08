@@ -1,3 +1,5 @@
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Core.operator_factory import OperatorFactory
 from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
@@ -5,7 +7,6 @@ from shared.Domain.Twi.twi_error_judgement import (
 )
 from packages.twi_automation.env import ENV
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Log.x_logger import XLogger
 import tweepy
 
 twitter_operator = OperatorFactory().create(OperatorType.TWI)
@@ -15,16 +16,17 @@ try:
         hashtag=XStr(ENV["HASH_TAG"])
     )
 
-    XLogger.notification_to_slack(
-        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+    LogHandler(
+        LogType.NOTIFICATION,
         "Favorite was successful" "\n" f"{favorited_user_screen_names}",
-    )
+    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
+
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
 
     judgement = TwiErrorJudgement(e)
     log_msg = judgement.judge()
 
-    XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+    LogHandler(
+        LogType.EXCEPTION,
         log_msg,
-    )
+    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

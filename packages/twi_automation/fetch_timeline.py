@@ -2,12 +2,12 @@ from packages.twi_automation.Application.twi_timeline_media_get_usecase import (
     TwiTimelineMediaGetUsecase,
 )
 from packages.twi_automation.env import ENV
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Text.text_file_service import TextFileService
 from shared.Domain.Text.x_text import XText
-from shared.Domain.Log.x_logger import XLogger
 
 
 def screen_name() -> XStr:
@@ -50,7 +50,7 @@ try:
 
 except Exception as e:
 
-    XLogger.exception_to_slack(
-        ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"],
+    LogHandler(
+        LogType.EXCEPTION,
         e,
-    )
+    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

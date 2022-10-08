@@ -1,9 +1,8 @@
 from packages.jobcan.env import ENV
-
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.String.xstr import XStr
-
-from shared.Domain.Log.x_logger import XLogger
 
 
 class PickUpNeedsFixRecordsUsecase:
@@ -28,10 +27,12 @@ class PickUpNeedsFixRecordsUsecase:
                 target_rows.append(row_text_list)
 
         if len(target_rows) == 0:
-            XLogger.notification_to_slack(
-                ENV["SLACK_WEBHOOK_URL_JOBCAN"], "修正が必要なレコードはありませんでした。"
-            )
+            LogHandler(
+                LogType.NOTIFICATION,
+                "修正が必要なレコードはありませんでした。",
+            ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])
         else:
-            XLogger.notification_to_slack(
-                ENV["SLACK_WEBHOOK_URL_JOBCAN"], f"修正が必要なレコードは{target_rows}です"
-            )
+            LogHandler(
+                LogType.NOTIFICATION,
+                f"修正が必要なレコードは{target_rows}です",
+            ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])

@@ -25,7 +25,7 @@ class TwitterOperatorImpl(TwitterOperator):
         auth = tweepy.OAuth1UserHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
         _twi = API(auth)
-        self.__twi = _twi
+        self._twi = _twi
         self._my_screen_name = ENV["MY_SCREEN_NAME"]
         self.black_list = ENV["BLACK_LIST"]
 

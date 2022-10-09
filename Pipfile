@@ -24,6 +24,7 @@ pyautogui = "*"
 pyperclip = "*"
 tqdm = "*"
 atomicwrites = "*"
+fastapi = "*"
 
 [dev-packages]
 mypy = "*"

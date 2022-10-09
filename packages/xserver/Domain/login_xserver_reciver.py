@@ -2,8 +2,7 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Text.text_file_service import TextFileService
-from shared.Domain.Text.x_text import XText
+from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 
 class LoginXserverReciver:
@@ -27,8 +26,8 @@ class LoginXserverReciver:
         login_btn.click()
 
     def auth_info(self) -> tuple[str, str]:
-        auth_info = TextFileService(
-            XText(XFileSystemPath(XStr("packages/xserver/auth_info.txt")))
+        auth_info = TextFileOperatorImpl(
+            XFileSystemPath(XStr("packages/xserver/auth_info.txt"))
         ).readlines(encoding="UTF-8")
         email = auth_info[0]
         password = auth_info[1]

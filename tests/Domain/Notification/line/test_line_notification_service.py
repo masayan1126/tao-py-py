@@ -11,10 +11,8 @@ def test_LINEに通知を送信できる(mock_requests):
     mock_response = Mock(status_code=200)
     mock_requests.post.return_value = mock_response
 
-    line_notification_service = LineNotificationService(
-        Notification("https://hoge/api/notify", "通知メッセージです")
-    )
+    sut = LineNotificationService(Notification("https://hoge/api/notify", "通知メッセージです"))
 
     expected = 200
-    actual = line_notification_service.send("dummy token")
+    actual = sut.send("dummy token")
     assert expected == actual

@@ -1,24 +1,24 @@
 import pytest
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Text.text_file_service import TextFileService
-from shared.Domain.Text.x_text import XText
+from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 
 @pytest.fixture
-def setuped_x_text() -> XText:
+def setuped_filepaths():
     # 読み込み用
     filepath1 = XFileSystemPath(XStr("tests/Domain/Text/sample.txt")).to_absolute()
     # 書き込み用
     filepath2 = XFileSystemPath(XStr("tests/Domain/Text/sample2.txt")).to_absolute()
-    x_text1 = XText(filepath1)
-    x_text2 = XText(filepath2)
-    return x_text1, x_text2
+    return filepath1, filepath2
 
 
-def test_テキストファイルを文字列として読み取ることができる(setuped_x_text: XText) -> None:
-    actual = TextFileService(setuped_x_text[0]).read("UTF-8")
+def test_テキストファイルの中身をを1つの文字列として読み取ることができる(
+    setuped_filepaths: list[XFileSystemPath],
+) -> None:
+    sut = TextFileOperatorImpl(setuped_filepaths[0])
     expected = "ruby,python\njava,php\njavascript"
+    actual = sut.read("UTF-8")
 
     assert expected == actual
 
@@ -26,13 +26,14 @@ def test_テキストファイルを文字列として読み取ることがで�
 def test_ファイルが見つからない場合は例外_read() -> None:
     with pytest.raises(FileNotFoundError):
         filepath = XFileSystemPath(XStr("tests/Domain/Foo/hoge.txt")).to_absolute()
-        x_text = XText(filepath)
-        TextFileService(x_text).read("UTF-8")
+        sut = TextFileOperatorImpl(filepath)
+        sut.read("UTF-8")
 
 
-def test_テキストファイルをリストとして読み取ることができる(setuped_x_text: XText) -> None:
-    actual = TextFileService(setuped_x_text[0]).readlines("UTF-8")
+def test_テキストファイルの中身をリストとして読み取ることができる(setuped_filepaths: list[XFileSystemPath]) -> None:
+    sut = TextFileOperatorImpl(setuped_filepaths[0])
     expected = ["ruby,python", "java,php", "javascript"]
+    actual = sut.readlines("UTF-8")
 
     assert expected == actual
 
@@ -40,30 +41,38 @@ def test_テキストファイルをリストとして読み取ることがで�
 def test_ファイルが見つからない場合は例外_readlines() -> None:
     with pytest.raises(FileNotFoundError):
         filepath = XFileSystemPath(XStr("tests/Domain/Foo/hoge.txt")).to_absolute()
-        x_text = XText(filepath)
-        TextFileService(x_text).readlines("UTF-8")
+        sut = TextFileOperatorImpl(filepath)
+        sut.readlines("UTF-8")
 
 
-def test_テキストファイルに書き込むことができる_write_改行あり(setuped_x_text: XText) -> None:
-    actual = TextFileService(setuped_x_text[1]).write(
+def test_テキストファイルに書き込むことができる_write_改行あり(
+    setuped_filepaths: list[XFileSystemPath],
+) -> None:
+    sut = TextFileOperatorImpl(setuped_filepaths[1])
+
+    expected = "python\njava\nphp"
+    actual = sut.write(
         content=["python", "java", "php"],
         is_overwrite=True,
         encoding="UTF-8",
         needs_indention=True,
     )
-    expected = "python\njava\nphp"
 
     assert expected == actual
 
 
-def test_テキストファイルに書き込むことができる_write_改行なし(setuped_x_text: XText) -> None:
-    actual = TextFileService(setuped_x_text[1]).write(
+def test_テキストファイルに書き込むことができる_write_改行なし(
+    setuped_filepaths: list[XFileSystemPath],
+) -> None:
+    sut = TextFileOperatorImpl(setuped_filepaths[1])
+
+    expected = "pythonjavaphp"
+    actual = sut.write(
         content=["python", "java", "php"],
         is_overwrite=True,
         encoding="UTF-8",
         needs_indention=False,
     )
-    expected = "pythonjavaphp"
 
     assert expected == actual
 
@@ -71,8 +80,8 @@ def test_テキストファイルに書き込むことができる_write_改行�
 def test_ファイルが見つからない場合は例外_write() -> None:
     with pytest.raises(FileNotFoundError):
         filepath = XFileSystemPath(XStr("tests/Domain/Foo/hoge.txt")).to_absolute()
-        x_text = XText(filepath)
-        TextFileService(x_text).write(
+        sut = TextFileOperatorImpl(filepath)
+        sut.write(
             content=XStr("python"),
             is_overwrite=True,
             encoding="UTF-8",

@@ -9,15 +9,15 @@ from shared.Core.command import Command
 
 
 @pytest.fixture
-def setuped_command():
-    command: Command = MakeFolderCommand()
-    command.set_reciver(MakeFolderReciver())
-    yield command
+def sut():
+    sut: Command = MakeFolderCommand()
+    sut.set_reciver(MakeFolderReciver())
+    yield sut
     XFileSystemPath(XStr("tests/sample")).to_absolute().delete()
 
 
-def test_フォルダを作成できる(setuped_command: Command) -> None:
+def test_フォルダを作成できる(sut: Command) -> None:
     filepath = XFileSystemPath(XStr("tests/sample")).to_absolute()
-    setuped_command.execute(XFolder(filepath))
+    sut.execute(XFolder(filepath))
 
     assert filepath.exsits()

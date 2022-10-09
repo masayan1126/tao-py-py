@@ -6,8 +6,7 @@ from shared.Domain.File.file_download_service import FileDownloadService
 from shared.Domain.File.x_file import XFile
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Text.text_file_service import TextFileService
-from shared.Domain.Text.x_text import XText
+from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.tweet import Tweet
 from shared.Domain.Url.x_url import XUrl
 
@@ -65,7 +64,7 @@ class TwiTimelineMediaGetUsecase:
             XStr("packages/twi_automation/files/fetch_timeline/since_tweet_id.txt")
         ).to_absolute()
 
-        TextFileService(x_text=XText(filepath)).write(
+        TextFileOperatorImpl(filepath).write(
             content=[str(last_tweet_id)],
             is_overwrite=True,
             encoding="UTF-8",

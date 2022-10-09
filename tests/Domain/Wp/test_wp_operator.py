@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, patch
+import pytest
 from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Wp.post import Post
 from shared.Domain.Wp.wp_operator import WpOperator
@@ -6,8 +7,13 @@ from shared.Domain.Wp.wp_operator_impl import WpOperatorImpl
 import json
 
 
+@pytest.fixture
+def sut() -> WpOperator:
+    return WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+
+
 @patch("shared.Domain.Wp.wp_operator_impl.requests")
-def test_レスポンスヘッダを取得できる(mock_requests) -> None:
+def test_レスポンスヘッダを取得できる(mock_requests, sut: WpOperator) -> None:
     mock_requests.head.return_value = MagicMock(
         status_code=200,
         headers={
@@ -18,8 +24,6 @@ def test_レスポンスヘッダを取得できる(mock_requests) -> None:
         },
     )
 
-    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
-
     expected = {
         "Server": "nginx",
         "Content-Type": "application/json; charset=UTF-8",
@@ -27,11 +31,13 @@ def test_レスポンスヘッダを取得できる(mock_requests) -> None:
         "X-WP-TotalPages": "10",
     }
 
-    assert expected == operator.response_headers()
+    actual = sut.response_headers()
+
+    assert expected == actual
 
 
 @patch("shared.Domain.Wp.wp_operator_impl.requests")
-def test_全ページ数を取得できる(mock_requests) -> None:
+def test_全ページ数を取得できる(mock_requests, sut: WpOperator) -> None:
 
     mock_requests.head.return_value = MagicMock(
         status_code=200,
@@ -44,13 +50,13 @@ def test_全ページ数を取得できる(mock_requests) -> None:
     )
 
     expected = 20
-    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+    actual = sut.total_page_count()
 
-    assert expected == operator.total_page_count()
+    assert expected == actual
 
 
 @patch("shared.Domain.Wp.wp_operator_impl.requests")
-def test_全記事数を取得できる(mock_requests) -> None:
+def test_全記事数を取得できる(mock_requests, sut: WpOperator) -> None:
 
     mock_requests.head.return_value = MagicMock(
         status_code=200,
@@ -63,13 +69,13 @@ def test_全記事数を取得できる(mock_requests) -> None:
     )
 
     expected = 150
-    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
+    actual = sut.total_posts_count()
 
-    assert expected == operator.total_posts_count()
+    assert expected == actual
 
 
 @patch("shared.Domain.Wp.wp_operator_impl.requests")
-def test_WordPressの記事を取得できる_全記事(mock_requests) -> None:
+def test_WordPressの記事を取得できる_全記事(mock_requests, sut: WpOperator) -> None:
 
     posts = [
         {
@@ -111,8 +117,6 @@ def test_WordPressの記事を取得できる_全記事(mock_requests) -> None:
         },
     )
 
-    operator: WpOperator = WpOperatorImpl(XUrl("https://hogefoobar.com/"))
-
     expected = [
         Post(
             posts[0]["id"],
@@ -140,4 +144,6 @@ def test_WordPressの記事を取得できる_全記事(mock_requests) -> None:
         ),
     ]
 
-    assert expected == operator.fetch_posts()
+    actual = sut.fetch_posts()
+
+    assert expected == actual

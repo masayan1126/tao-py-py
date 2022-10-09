@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from time import sleep
 from packages.twi_automation.env import ENV
 from packages.twi_automation.config import CONFIG
@@ -12,6 +13,7 @@ from tweepy.errors import HTTPException
 from tweepy import models
 
 
+@dataclass
 class TwitterOperatorImpl(TwitterOperator):
     def __init__(self):
 
@@ -22,11 +24,12 @@ class TwitterOperatorImpl(TwitterOperator):
 
         auth = tweepy.OAuth1UserHandler(CONSUMER_KEY, CONSUMER_SECRET)
         auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-        self._twi = API(auth)
+        _twi = API(auth)
+        self.__twi = _twi
         self._my_screen_name = ENV["MY_SCREEN_NAME"]
         self.black_list = ENV["BLACK_LIST"]
 
-    def twi(self):
+    def twi(self) -> API:
         return self._twi
 
     def do_tweet(self, tweet_content: XStr) -> Tweet:
@@ -55,13 +58,12 @@ class TwitterOperatorImpl(TwitterOperator):
             raise e
 
     def follow(self, hashtag: XStr) -> tuple[int, list[str]]:
-        try:
-            success_count = 0
-            followed_users = []
+        tweets = self.twi().search_tweets(q=hashtag.value(), count=25)
+        follow_count = 0
+        followed_users = []
+        for tweet in tweets:
+            try:
 
-            tweets = self.twi().search_tweets(q=hashtag.value(), count=25)
-
-            for tweet in tweets:
                 screen_name = tweet.user.screen_name
                 followed_users.append(f"{screen_name}" "\n")
 
@@ -72,17 +74,19 @@ class TwitterOperatorImpl(TwitterOperator):
                 ):
                     self.twi().create_friendship(screen_name=screen_name)
                     self.twi().create_favorite(tweet.id)
-                    success_count += 1
+                    follow_count += 1
                     # 以下で、RateLimitError ⇨ TooManyRequestsになった模様
                     # https://github.com/tweepy/tweepy/commit/cd5f696d09530f86ac0edf1ec0fe0a02578a3920
 
-            return success_count, followed_users
-        except (HTTPException) as e:
+            except (HTTPException) as e:
 
-            # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけ
+                # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけ
 
-            if 139 not in e.api_codes:
-                raise e
+                if 139 not in e.api_codes:
+                    raise e
+                else:
+                    continue
+        return follow_count, followed_users
 
     # 参考
     # https://kia-tips.com/it/python/write-twitter-bot-python-tweepy-unfollow-non-followers#i-3
@@ -91,13 +95,12 @@ class TwitterOperatorImpl(TwitterOperator):
         unfollowed_user_screen_names: list[str] = []
 
         try:
-            follower_ids = self.follower_ids(self.my_screen_name())
+            follower_ids = self.follower_ids(self.my_screen_name())  # フォロワーリスト
 
-            for friend_id in self.follow_ids(self.my_screen_name()):
+            for friend_id in self.follow_ids(self.my_screen_name()):  # フォローリスト
                 # 相互フォローでなければ(フォローしているユーザーがフォロワーにいなければ)
                 if friend_id in follower_ids:
-                    break
-                sleep(1)
+                    continue
 
                 while total_unfollow_count < max_unfollow_count:
                     self.twi().destroy_friendship(user_id=friend_id)

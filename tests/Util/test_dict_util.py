@@ -14,9 +14,7 @@ def setuped():
 
 
 def test_特定のキーの値が最も大きい辞書型の要素を返します(setuped):
-    d = DictUtil.highest(setuped, "tall", 0)
-
-    expected = d
+    expected = DictUtil.highest(setuped, "tall", 0)
     actual = setuped[1]
 
     assert expected == actual

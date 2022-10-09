@@ -19,8 +19,6 @@ class WebBrowserFactory(Factory):
         judgement = BrowserTypeJudgement(browser_type, is_headless, on_docker)
         webdriver: WebDriver = judgement.judge()
 
-        print(webdriver)
-
         web_browser_operator: WebBrowserOperator = DiContainer().resolve(
             WebBrowserOperator
         )

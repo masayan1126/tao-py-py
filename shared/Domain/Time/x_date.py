@@ -1,7 +1,9 @@
+from dataclasses import dataclass
 import datetime
 from dateutil.relativedelta import relativedelta
 
 
+@dataclass
 class XDate:
     def __init__(self, date_str: str) -> None:
 

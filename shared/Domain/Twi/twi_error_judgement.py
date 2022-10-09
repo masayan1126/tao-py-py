@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from shared.judgement import Judgement
-from tweepy import errors
+from tweepy.errors import HTTPException
 
 
 @dataclass
 class TwiErrorJudgement(Judgement):
-    e: errors.TweepyException
+    e: HTTPException
 
     def judge(self) -> str:
 
@@ -28,4 +28,4 @@ class TwiErrorJudgement(Judgement):
             return "Received spam treatment"
 
         else:
-            return "Failed"
+            return "Twitter API Something Failed"

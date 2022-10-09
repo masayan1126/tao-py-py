@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Any
 
-# 辞書が要素のリストに対して処理をする
+# 辞書が要素のリストに対してするユーティリティ
 
 
 class DictUtil:

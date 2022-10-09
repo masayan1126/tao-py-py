@@ -9,9 +9,8 @@ from shared.Domain.Url.x_url import XUrl
 @patch("shared.Domain.Scraping.html_analyzer_factory.requests")
 def test_HTML解析用オブジェクトを生成できる(mock_requests):
     mock_requests.get.return_value = MagicMock(status_code=200, content="dummy binary")
+    sut = HtmlAnalyzerFactory()
 
-    html_analyzer = HtmlAnalyzerFactory().create(XUrl("https://maasaablog.com"))
-
-    expected = HtmlAnalyzerImpl()
-    actual = html_analyzer
+    expected = sut.create(XUrl("https://maasaablog.com"))
+    actual = HtmlAnalyzerImpl()
     assert expected == actual

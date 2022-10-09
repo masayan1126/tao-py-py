@@ -24,9 +24,9 @@ def test_今日のIPアドレスを取得できる(mock_bs4_select_method, mock_
         XUrl("https://maasaablog.com")
     )
 
-    ip = IpAddressService(html_analyzer).get_today_ip()
+    sut = IpAddressService(html_analyzer)
 
     expected = "192.0.2.12"
-    actual = ip.value()
+    actual = sut.get_today_ip().value()
 
     assert expected == actual

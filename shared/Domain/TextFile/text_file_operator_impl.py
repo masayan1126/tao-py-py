@@ -2,17 +2,19 @@
 # 書き込み(w または wt)
 # 追記(a または at)
 
+from dataclasses import dataclass
 from typing import IO
-from shared.Domain.Text.x_text import XText
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.TextFile.text_file_operator import TextFileOperator
 
 
-class TextFileService:
-    def __init__(self, x_text: XText):
-        self.x_text = x_text
+@dataclass
+class TextFileOperatorImpl(TextFileOperator):
+    filepath: XFileSystemPath
 
     def _open(self, mode: str, encoding: str) -> IO:
         try:
-            f = open(self.x_text.filepath().of_text(), mode=mode, encoding=encoding)
+            f = open(self.filepath.of_text(), mode=mode, encoding=encoding)
             return f
         except FileNotFoundError:
             raise FileNotFoundError

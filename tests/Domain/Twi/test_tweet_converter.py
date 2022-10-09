@@ -11,7 +11,6 @@ def sut() -> TweetConverter:
 
 @patch("shared.Domain.Twi.tweet_converter.Status")
 def test_convert(tweepy_status_mock, sut: TweetConverter) -> None:
-
     tweepy_status_mock.id = 1
     tweepy_status_mock.text = "text1"
     tweepy_status_mock._json = {
@@ -26,7 +25,6 @@ def test_convert(tweepy_status_mock, sut: TweetConverter) -> None:
 
 @patch("shared.Domain.Twi.tweet_converter.Status")
 def test_convert_メディアなし(tweepy_status_mock, sut: TweetConverter) -> None:
-
     tweepy_status_mock.id = 2
     tweepy_status_mock.text = "text2"
     tweepy_status_mock._json = MagicMock()

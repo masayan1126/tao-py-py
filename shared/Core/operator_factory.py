@@ -7,6 +7,8 @@ class OperatorFactory(Factory):
     def create(self, type: OperatorType):
         if type is OperatorType.TWI:
             return TwitterOperatorImpl()
+        elif type is OperatorType.TEXTFILE:
+            pass
         elif type is OperatorType.WP:
             pass
         elif type is OperatorType.GUI:

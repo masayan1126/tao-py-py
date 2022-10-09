@@ -48,7 +48,7 @@ class XStr:
         return XStr(self.value().lower())
 
     # 文字も位置も一致している文字の数を返します
-    def compare(self, other: str) -> int:
+    def approximate(self, other: str) -> int:
         if self.count() != len(other):
             raise ValueError
 

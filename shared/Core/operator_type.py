@@ -3,7 +3,8 @@ from enum import Enum
 
 class OperatorType(Enum):
     TWI = 1
-    WP = 2
-    GUI = 3
-    BROWSER = 4
-    HTML = 5
+    TEXTFILE = 2
+    WP = 3
+    GUI = 4
+    BROWSER = 5
+    HTML = 6

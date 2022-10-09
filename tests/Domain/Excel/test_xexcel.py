@@ -16,9 +16,9 @@ def setuped_filepath() -> XFileSystemPath:
 def test_エクセルを読み取ることができる():
     filepath = XFileSystemPath(XStr("tests/Domain/Excel/sample.xlsx")).to_absolute()
     xworkbook = XExcel().read(filepath, sheet_name=None)
-    actual = xworkbook.get_all_sheet_names()[0]
     expected = "プログラミング言語一覧"
-    assert actual == expected
+    actual = xworkbook.get_all_sheet_names()[0]
+    assert expected == actual
 
 
 def test_エクセルを出力できる(setuped_filepath: XFileSystemPath):

@@ -6,32 +6,25 @@ from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Text.text_file_service import TextFileService
-from shared.Domain.Text.x_text import XText
+from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 
 def screen_name() -> XStr:
     return XStr(
-        TextFileService(
-            x_text=XText(
-                XFileSystemPath(
-                    XStr("packages/twi_automation/files/fetch_timeline/screen_name.txt")
-                ).to_absolute()
-            )
+        TextFileOperatorImpl(
+            XFileSystemPath(
+                XStr("packages/twi_automation/files/fetch_timeline/screen_name.txt")
+            ).to_absolute()
         ).read(encoding="UTF-8")
     )
 
 
 def since_tweet_id() -> int:
     return int(
-        TextFileService(
-            x_text=XText(
-                XFileSystemPath(
-                    XStr(
-                        "packages/twi_automation/files/fetch_timeline/since_tweet_id.txt"
-                    )
-                ).to_absolute()
-            )
+        TextFileOperatorImpl(
+            XFileSystemPath(
+                XStr("packages/twi_automation/files/fetch_timeline/since_tweet_id.txt")
+            ).to_absolute()
         ).read(encoding="UTF-8")
     )
 

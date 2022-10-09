@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock, patch
-from shared.Core.di_container import DiContainer
 from shared.Domain.Scraping.web_browser_factory import WebBrowserFactory
-from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
+from shared.Domain.Scraping.web_browser_operator_impl import WebBrowserOperatorImpl
 from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Scraping.browser_type import BrowserType
 
@@ -15,9 +14,6 @@ def test_ブラウザオブジェクトを生成できる(browser_judement_mock)
         XUrl("https://hogefoovar.com"), BrowserType.CHROME
     )
 
-    web_browser_operator = DiContainer().resolve(WebBrowserOperator)
-    web_browser_operator.boot(web_driver_mock, XUrl("https://hogefoovar.com"))
-
-    expected = web_browser_operator
+    expected = WebBrowserOperatorImpl()
     actual = browser_operator_from_mock
     assert expected == actual

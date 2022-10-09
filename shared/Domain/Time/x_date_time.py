@@ -1,9 +1,11 @@
+from dataclasses import dataclass
 import datetime
 
 from shared.Domain.Time.x_date import XDate
 from dateutil.relativedelta import relativedelta
 
 
+@dataclass
 class XDateTime:
     def __init__(self, date_time_str: str) -> None:
 
@@ -109,3 +111,6 @@ class XDateTime:
     def sub_seconds(self, seconds=1):
         self._datetime = self.datetime() - datetime.timedelta(seconds=seconds)
         return self
+
+    def text_of(self, format: str = "%Y-%m-%dT%H:%M:%S"):
+        return self.format(format)

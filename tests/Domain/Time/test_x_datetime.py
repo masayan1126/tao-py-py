@@ -4,108 +4,101 @@ from shared.Domain.Time.x_date import XDate
 from shared.Domain.Time.x_date_time import XDateTime
 
 
-def test_日時オブジェクトを生成できる() -> None:
+@pytest.fixture
+def sut() -> XDateTime:
+    return XDateTime("2022-12-29 23:10:45")
 
-    # formatテストはこのテスト以降にあるので、ここではisoformat()を使用する
-    actual = XDateTime("2022-12-29").datetime().isoformat()
-    expected = "2022-12-29T00:00:00"
+
+def test_日時オブジェクトを生成できる(sut: XDateTime) -> None:
+    expected = "2022-12-29T23:10:45"
+    actual = sut.text_of()
 
     assert expected == actual
 
 
-def test_日時オブジェクトを生成できる_ISO8601でない場合は例外() -> None:
+def test_日時オブジェクトを生成できる_ISO8601形式でない場合は例外() -> None:
     with pytest.raises(ValueError):
-        XDateTime("2022/12/29").datetime()
+        XDateTime("2022/12/29")
 
 
-def test_日時オブジェクトをフォーマットできる() -> None:
-
-    actual = XDateTime("2022-12-29").format("%Y/%m/%d %H:%M:%S")
-    expected = "2022/12/29 00:00:00"
+def test_日時オブジェクトをフォーマットできる(sut: XDateTime) -> None:
+    expected = "2022/12/29T23:10:45"
+    actual = sut.format("%Y/%m/%dT%H:%M:%S")
 
     assert expected == actual
 
 
-def test_日時オブジェクトから年を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29").year()
+def test_日時オブジェクトから年を取得できる(sut: XDateTime) -> None:
     expected = "2022"
+    actual = sut.year()
 
     assert expected == actual
 
 
-def test_日時オブジェクトから月を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29").month()
+def test_日時オブジェクトから月を取得できる(sut: XDateTime) -> None:
     expected = "12"
+    actual = sut.month()
 
     assert expected == actual
 
 
-def test_日時オブジェクトから日を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29").day()
+def test_日時オブジェクトから日を取得できる(sut: XDateTime) -> None:
     expected = "29"
+    actual = sut.day()
 
     assert expected == actual
 
 
-def test_日時オブジェクトから時間を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29 23:10:45").hour()
+def test_日時オブジェクトから時間を取得できる(sut: XDateTime) -> None:
     expected = "23"
+    actual = sut.hour()
 
     assert expected == actual
 
 
-def test_日時オブジェクトから分を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29 23:10:45").minutes()
+def test_日時オブジェクトから分を取得できる(sut: XDateTime) -> None:
     expected = "10"
+    actual = sut.minutes()
 
     assert expected == actual
 
 
-def test_日時オブジェクトから秒を取得できる() -> None:
-
-    actual = XDateTime("2022-12-29 23:10:45").seconds()
+def test_日時オブジェクトから秒を取得できる(sut: XDateTime) -> None:
     expected = "45"
+    actual = sut.seconds()
 
     assert expected == actual
 
 
 def test_今日の日時オブジェクトを生成できる() -> None:
-
     t_delta = datetime.timedelta(hours=9)
     # 日本標準時
     jst = datetime.timezone(t_delta, "JST")
 
-    actual = XDateTime.now().format("%Y-%m-%d %H:%M:%S")
+    sut = XDateTime.now()
+
     expected = datetime.datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S")
+    actual = sut.format("%Y-%m-%d %H:%M:%S")
 
     assert expected == actual
 
 
-def test_日時オブジェクトを日付オブジェクトに変換できる() -> None:
-
-    actual = XDateTime("2022-12-29 23:10:45").to_x_date().format("%Y/%m/%d")
-    expected = XDate("2022-12-29").format("%Y/%m/%d")
+def test_日時オブジェクトを日付オブジェクトに変換できる(sut: XDateTime) -> None:
+    expected = XDate("2022-12-29")
+    actual = sut.to_x_date()
 
     assert expected == actual
 
 
-def test_指定月の月末日を取得できる() -> None:
-
-    actual = XDateTime.last_datetime_of_month(2022, 1).format("%Y/%m/%d")
+def test_指定月の月末日を取得できる(sut: XDateTime) -> None:
     expected = "2022/01/31"
+    actual = sut.last_datetime_of_month(2022, 1).format("%Y/%m/%d")
 
     assert expected == actual
 
 
-def test_日時を加算できる_日() -> None:
-
-    x_date_time = XDateTime("2022-12-21 23:10:45")
-    actual = x_date_time.add_days(2).format("%Y/%m/%d")
-    expected = "2022/12/23"
+def test_日時を加算できる_日(sut: XDateTime) -> None:
+    expected = "2022/12/31"
+    actual = sut.add_days(2).format("%Y/%m/%d")
 
     assert expected == actual

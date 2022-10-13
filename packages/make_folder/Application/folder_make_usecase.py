@@ -10,7 +10,7 @@ from shared.Core.command import Command
 from shared.i_iterator import IIterator
 
 
-class MakeFolderUsecase:
+class FolderMakeUsecase:
     def __init__(self, folder_list_path: XFileSystemPath):
         self.folder_list_path = folder_list_path
 

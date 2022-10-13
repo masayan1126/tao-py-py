@@ -11,7 +11,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 from shared.Domain.Scraping.browser_type import BrowserType
 
 
-class LoginJobcanUsecase:
+class JobcanLoginUsecase:
     def handle(self) -> WebBrowserOperator:
         try:
 

@@ -5,7 +5,7 @@ from shared.Youtube.yt_transcript_list import YtTranscriptList
 
 
 @dataclass
-class BuildYoutubeTranscriptUsecase:
+class YoutubeTranscriptBuildUsecase:
 
     _yt_transcript_list: YtTranscriptList
 

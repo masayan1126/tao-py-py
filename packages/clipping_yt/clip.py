@@ -1,5 +1,5 @@
-from packages.clipping_yt.Application.clip_youtube_video_usecase import (
-    ClipYoutubeVideoUsecase,
+from packages.clipping_yt.Application.youtube_video_clip_usecase import (
+    YoutubeVideoClipUsecase,
 )
 
-ClipYoutubeVideoUsecase().clip()
+YoutubeVideoClipUsecase().clip()

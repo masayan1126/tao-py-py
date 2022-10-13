@@ -1,5 +1,5 @@
-from shared.Application.Youtube.download_youtube_video_usecase import (
-    DownloadYoutubeVideoUsecase,
+from shared.Application.Youtube.youtube_video_download_usecase import (
+    YoutubeVideoDownloadUsecase,
 )
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
@@ -9,4 +9,4 @@ options = {"outtmpl": download_path_to.of_text()}
 
 video_id = "vudjymfhl3A"  # TODO: CSVから読み込む
 
-DownloadYoutubeVideoUsecase().download(video_id=video_id, options=options)
+YoutubeVideoDownloadUsecase().download(video_id=video_id, options=options)

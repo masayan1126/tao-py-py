@@ -5,7 +5,7 @@ from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.String.xstr import XStr
 
 
-class PickUpNeedsFixRecordsUsecase:
+class NeedsFixRecordsPickUpUsecase:
     def handle(self, web_browser_operator: WebBrowserOperator):
         trs = web_browser_operator.search_by_css_selector(css_selector="tbody tr")
         # すでに工数が入力されているが、総労働時間と工数合計が等しくない(つまり修正が必要なレコード)

@@ -1,5 +1,5 @@
-from packages.mercari.Application.exhibit_new_product_usecase import (
-    ExhibitNewProductUsecase,
+from packages.mercari.Application.new_product_exhibit_usecase import (
+    NewProductExhibitUsecase,
 )
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
@@ -10,4 +10,4 @@ detail = ""
 detail_filepath = XFileSystemPath(XStr("packages/mercari/detail.txt")).to_absolute()
 
 
-ExhibitNewProductUsecase().exhibit(detail_filepath)
+NewProductExhibitUsecase().exhibit(detail_filepath)

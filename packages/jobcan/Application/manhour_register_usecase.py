@@ -8,7 +8,7 @@ from shared.Domain.String.xstr import XStr
 from selenium.webdriver.common.keys import Keys
 
 
-class RegisterManhourUseCase:
+class ManhourRegisterUseCase:
     def handle(self, web_browser_operator: WebBrowserOperator):
         records = web_browser_operator.search_by_css_selector(css_selector="tbody > tr")
         today_record_index = 0

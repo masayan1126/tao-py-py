@@ -1,13 +1,12 @@
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
-
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 # memo: 一旦保留
 
 
-class ExhibitNewProductUsecase:
+class NewProductExhibitUsecase:
     def exhibit(self, detail_filepath: XFileSystemPath):
 
         detail = TextFileOperatorImpl(detail_filepath).read(encoding="UTF-8")

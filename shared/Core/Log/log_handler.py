@@ -24,7 +24,7 @@ from slack_log_handler import SlackLogHandler
 class LogHandler:
     log_type: LogType
     log_message: str
-    caller = None
+    caller: str = ""
 
     def to_slack(self, webhook_url: str):
         if self.log_type == LogType.EXCEPTION:
@@ -44,5 +44,5 @@ class LogHandler:
             logger.exception(self.log_message, stack_info=True)
             return "Exception to slack"
         elif self.log_type == LogType.NOTIFICATION:
-            logger.info(self.log_message, stack_info=True)
+            logger.info(self.log_message, stack_info=False)
             return "Notification to slack"

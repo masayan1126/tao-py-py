@@ -1,11 +1,14 @@
-from flask import Flask
+#!/home/maasaablog/.local/share/virtualenvs/tao-pypy-gEOT-sr7/bin/python3.10
+
+from flask import Flask, jsonify
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
 
 
-@app.route("/tweet", methods=["GET"])
-def get_tweet():
-    return "Success a Tweet!\n"
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({"recipe": "hoge"})
 
 
 if __name__ == "__main__":

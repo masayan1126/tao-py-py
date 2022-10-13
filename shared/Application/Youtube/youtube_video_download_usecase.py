@@ -2,7 +2,7 @@ from shared.Domain.Url.x_url import XUrl
 from shared.Youtube.yt_downloader import YtDownloader
 
 
-class DownloadYoutubeVideoUsecase:
+class YoutubeVideoDownloadUsecase:
     def download(self, video_id: str, options: dict):
 
         yt_downloader = YtDownloader(options)

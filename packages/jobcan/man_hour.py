@@ -1,9 +1,9 @@
-from packages.jobcan.Application.login_jobcan_usecase import LoginJobcanUsecase
-from packages.jobcan.Application.pick_up_needs_fix_records_usecase import (
-    PickUpNeedsFixRecordsUsecase,
+from packages.jobcan.Application.jobcan_login_usecase import JobcanLoginUsecase
+from packages.jobcan.Application.needs_fix_records_pick_up_usecase import (
+    NeedsFixRecordsPickUpUsecase,
 )
 
-from packages.jobcan.Application.register_manhour_usecase import RegisterManhourUseCase
+from packages.jobcan.Application.manhour_register_usecase import ManhourRegisterUseCase
 from shared.Core.Log.log_type import LogType
 from shared.Domain.IpAddress.ip_address_service import IpAddressService
 from shared.Core.Log.log_handler import LogHandler
@@ -30,6 +30,6 @@ LogHandler(
     f"Notify today task to line is successed !!\n And Today Your IP is {ip_address.value()}",
 ).to_slack(ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"])
 
-web_browser_operator = LoginJobcanUsecase().handle()
-RegisterManhourUseCase().handle(web_browser_operator)
-PickUpNeedsFixRecordsUsecase().handle(web_browser_operator)
+web_browser_operator = JobcanLoginUsecase().handle()
+ManhourRegisterUseCase().handle(web_browser_operator)
+NeedsFixRecordsPickUpUsecase().handle(web_browser_operator)

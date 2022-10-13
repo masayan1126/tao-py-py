@@ -1,6 +1,6 @@
 from time import sleep
-from packages.xserver.Application.open_xserver_filemanager_usecase import (
-    OpenXserverFilemanagerUsecase,
+from packages.xserver.Application.xserver_filemanager_open_usecase import (
+    XserverFilemanagerOpenUsecase,
 )
 
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
@@ -25,6 +25,6 @@ command.set_reciver(LoginXserverReciver())
 sleep(3)
 
 automatic_operator: AutomaticOperator = AutomaticOperatorImpl()
-OpenXserverFilemanagerUsecase(
+XserverFilemanagerOpenUsecase(
     automatic_operator, chrome_browser_operator, command
 ).open_filemanager()

@@ -10,7 +10,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 
 
 @dataclass
-class OpenXserverFilemanagerUsecase:
+class XserverFilemanagerOpenUsecase:
     automatic_operator: AutomaticOperator
     web_browser_operator: WebBrowserOperator
     login_xserver_command: Command

@@ -20,14 +20,7 @@ jobs:
       credentials:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      
-    services:
-      # ubuntuからはこのサービスコンテナ名で通信可能
-      selenium:
-        image: selenium/standalone-chrome
-        volumes:
-          - /dev/shm:/dev/shm
-
+    
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
@@ -47,7 +40,7 @@ jobs:
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv install --dev --skip-lock
+        pipenv install
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

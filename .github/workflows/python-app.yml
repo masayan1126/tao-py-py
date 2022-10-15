@@ -27,7 +27,7 @@ jobs:
       SLACK_FOOTER: ""
 
     steps:
-    - name: Confirm
+    - name: Confirm version
       run: |
         ls -la
         python -V
@@ -37,6 +37,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install pipenv
+        pipenv run python -V
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため

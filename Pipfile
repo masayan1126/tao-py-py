@@ -6,15 +6,6 @@ name = "pypi"
 [packages]
 pandas = "*"
 beautifulsoup4 = "*"
-requests = "*"
-webdriver-manager = "*"
-selenium = "*"
-pillow = "*"
-youtube-dl = "*"
-slack-log-handler = "*"
-tweepy = "*"
-openpyxl = "*"
-
 
 [dev-packages]
 mypy = "*"

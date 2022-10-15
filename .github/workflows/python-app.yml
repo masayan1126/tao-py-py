@@ -13,7 +13,13 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    
+    container:
+      image: python:3.10.5-buster
+      credentials:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
     
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -33,6 +39,7 @@ jobs:
         python -m pip install pipenv
     - name: Install dependencies
       run: |
+        # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
         pipenv sync --dev
     - name: Lint with flake8
       run: |

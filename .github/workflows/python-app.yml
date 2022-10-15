@@ -40,7 +40,6 @@ jobs:
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv sync --dev
         pipenv shell
         which python
         python -V

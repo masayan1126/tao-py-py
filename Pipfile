@@ -14,17 +14,7 @@ youtube-dl = "*"
 slack-log-handler = "*"
 tweepy = "*"
 openpyxl = "*"
-chromedriver-binary = "==93.*"
-retry = "*"
-google-api-python-client = "*"
-google-auth = "*"
-youtube-transcript-api = "*"
-ffmpeg-python = "*"
-pyautogui = "*"
-pyperclip = "*"
-tqdm = "*"
-atomicwrites = "*"
-flask = "*"
+
 
 [dev-packages]
 mypy = "*"

@@ -39,7 +39,7 @@ jobs:
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv sync --dev
+        pipenv install
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

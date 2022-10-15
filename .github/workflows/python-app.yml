@@ -16,18 +16,25 @@ jobs:
     runs-on: ubuntu-latest
     
     container:
-      image: python:3.10.5-buster
+      image: python:3.9.4-buster
       credentials:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-    
+      
+    services:
+      # ubuntuからはこのサービスコンテナ名で通信可能
+      selenium:
+        image: selenium/standalone-chrome
+        volumes:
+          - /dev/shm:/dev/shm
+
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
       SLACK_FOOTER: ""
 
     steps:
-    - name: Confirm version
+    - name: Confirm
       run: |
         ls -la
         python -V
@@ -37,11 +44,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install pipenv
-        pipenv run python -V
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv sync --dev
+        pipenv install --dev --skip-lock
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -89,7 +95,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
           port: 10022
           local_path: './'
-          remote_path: ${{ secrets.SFTP_REMOTE_PATH }} 
+          remote_path: '/home/maasaablog/maasaablog.com/public_html/dev.maasaablog.com/tao-pypy'
     
       - name: Slack Notification on Success
         uses: rtCamp/action-slack-notify@v2.2.0

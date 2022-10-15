@@ -40,7 +40,12 @@ jobs:
     - name: Install dependencies
       run: |
         # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv install --dev --skip-lock
+        pipenv sync --dev
+        pipenv shell
+        which python
+        python -V
+        ls -la
+        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -49,7 +54,7 @@ jobs:
         pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run test
       run: | 
-        pipenv run pytest tests
+        pytest tests
 
     - name: Slack Notification on Success
       uses: rtCamp/action-slack-notify@v2.2.0

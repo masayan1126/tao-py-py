@@ -41,7 +41,7 @@ jobs:
         poetry --version
     - name: Poetry Install Dependencies
       run: |
-        poetry install --no-interaction
+        poetry install
     - name: Test with pytest
       run: |
         poetry run pytest

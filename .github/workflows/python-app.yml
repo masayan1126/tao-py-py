@@ -15,12 +15,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     
-    container:
-      image: python:3.10.5-buster
-      credentials:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-    
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
       SLACK_CHANNEL: develops-tao-pypy
@@ -33,15 +27,24 @@ jobs:
         python -V
     - uses: actions/checkout@v2
 
-    - name: Install pipenv
+    - name: Set up Python 3.10.5
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.10.5
+
+    - name: Install poetry
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install pipenv
-    - name: Install dependencies
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+    - name: Poetry Version
       run: |
-        # OSによりインストール方法が異なる(pyautogui等)lockファイルに対応するため
-        pipenv shell
-        pipenv install
+        poetry --version
+    - name: Poetry Install Dependencies
+      run: |
+        poetry install --no-interaction
+    - name: Test with pytest
+      run: |
+        poetry run pytest
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

@@ -4,6 +4,7 @@ from packages.jobcan.Application.needs_fix_records_pick_up_usecase import (
 )
 
 from packages.jobcan.Application.manhour_register_usecase import ManhourRegisterUseCase
+from packages.jobcan.env import ENV
 from shared.Core.Log.log_type import LogType
 from shared.Domain.IpAddress.ip_address_service import IpAddressService
 from shared.Core.Log.log_handler import LogHandler
@@ -28,6 +29,7 @@ ip_address = IpAddressService(html_analyzer).get_today_ip()
 LogHandler(
     LogType.NOTIFICATION,
     f"Notify today task to line is successed !!\n And Today Your IP is {ip_address.value()}",
+    ENV["PACKAGE_NAME"],
 ).to_slack(ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"])
 
 web_browser_operator = JobcanLoginUsecase().handle()

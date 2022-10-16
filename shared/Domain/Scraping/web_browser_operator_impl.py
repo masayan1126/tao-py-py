@@ -43,7 +43,7 @@ class WebBrowserOperatorImpl:
             self._webdriver.find_elements(By.CLASS_NAME, class_name)
         )
 
-    def find_by_css_selector(self, css_selector: str) -> XWebElement:
+    def find_by_css_selector(self, css_selector: str) -> XWebElementList:
         return WebElementConverter().convert(
             self._webdriver.find_elements(By.CSS_SELECTOR, css_selector)
         )
@@ -66,5 +66,8 @@ class WebBrowserOperatorImpl:
     def web_driver(self) -> WebDriver:
         return self._webdriver
 
-    def switch_new_tab(self):
-        return self._webdriver.switch_to.window(self._webdriver.window_handles[-1])
+    def switch_new_tab(self, to: str = None):
+        self._webdriver.switch_to.window(self._webdriver.window_handles[-1])
+
+        if to is not None:
+            self.web_driver().get(to)

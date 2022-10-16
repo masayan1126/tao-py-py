@@ -38,6 +38,5 @@ class XserverFilemanagerOpenUsecase:
 
         except SessionNotCreatedException:
             LogHandler(
-                LogType.EXCEPTION,
-                "Browser version may not be up to date .",
+                LogType.EXCEPTION, "Browser version may not be up to date .", "XSERVER"
             ).to_slack(ENV["SLACK_WEBHOOK_URL_COMMON"])

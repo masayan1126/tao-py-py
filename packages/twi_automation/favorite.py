@@ -19,6 +19,7 @@ try:
     LogHandler(
         LogType.NOTIFICATION,
         "Favorite was successful" "\n" f"{favorited_user_screen_names}",
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
 except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
@@ -29,4 +30,5 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
     LogHandler(
         LogType.EXCEPTION,
         log_msg,
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

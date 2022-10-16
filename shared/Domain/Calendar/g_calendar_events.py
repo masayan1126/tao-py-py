@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Callable
 from shared.Domain.Calendar.g_calendar_event import GCalendarEvent
 from shared.Domain.Array.abstract_array import AbstractArray
 
@@ -11,3 +13,7 @@ class GCalendarEvents(AbstractArray):
 
     def all(self) -> list[GCalendarEvent]:
         return super().all()
+
+    def map(self, callable: Callable) -> GCalendarEvents:
+        super().map(callable)
+        return self

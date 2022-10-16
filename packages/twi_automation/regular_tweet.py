@@ -14,12 +14,15 @@ now = XDateTime.now()
 tweet = ENV["REGULAR_TWEET"]
 
 tweet_content = XStr(f"{tweet}{now.format('%Y/%m/%d %H:%M:%S')}")
-twitter_operator = OperatorFactory().create(OperatorType.TWI)
 
 try:
+    operator = OperatorFactory().create(OperatorType.TWI)
+    operator.do_tweet(tweet_content)
+
     LogHandler(
         LogType.NOTIFICATION,
         "Tweet was successful" "\n\n" f"{tweet_content.value()}",
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
 except (errors.TweepyException) as e:
@@ -28,6 +31,7 @@ except (errors.TweepyException) as e:
     log_msg = judgement.judge()
 
     LogHandler(
-        LogType.NOTIFICATION,
+        LogType.EXCEPTION,
         log_msg,
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

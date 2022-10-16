@@ -35,12 +35,14 @@ class ManhourRegisterUseCase:
         modal_title = web_browser_operator.find_by_class_name(
             class_name="modal-title"
         ).first()
-        xregex = XRegex("(?<=\＝).+")
+        xregex = XRegex(XStr("(?<=\＝).+"))
         working_time = xregex.partial_match(XStr(modal_title.web_element().text))
         sleep(2)
-        working_time_input = web_browser_operator.find_by_css_selector(
-            "#save-form .man-hour-input"
-        ).web_element()
+        working_time_input = (
+            web_browser_operator.find_by_css_selector("#save-form .man-hour-input")
+            .first()
+            .web_element()
+        )
 
         working_time_input.clear()
         working_time_input.send_keys(working_time)

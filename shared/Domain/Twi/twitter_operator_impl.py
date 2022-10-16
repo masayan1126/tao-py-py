@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from time import sleep
 from packages.twi_automation.env import ENV
 from packages.twi_automation.config import CONFIG
 from shared.Domain.Twi.twitter_operator import TwitterOperator
@@ -98,16 +97,18 @@ class TwitterOperatorImpl(TwitterOperator):
             follower_ids = self.follower_ids(self.my_screen_name())  # フォロワーリスト
 
             for friend_id in self.follow_ids(self.my_screen_name()):  # フォローリスト
-                # 相互フォローでなければ(フォローしているユーザーがフォロワーにいなければ)
+                if total_unfollow_count > max_unfollow_count:
+                    break
+
+                # 相互フォローだったら
                 if friend_id in follower_ids:
                     continue
 
-                while total_unfollow_count < max_unfollow_count:
-                    self.twi().destroy_friendship(user_id=friend_id)
-                    total_unfollow_count += 1
-                    unfollowed_user_screen_names.append(
-                        self.twi().get_user(user_id=friend_id).screen_name
-                    )
+                self.twi().destroy_friendship(user_id=friend_id)
+                total_unfollow_count += 1
+                unfollowed_user_screen_names.append(
+                    self.twi().get_user(user_id=friend_id).screen_name
+                )
 
             return total_unfollow_count, unfollowed_user_screen_names
 

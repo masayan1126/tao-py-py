@@ -26,17 +26,14 @@ class JobcanLoginUsecase:
             command.execute()
 
             # 新しいタブに切り替える
-            web_browser_operator.webdriver().switch_to.window(
-                web_browser_operator.webdriver().window_handles[-1]
-            )
-            web_browser_operator.webdriver().get(
+            web_browser_operator.switch_new_tab(
                 "https://ssl.jobcan.jp/employee/man-hour-manage"
             )
-
             return web_browser_operator
 
         except SessionNotCreatedException:
             LogHandler(
                 LogType.EXCEPTION,
                 "Browser version may not be up to date .",
+                ENV["PACKAGE_NAME"],
             ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])

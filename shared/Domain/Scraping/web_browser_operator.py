@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
 from selenium.webdriver.remote.webdriver import WebDriver
-from shared.Domain.Scraping.xbrowser import XBrowser
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.Url.x_url import XUrl
@@ -29,7 +28,7 @@ class WebBrowserOperator(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def find_by_css_selector(self, css_selector: str) -> XWebElement:
+    def find_by_css_selector(self, css_selector: str) -> XWebElementList:
         pass
 
     @abstractmethod
@@ -41,7 +40,7 @@ class WebBrowserOperator(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def switch_new_tab(self) -> None:
+    def switch_new_tab(self, to: str = None) -> None:
         pass
 
     @abstractmethod

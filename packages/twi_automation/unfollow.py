@@ -20,6 +20,7 @@ except Exception as e:
     LogHandler(
         LogType.EXCEPTION,
         error_message,
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 finally:
     if (
@@ -27,6 +28,7 @@ finally:
         and "unfollowed_user_screen_names" in locals()
     ):
         LogHandler(
-            LogType.EXCEPTION,
+            LogType.NOTIFICATION,
             f"{total_unfollow_count}人のフォローを解除しました。\n {unfollowed_user_screen_names}",
+            ENV["PACKAGE_NAME"],
         ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

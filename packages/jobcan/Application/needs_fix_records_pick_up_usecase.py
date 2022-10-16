@@ -30,9 +30,11 @@ class NeedsFixRecordsPickUpUsecase:
             LogHandler(
                 LogType.NOTIFICATION,
                 "修正が必要なレコードはありませんでした。",
+                ENV["PACKAGE_NAME"],
             ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])
         else:
             LogHandler(
                 LogType.NOTIFICATION,
                 f"修正が必要なレコードは{target_rows}です",
+                ENV["PACKAGE_NAME"],
             ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])

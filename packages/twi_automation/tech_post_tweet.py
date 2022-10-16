@@ -41,6 +41,7 @@ for random_number in random_numbers:
         LogHandler(
             LogType.NOTIFICATION,
             "Tweet was successful" "\n\n" f"{tweet_content.value()}",
+            ENV["PACKAGE_NAME"],
         ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
     except (errors.TweepyException) as e:
@@ -50,4 +51,5 @@ for random_number in random_numbers:
         LogHandler(
             LogType.EXCEPTION,
             log_msg,
+            ENV["PACKAGE_NAME"],
         ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

@@ -11,7 +11,7 @@
 - ブラウザ自動テスト
 ## 開発環境
 - Python 3.10
-- Pipenv(バージョン管理)
+- Poetry(バージョン管理)
 - Flake8, mypy(静的解析)
 - Docker(Seleniumテスト用)
 - Xserver(本番デプロイ先)

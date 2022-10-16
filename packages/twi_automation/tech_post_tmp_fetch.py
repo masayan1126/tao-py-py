@@ -24,4 +24,5 @@ except Exception as e:
     LogHandler(
         LogType.EXCEPTION,
         e,
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

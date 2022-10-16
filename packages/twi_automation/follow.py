@@ -21,6 +21,7 @@ if api_code == "88" or api_code == "283":
     LogHandler(
         LogType.EXCEPTION,
         "Rate limit もしくはspam認定を受けているため、処理開始前にキャンセルしました",
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
     TextFileOperatorImpl(error_log_filepath).write(
@@ -43,6 +44,7 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
     LogHandler(
         LogType.EXCEPTION,
         log_msg,
+        ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
     TextFileOperatorImpl(error_log_filepath).write(
@@ -53,4 +55,5 @@ finally:
         LogHandler(
             LogType.NOTIFICATION,
             "フォロー・いいね数:" f"{success_count}/25" "\n" f"{users_tried_to_follow}/25",
+            ENV["PACKAGE_NAME"],
         ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])

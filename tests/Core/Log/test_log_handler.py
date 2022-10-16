@@ -9,7 +9,7 @@ def test_slackにログを通知できる_NOTIFICATION(slack_log_handler_mock) -
     handler_mock.level = 1
     slack_log_handler_mock.return_value = handler_mock
 
-    sut = LogHandler(LogType.NOTIFICATION, "ログメッセージ1")
+    sut = LogHandler(LogType.NOTIFICATION, "ログメッセージ1", "package1")
 
     expected = "Notification to slack"
     actual = sut.to_slack("webhook url1")

@@ -17,8 +17,18 @@ config_mock.CONFIG = {
     "CALENDAR_AUTH_ENDPOINT": "https://www.googleapis.com/auth/calendar",
     "CALENDAR_ID": "AGRHRHHR@gmail.com",
 }
-
 sys.modules["packages.today_task_notification.config"] = config_mock
+
+credential_file_mock = MagicMock()
+sys.modules[
+    "packages.today_task_notification.my-daily-task-349202-9456073dfb61.json"
+] = credential_file_mock
+
+credential_file_mock.CONFIG = {
+    "LINE_NOTIFY_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx",
+    "CALENDAR_AUTH_ENDPOINT": "https://www.googleapis.com/auth/calendar",
+    "CALENDAR_ID": "AGRHRHHR@gmail.com",
+}
 
 
 # memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり
@@ -54,7 +64,10 @@ def g_calendar_event_list():
 
 
 @patch.object(GCalendarOperatorImpl, "_api_client")
-def test_fetch_events(g_calendar_api_mock) -> None:
+@patch.object(GCalendarOperatorImpl, "__init__")
+def test_fetch_events(init_mock, g_calendar_api_mock) -> None:
+
+    init_mock.return_value = None
 
     row_events = {
         "items": [

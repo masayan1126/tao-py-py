@@ -9,18 +9,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 
-# モジュールをモックへ差し替えるように追加(Gitリポジトリに存在しないconfigなど)
-import sys
-
-config_mock = MagicMock()
-config_mock.CONFIG = {
-    "LINE_NOTIFY_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx",
-    "CALENDAR_AUTH_ENDPOINT": "https://www.googleapis.com/auth/calendar",
-    "CALENDAR_ID": "AGRHRHHR@gmail.com",
-}
-sys.modules["packages.today_task_notification.config"] = config_mock
-
-
 # memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり
 from shared.Domain.GCalendar.g_calendar_operator_factory import GCalendarOperatorFactory
 from shared.Domain.GCalendar.g_calendar_operator_impl import GCalendarOperatorImpl

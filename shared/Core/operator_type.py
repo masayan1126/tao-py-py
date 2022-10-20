@@ -8,3 +8,4 @@ class OperatorType(Enum):
     GUI = 4
     BROWSER = 5
     HTML = 6
+    CALENDAR = 7

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from selenium.webdriver.common.by import By
 from injector import inject
 from shared.Domain.Converter.web_element_converter import WebElementConverter
+from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.xweb_element import XWebElement
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -9,7 +10,7 @@ from shared.Domain.Url.x_url import XUrl
 
 
 @dataclass
-class WebBrowserOperatorImpl:
+class WebBrowserOperatorImpl(WebBrowserOperator):
     @inject
     def boot(
         self, webdriver: WebDriver, x_url: XUrl, needs_multiple_tags: bool = False

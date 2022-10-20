@@ -10,8 +10,8 @@ def sut() -> XDateTime:
 
 
 def test_日時オブジェクトを生成できる(sut: XDateTime) -> None:
-    expected = "2022-12-29T23:10:45"
-    actual = sut.text_of()
+    expected = XDateTime("2022-12-29 23:10:45")
+    actual = sut
 
     assert expected == actual
 

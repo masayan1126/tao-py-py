@@ -1,7 +1,7 @@
 from shared.Domain.FileSystem.x_folder import XFolder
 
-from shared.i_iterator import IIterator
-from shared.i_aggregate import IAggregate
+from shared.Core.i_iterator import IIterator
+from shared.Core.i_aggregate import IAggregate
 
 
 class XFolderIterator(IIterator):

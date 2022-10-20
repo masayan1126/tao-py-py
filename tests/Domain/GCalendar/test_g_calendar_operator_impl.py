@@ -1,0 +1,121 @@
+from shared.Domain.GCalendar.g_calendar_event import GCalendarEvent
+import pytest
+from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventConverter
+from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
+from shared.Domain.Time.x_date import XDate
+from shared.Domain.Time.x_date_time import XDateTime
+
+from unittest.mock import MagicMock, patch
+import pytest
+
+
+# モジュールをモックへ差し替えるように追加(Gitリポジトリに存在しないconfigなど)
+import sys
+
+config_mock = MagicMock()
+config_mock.CONFIG = {
+    "LINE_NOTIFY_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx",
+    "CALENDAR_AUTH_ENDPOINT": "https://www.googleapis.com/auth/calendar",
+    "CALENDAR_ID": "AGRHRHHR@gmail.com",
+}
+sys.modules["packages.today_task_notification.config"] = config_mock
+
+
+# memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり
+from shared.Domain.GCalendar.g_calendar_operator_factory import GCalendarOperatorFactory
+from shared.Domain.GCalendar.g_calendar_operator_impl import GCalendarOperatorImpl
+
+
+@pytest.fixture
+def g_calendar_event_list():
+
+    # {
+    #             "id": "id1",
+    #             "htmlLink": "link1",
+    #             "created": XDateTime("2022-10-01"),
+    #             "updated": XDateTime("2022-10-01"),
+    #             "summary": "予定1",
+    #             "start": {"date": XDate("2022-10-01")},
+    #             "end": {"date": XDate("2022-10-02")},
+    #         },
+    #         {
+    #             "id": "id2",
+    #             "htmlLink": "link2",
+    #             "created": XDateTime("2022-10-02"),
+    #             "updated": XDateTime("2022-10-02"),
+    #             "summary": "予定2",
+    #             "start": {"date": XDate("2022-10-02")},
+    #             "end": {"date": XDate("2022-10-03")},
+    #         },
+
+    return GCalendarEvents(
+        [
+            GCalendarEvent(
+                id="id1",
+                summary="予定1",
+                link="link1",
+                start={"date": XDate("2022-10-01")},
+                end={"date": XDate("2022-10-02")},
+                created_at=XDateTime("2022-10-01"),
+                updated_at=XDateTime("2022-10-01"),
+            ),
+            GCalendarEvent(
+                id="id2",
+                summary="予定2",
+                link="link2",
+                start={"date": XDate("2022-10-02")},
+                end={"date": XDate("2022-10-03")},
+                created_at=XDateTime("2022-10-02"),
+                updated_at=XDateTime("2022-10-02"),
+            ),
+        ]
+    )
+
+
+# api clinentをmockにする必要がある
+# @patch("shared.Domain.GCalendar.g_calendar_operator_impl.Resource")
+@patch.object(GCalendarOperatorImpl, "api_client")
+def test_fetch_events(g_calendar_api_mock) -> None:
+
+    row_events = {
+        "items": [
+            {
+                "id": "id1",
+                "htmlLink": "link1",
+                "created": XDateTime("2022-10-01"),
+                "updated": XDateTime("2022-10-01"),
+                "summary": "予定1",
+                "start": {"date": XDate("2022-10-01")},
+                "end": {"date": XDate("2022-10-02")},
+            },
+            {
+                "id": "id2",
+                "htmlLink": "link2",
+                "created": XDateTime("2022-10-02"),
+                "updated": XDateTime("2022-10-02"),
+                "summary": "予定2",
+                "start": {"date": XDate("2022-10-02")},
+                "end": {"date": XDate("2022-10-03")},
+            },
+        ]
+    }
+
+    # mockのキャプチャ：　api_client().events().list().execute().__getitem__()
+    mock1 = MagicMock()
+    mock1.execute.return_value = row_events
+    resouce_mock = MagicMock()
+    resouce_mock.list.return_value = mock1
+    mock2 = MagicMock()
+    mock2.events.return_value = resouce_mock
+    g_calendar_api_mock.return_value = mock2
+
+    sut = GCalendarOperatorFactory().create()
+
+    expected = GCalendarEventConverter.from_row(row_events["items"])
+    actual = sut.fetch_events(
+        calendar_id="calendar_id1",
+        time_min="time_min1",
+        time_max="time_max1",
+    )
+
+    assert expected == actual

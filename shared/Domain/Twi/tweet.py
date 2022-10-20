@@ -9,6 +9,14 @@ class Tweet:
     _is_contain_media: bool = False
     _media_list: list = field(default_factory=list)
 
+    def __init__(
+        self, id: int, text: str, is_contain_media: bool = False, media_list: list = []
+    ):
+        self._id = id
+        self._text = text
+        self._is_contain_media = is_contain_media
+        self._media_list = media_list
+
     def id(self) -> int:
         return self._id
 

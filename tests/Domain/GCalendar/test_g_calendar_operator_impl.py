@@ -64,10 +64,10 @@ def g_calendar_event_list():
 
 
 @patch.object(GCalendarOperatorImpl, "_api_client")
-@patch.object(GCalendarOperatorImpl, "__init__")
-def test_fetch_events(init_mock, g_calendar_api_mock) -> None:
+@patch("shared.Domain.GCalendar.g_calendar_operator_impl.auth")
+def test_fetch_events(auth_mock, g_calendar_api_mock) -> None:
 
-    init_mock.return_value = None
+    auth_mock.load_credentials_from_file.return_value = [MagicMock()]
 
     row_events = {
         "items": [

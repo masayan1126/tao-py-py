@@ -1,6 +1,6 @@
 from googleapiclient.discovery import Resource
 from googleapiclient import discovery
-import google.auth
+from google import auth
 from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventConverter
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
@@ -11,7 +11,7 @@ from shared.Domain.GCalendar.g_calendar_operator import GCalendarOperator
 class GCalendarOperatorImpl(GCalendarOperator):
     def __init__(self, credential_json_file: XFileSystemPath):
 
-        credentials = google.auth.load_credentials_from_file(
+        credentials = auth.load_credentials_from_file(
             credential_json_file.to_absolute().of_text(),
             [CONFIG["CALENDAR_AUTH_ENDPOINT"]],
         )[0]

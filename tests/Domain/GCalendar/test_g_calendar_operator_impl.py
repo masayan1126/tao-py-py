@@ -29,25 +29,6 @@ from shared.Domain.GCalendar.g_calendar_operator_impl import GCalendarOperatorIm
 @pytest.fixture
 def g_calendar_event_list():
 
-    # {
-    #             "id": "id1",
-    #             "htmlLink": "link1",
-    #             "created": XDateTime("2022-10-01"),
-    #             "updated": XDateTime("2022-10-01"),
-    #             "summary": "予定1",
-    #             "start": {"date": XDate("2022-10-01")},
-    #             "end": {"date": XDate("2022-10-02")},
-    #         },
-    #         {
-    #             "id": "id2",
-    #             "htmlLink": "link2",
-    #             "created": XDateTime("2022-10-02"),
-    #             "updated": XDateTime("2022-10-02"),
-    #             "summary": "予定2",
-    #             "start": {"date": XDate("2022-10-02")},
-    #             "end": {"date": XDate("2022-10-03")},
-    #         },
-
     return GCalendarEvents(
         [
             GCalendarEvent(
@@ -72,9 +53,7 @@ def g_calendar_event_list():
     )
 
 
-# api clinentをmockにする必要がある
-# @patch("shared.Domain.GCalendar.g_calendar_operator_impl.Resource")
-@patch.object(GCalendarOperatorImpl, "api_client")
+@patch.object(GCalendarOperatorImpl, "_api_client")
 def test_fetch_events(g_calendar_api_mock) -> None:
 
     row_events = {

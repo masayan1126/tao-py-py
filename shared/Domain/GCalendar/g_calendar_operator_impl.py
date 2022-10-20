@@ -20,7 +20,7 @@ class GCalendarOperatorImpl(GCalendarOperator):
             [CONFIG["CALENDAR_AUTH_ENDPOINT"]],
         )[0]
 
-        self._api_client = discovery.build("calendar", "v3", credentials=credentials)
+        self.api_client = discovery.build("calendar", "v3", credentials=credentials)
 
     def fetch_events(self, calendar_id: str, time_min, time_max) -> GCalendarEvents:
         return GCalendarEventConverter.from_row(
@@ -28,7 +28,7 @@ class GCalendarOperatorImpl(GCalendarOperator):
         )
 
     def row_events(self, calendar_id: str, time_min, time_max):
-        resource: Resource = self.api_client().events()
+        resource: Resource = self._api_client().events()
 
         return resource.list(
             calendarId=calendar_id,
@@ -38,5 +38,5 @@ class GCalendarOperatorImpl(GCalendarOperator):
             orderBy="startTime",
         ).execute()["items"]
 
-    def api_client(self):
-        return self._api_client
+    def _api_client(self):
+        return self.api_client

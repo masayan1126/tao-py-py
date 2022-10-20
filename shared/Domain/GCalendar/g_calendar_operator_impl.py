@@ -4,7 +4,6 @@ from google import auth
 from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventConverter
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from packages.today_task_notification.config import CONFIG
 from shared.Domain.GCalendar.g_calendar_operator import GCalendarOperator
 
 
@@ -13,7 +12,7 @@ class GCalendarOperatorImpl(GCalendarOperator):
 
         credentials = auth.load_credentials_from_file(
             credential_json_file.to_absolute().of_text(),
-            [CONFIG["CALENDAR_AUTH_ENDPOINT"]],
+            ["https://www.googleapis.com/auth/calendar"],
         )[0]
 
         self.api_client = discovery.build("calendar", "v3", credentials=credentials)

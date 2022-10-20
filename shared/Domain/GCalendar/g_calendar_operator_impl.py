@@ -1,15 +1,11 @@
-from dataclasses import dataclass
 from googleapiclient.discovery import Resource
 from googleapiclient import discovery
 import google.auth
-from shared.Core.Log.log_handler import LogHandler
-from shared.Core.Log.log_type import LogType
 from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventConverter
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from packages.today_task_notification.config import CONFIG
 from shared.Domain.GCalendar.g_calendar_operator import GCalendarOperator
-from packages.twi_automation.env import ENV
 
 
 class GCalendarOperatorImpl(GCalendarOperator):

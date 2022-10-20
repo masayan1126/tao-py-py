@@ -18,7 +18,7 @@ config_mock.CONFIG = {
     "CALENDAR_ID": "AGRHRHHR@gmail.com",
 }
 
-sys.modules["shared.Domain.GCalendar.g_calendar_operator_impl.config"] = config_mock
+sys.modules["packages.today_task_notification.config"] = config_mock
 
 
 # memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり

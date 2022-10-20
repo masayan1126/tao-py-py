@@ -4,24 +4,8 @@ from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventCon
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
 from shared.Domain.Time.x_date import XDate
 from shared.Domain.Time.x_date_time import XDateTime
-
 from unittest.mock import MagicMock, patch
 import pytest
-
-# モジュールをモックへ差し替えるように追加(Gitリポジトリに存在しないconfigなど)
-import sys
-
-config_mock = MagicMock()
-config_mock.CONFIG = {
-    "LINE_NOTIFY_TOKEN": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx",
-    "CALENDAR_AUTH_ENDPOINT": "https://www.googleapis.com/auth/calendar",
-    "CALENDAR_ID": "AGRHRHHR@gmail.com",
-}
-
-sys.modules["packages.today_task_notification.config"] = config_mock
-
-
-# memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり
 from shared.Domain.GCalendar.g_calendar_operator_factory import GCalendarOperatorFactory
 from shared.Domain.GCalendar.g_calendar_operator_impl import GCalendarOperatorImpl
 
@@ -54,7 +38,10 @@ def g_calendar_event_list():
 
 
 @patch.object(GCalendarOperatorImpl, "_api_client")
-def test_fetch_events(g_calendar_api_mock) -> None:
+@patch("shared.Domain.GCalendar.g_calendar_operator_impl.auth")
+def test_fetch_events(auth_mock, g_calendar_api_mock) -> None:
+
+    auth_mock.load_credentials_from_file.return_value = [MagicMock()]
 
     row_events = {
         "items": [

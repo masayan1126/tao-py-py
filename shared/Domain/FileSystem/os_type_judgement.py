@@ -1,6 +1,6 @@
 import platform
 from shared.Domain.FileSystem.os_type import OsType
-from shared.judgement import Judgement
+from shared.Core.judgement import Judgement
 
 
 class OsTypeJudgement(Judgement):

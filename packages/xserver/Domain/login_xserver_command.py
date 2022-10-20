@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Core.command import Command
-from shared.i_reciver import IReceiver
+from shared.Core.i_reciver import IReceiver
 
 
 @dataclass

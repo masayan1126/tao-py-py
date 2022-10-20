@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 import datetime
-
 from shared.Domain.Time.x_date import XDate
 from dateutil.relativedelta import relativedelta
 
 
 @dataclass
 class XDateTime:
+    _datetime: datetime.datetime
+
     def __init__(self, date_time_str: str) -> None:
 
         try:
@@ -16,9 +17,6 @@ class XDateTime:
 
         except ValueError:
             raise ValueError
-
-    def datetime(self):
-        return self._datetime
 
     def year(self) -> str:
         return self.format("%Y")
@@ -71,45 +69,45 @@ class XDateTime:
         # format文字列は"%Y年%m月%d日%H時%M分%S秒"など
         # localにより、%Yなどの文字列は何を取得できるかが変わる
         # ここではエラーハンドリングしない。文字列が渡ってきさえすれば変換は可能。呼び出し側の記述が守れていればOKなため
-        return self.datetime().strftime(format)
+        return self._datetime.strftime(format)
 
     def to_x_date(self):
-        dt = self.datetime()
+        dt = self._datetime
         date = datetime.date(dt.year, dt.month, dt.day)
         date_str = date.isoformat()
         return XDate(date_str)
 
     def add_days(self, days=1):
-        self._datetime = self.datetime() + datetime.timedelta(days=days)
+        self._datetime = self._datetime + datetime.timedelta(days=days)
         return self
 
     def add_hours(self, hours=1):
-        self._datetime = self.datetime() + datetime.timedelta(hours=hours)
+        self._datetime = self._datetime + datetime.timedelta(hours=hours)
         return self
 
     def add_minutes(self, minutes=1):
-        self._datetime = self.datetime() + datetime.timedelta(minutes=minutes)
+        self._datetime = self._datetime + datetime.timedelta(minutes=minutes)
         return self
 
     def add_seconds(self, seconds=1):
-        self._datetime = self.datetime() + datetime.timedelta(seconds=seconds)
+        self._datetime = self._datetime + datetime.timedelta(seconds=seconds)
 
         return self
 
     def sub_days(self, days=1):
-        self._datetime = self.datetime() - datetime.timedelta(days=days)
+        self._datetime = self._datetime - datetime.timedelta(days=days)
         return self
 
     def sub_hours(self, hours=1):
-        self._datetime = self.datetime() - datetime.timedelta(hours=hours)
+        self._datetime = self._datetime - datetime.timedelta(hours=hours)
         return self
 
     def sub_minutes(self, minutes=1):
-        self._datetime = self.datetime() - datetime.timedelta(minutes=minutes)
+        self._datetime = self._datetime - datetime.timedelta(minutes=minutes)
         return self
 
     def sub_seconds(self, seconds=1):
-        self._datetime = self.datetime() - datetime.timedelta(seconds=seconds)
+        self._datetime = self._datetime - datetime.timedelta(seconds=seconds)
         return self
 
     def text_of(self, format: str = "%Y-%m-%dT%H:%M:%S"):

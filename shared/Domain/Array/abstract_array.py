@@ -1,9 +1,11 @@
 from __future__ import annotations
 from abc import abstractmethod
 from abc import ABCMeta
+from dataclasses import dataclass
 from typing import Any, Callable
 
 
+@dataclass
 class AbstractArray(metaclass=ABCMeta):
     def __init__(self, array: list[Any] = []):
         self.array = array

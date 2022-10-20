@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from shared.judgement import Judgement
+from shared.Core.judgement import Judgement
 from tweepy.errors import HTTPException
 
 

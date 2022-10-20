@@ -5,7 +5,9 @@ from dateutil.relativedelta import relativedelta
 
 @dataclass
 class XDate:
-    def __init__(self, date_str: str) -> None:
+    _date: datetime.date
+
+    def __init__(self, date_str) -> None:
 
         try:
             # Y-m-d形式(例.2012-02-21)
@@ -13,9 +15,6 @@ class XDate:
             self._date = datetime.date.fromisoformat(date_str)
         except ValueError:
             raise ValueError
-
-    def date(self):
-        return self._date
 
     def year(self) -> str:
         return self.format("%Y")
@@ -43,9 +42,9 @@ class XDate:
         last_day_str = datetime.date.strftime(last_day, "%Y-%m-%d")
         return XDate(last_day_str)
 
-    def format(self, format: str):
+    def format(self, format: str) -> str:
         # isoformat(Y-m-d)以外のフォーマットで取得したい場合に使用
         # format文字列は"%Y年%m月%d日"など
         # localにより、%Yなどの文字列は何を取得できるかが変わる
         # ここではエラーハンドリングしない。文字列が渡ってきさえすれば変換は可能。呼び出し側の記述が守れていればOKなため
-        return self.date().strftime(format)
+        return self._date.strftime(format)

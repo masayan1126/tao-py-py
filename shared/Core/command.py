@@ -1,5 +1,5 @@
 import abc
-from shared.i_reciver import IReceiver
+from shared.Core.i_reciver import IReceiver
 
 
 class Command:

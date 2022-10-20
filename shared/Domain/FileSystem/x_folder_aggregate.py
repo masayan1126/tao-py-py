@@ -1,6 +1,6 @@
 from typing import Callable
 from shared.Domain.FileSystem.x_folder import XFolder
-from shared.i_aggregate import IAggregate
+from shared.Core.i_aggregate import IAggregate
 from shared.Domain.FileSystem.x_folder_iterator import XFolderIterator
 
 

@@ -1,5 +1,5 @@
 from shared.Domain.Scraping.browser_type import BrowserType
-from shared.judgement import Judgement
+from shared.Core.judgement import Judgement
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome import service as fs

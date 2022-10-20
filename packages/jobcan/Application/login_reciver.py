@@ -8,9 +8,6 @@ from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 
 class LoginReciver:
-    def __str__(self):
-        pass
-
     def action(self, web_browser_operator: WebBrowserOperator) -> None:
         user_email = web_browser_operator.find_by_id(id_name="user_email")
         user_password = web_browser_operator.find_by_id(id_name="user_password")

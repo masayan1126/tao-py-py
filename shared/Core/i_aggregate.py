@@ -1,6 +1,6 @@
 import abc
 
-from shared.i_iterator import IIterator
+from shared.Core.i_iterator import IIterator
 
 
 class IAggregate:

@@ -1,6 +1,6 @@
 from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Core.command import Command
-from shared.i_reciver import IReceiver
+from shared.Core.i_reciver import IReceiver
 
 
 class MakeFolderCommand(Command):

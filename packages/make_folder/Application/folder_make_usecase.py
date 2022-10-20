@@ -5,9 +5,9 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.FileSystem.x_folder import XFolder
 from shared.Domain.FileSystem.x_folder_aggregate import XFolderAggregate
 from shared.Domain.String.xstr import XStr
-from shared.i_aggregate import IAggregate
+from shared.Core.i_aggregate import IAggregate
 from shared.Core.command import Command
-from shared.i_iterator import IIterator
+from shared.Core.i_iterator import IIterator
 
 
 class FolderMakeUsecase:

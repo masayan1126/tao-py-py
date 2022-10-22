@@ -3,9 +3,7 @@ from packages.jobcan.env import ENV
 from packages.xserver.Domain.login_xserver_command import LoginXserverCommand
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Domain.Scraping.web_browser_operator_factory import (
-    WebBrowserOperatorFactory,
-)
+from shared.Domain.Scraping.web_browser_factory import WebBrowserFactory
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Url.x_url import XUrl
 from shared.Core.command import Command
@@ -17,21 +15,21 @@ class JobcanLoginUsecase:
     def handle(self) -> WebBrowserOperator:
         try:
 
-            chorme_browser_operator = WebBrowserOperatorFactory().create(
+            web_browser_operator = WebBrowserFactory().create(
                 x_url=XUrl("https://id.jobcan.jp/"),
                 browser_type=BrowserType.CHROME,
                 is_headless=False,
             )
 
-            command: Command = LoginXserverCommand(chorme_browser_operator)
+            command: Command = LoginXserverCommand(web_browser_operator)
             command.set_reciver(LoginReciver())
             command.execute()
 
             # 新しいタブに切り替える
-            chorme_browser_operator.switch_new_tab(
+            web_browser_operator.switch_new_tab(
                 "https://ssl.jobcan.jp/employee/man-hour-manage"
             )
-            return chorme_browser_operator
+            return web_browser_operator
 
         except SessionNotCreatedException:
             LogHandler(

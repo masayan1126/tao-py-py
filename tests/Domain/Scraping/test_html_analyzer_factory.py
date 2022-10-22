@@ -7,11 +7,10 @@ from shared.Domain.Url.x_url import XUrl
 
 
 @patch("shared.Domain.Scraping.html_analyzer_factory.requests")
-def test_HTML解析用インスタンスを生成できる(mock_requests):
-    response_mock = MagicMock(status_code=200, content="dummy binary")
-    mock_requests.get.return_value = response_mock
+def test_HTML解析用オブジェクトを生成できる(mock_requests):
+    mock_requests.get.return_value = MagicMock(status_code=200, content="dummy binary")
     sut = HtmlAnalyzerFactory()
 
-    expected = HtmlAnalyzerImpl()
-    actual = sut.create(XUrl("https://maasaablog.com"))
+    expected = sut.create(XUrl("https://maasaablog.com"))
+    actual = HtmlAnalyzerImpl()
     assert expected == actual

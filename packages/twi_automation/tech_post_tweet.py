@@ -1,6 +1,8 @@
 from pandas import DataFrame
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
+from shared.Core.operator_factory import OperatorFactory
+from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
@@ -8,12 +10,9 @@ from packages.twi_automation.env import ENV
 from shared.Domain.Converter.data_frame_converter import DataFrameConverter
 
 from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.Number.number_randomizer import NumberRandomizer
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
-from shared.Domain.Twi.twitter_operator_factory_option import (
-    TwitterOperatorFactoryOption,
-)
 from tweepy import errors
 
 # 毎日30分おきにランダムで1記事をツイート(csvのリストから取得)
@@ -29,8 +28,7 @@ posts = DataFrameConverter.to_list(posts_df)
 randomizer = NumberRandomizer()
 random_numbers = randomizer.generate(0, len(posts), 1)
 
-factory_option = TwitterOperatorFactoryOption(ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"])
-operator = TwitterOperatorFactory().create(factory_option)
+twitter_operator = OperatorFactory().create(OperatorType.TWI)
 
 for random_number in random_numbers:
     selected_post = posts[random_number]
@@ -38,7 +36,7 @@ for random_number in random_numbers:
     link = selected_post["link"]
     tweet_content = XStr(f"{title}" "\n\n" f"{link}")
     try:
-        operator.do_tweet(tweet_content)
+        twitter_operator.do_tweet(tweet_content)
 
         LogHandler(
             LogType.NOTIFICATION,

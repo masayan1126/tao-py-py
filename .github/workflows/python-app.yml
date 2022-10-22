@@ -17,11 +17,11 @@ jobs:
     
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SLACK_CHANNEL: devops-tao-pypy
+      SLACK_CHANNEL: develops-tao-pypy
       SLACK_FOOTER: ""
 
     steps:
-    - name: Confirm version
+    - name: Confirm
       run: |
         ls -la
         python -V
@@ -36,7 +36,7 @@ jobs:
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
         echo "$HOME/.poetry/bin" >> $GITHUB_PATH
-    - name: Confirm Poetry Version
+    - name: Poetry Version
       run: |
         poetry --version
     - name: Poetry Install Dependencies
@@ -78,7 +78,7 @@ jobs:
 
     env:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SLACK_CHANNEL: devops-tao-pypy
+      SLACK_CHANNEL: develops-tao-pypy
       SLACK_FOOTER: ":rocket:"
 
     steps:

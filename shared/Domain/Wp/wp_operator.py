@@ -1,21 +1,19 @@
-from abc import ABCMeta, abstractmethod
-
-from shared.Domain.Wp.post import Post
+import abc
 
 
-class WpOperator(metaclass=ABCMeta):
-    @abstractmethod
+class WpOperator:
+    @abc.abstractmethod
     def response_headers(self):
         pass
 
-    @abstractmethod
-    def total_page_count(self) -> int:
+    @abc.abstractmethod
+    def total_page_count(self):
         pass
 
-    @abstractmethod
-    def total_posts_count(self) -> int:
+    @abc.abstractmethod
+    def total_posts_count(self):
         pass
 
-    @abstractmethod
-    def fetch_posts(self) -> list[Post]:
+    @abc.abstractmethod
+    def fetch_posts(self):
         pass

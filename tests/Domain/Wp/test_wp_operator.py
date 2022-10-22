@@ -3,13 +3,13 @@ import pytest
 from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Wp.post import Post
 from shared.Domain.Wp.wp_operator import WpOperator
-from shared.Domain.Wp.wp_operator_factory import WpOperatorFactory
+from shared.Domain.Wp.wp_operator_impl import WpOperatorImpl
 import json
 
 
 @pytest.fixture
 def sut() -> WpOperator:
-    return WpOperatorFactory().create(XUrl("https://hogefoobar.com/"))
+    return WpOperatorImpl(XUrl("https://hogefoobar.com/"))
 
 
 @patch("shared.Domain.Wp.wp_operator_impl.requests")

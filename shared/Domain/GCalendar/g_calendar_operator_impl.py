@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from googleapiclient.discovery import Resource
 from googleapiclient import discovery
 from google import auth
@@ -8,7 +7,6 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.GCalendar.g_calendar_operator import GCalendarOperator
 
 
-@dataclass
 class GCalendarOperatorImpl(GCalendarOperator):
     def __init__(self, credential_json_file: XFileSystemPath):
 

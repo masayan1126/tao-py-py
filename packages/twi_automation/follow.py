@@ -1,7 +1,6 @@
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Core.operator_factory import OperatorFactory
-from shared.Core.operator_type import OperatorType
+from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
 from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
@@ -9,12 +8,18 @@ from shared.Domain.Twi.twi_error_judgement import (
 from packages.twi_automation.env import ENV
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
+from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
+from shared.Domain.Twi.twitter_operator_factory_option import (
+    TwitterOperatorFactoryOption,
+)
 import tweepy
 
 error_log_filepath = XFileSystemPath(
     XStr("packages/twi_automation/error-log.txt")
 ).to_absolute()
-api_code = TextFileOperatorImpl(error_log_filepath).read(encoding="UTF-8")
+
+text_file_operator = TextFileOperatorFactory().create(error_log_filepath)
+api_code = text_file_operator.read(encoding="UTF-8")
 
 # Rate limit もしくはspam認定ならそもそも1回分処理を中止して、エラーログ用のテキストを空にする
 if api_code == "88" or api_code == "283":
@@ -24,7 +29,7 @@ if api_code == "88" or api_code == "283":
         ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
-    TextFileOperatorImpl(error_log_filepath).write(
+    text_file_operator.write(
         "", is_overwrite=True, encoding="UTF-8", needs_indention=True
     )
 
@@ -32,8 +37,12 @@ if api_code == "88" or api_code == "283":
 
 
 try:
-    twitter_operator = OperatorFactory().create(OperatorType.TWI)
-    success_count, users_tried_to_follow = twitter_operator.follow(
+    factory_option = TwitterOperatorFactoryOption(
+        ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"]
+    )
+
+    operator = TwitterOperatorFactory().create(factory_option)
+    success_count, users_tried_to_follow = operator.follow(
         hashtag=XStr(ENV["HASH_TAG"])
     )
 
@@ -47,9 +56,7 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
         ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
-    TextFileOperatorImpl(error_log_filepath).write(
-        e.api_codes[0], is_overwrite=True, encoding="UTF-8"
-    )
+    text_file_operator.write(e.api_codes[0], is_overwrite=True, encoding="UTF-8")
 finally:
     if "success_count" in locals() and "users_tried_to_follow" in locals():
         LogHandler(

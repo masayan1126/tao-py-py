@@ -1,6 +1,5 @@
 from unittest.mock import MagicMock, patch
 from shared.Domain.IpAddress.ip_address_service import IpAddressService
-from shared.Domain.Scraping.html_analyzer import HtmlAnalyzer
 from shared.Domain.Scraping.html_analyzer_factory import (
     HtmlAnalyzerFactory,
 )
@@ -20,9 +19,7 @@ def test_今日のIPアドレスを取得できる(mock_bs4_select_method, mock_
         MagicMock(text="Copyright (C) 1997-"),
     ]
 
-    html_analyzer: HtmlAnalyzer = HtmlAnalyzerFactory().create(
-        XUrl("https://maasaablog.com")
-    )
+    html_analyzer = HtmlAnalyzerFactory().create(XUrl("https://maasaablog.com"))
 
     sut = IpAddressService(html_analyzer)
 

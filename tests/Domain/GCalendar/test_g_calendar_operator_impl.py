@@ -1,7 +1,9 @@
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.GCalendar.g_calendar_event import GCalendarEvent
 import pytest
 from shared.Domain.GCalendar.g_calendar_event_converter import GCalendarEventConverter
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
+from shared.Domain.String.xstr import XStr
 from shared.Domain.Time.x_date import XDate
 from shared.Domain.Time.x_date_time import XDateTime
 from unittest.mock import MagicMock, patch
@@ -75,7 +77,7 @@ def test_fetch_events(auth_mock, g_calendar_api_mock) -> None:
     mock2.events.return_value = resouce_mock
     g_calendar_api_mock.return_value = mock2
 
-    sut = GCalendarOperatorFactory().create()
+    sut = GCalendarOperatorFactory().create(XFileSystemPath(XStr("sample.json")))
 
     expected = GCalendarEventConverter.from_row(row_events["items"])
     actual = sut.fetch_events(

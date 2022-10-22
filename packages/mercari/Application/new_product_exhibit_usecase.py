@@ -1,6 +1,7 @@
 from shared.Domain.Automatic.automatic_operator import AutomaticOperator
 from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
+from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
 from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 # memo: 一旦保留
@@ -9,7 +10,9 @@ from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 class NewProductExhibitUsecase:
     def exhibit(self, detail_filepath: XFileSystemPath):
 
-        detail = TextFileOperatorImpl(detail_filepath).read(encoding="UTF-8")
+        text_file_operator = TextFileOperatorFactory().create(detail_filepath)
+
+        detail = text_file_operator.read(encoding="UTF-8")
 
         automatic_operator: AutomaticOperator = AutomaticOperatorImpl()
 

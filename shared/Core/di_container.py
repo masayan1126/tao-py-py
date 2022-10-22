@@ -13,6 +13,8 @@ class DiContainer:
         )
         binder.bind(HtmlAnalyzer, to=injector.InstanceProvider(HtmlAnalyzerImpl()))
 
+        # TODO: wp,textfile,twi,automatic,calendar,
+
     # 引数にinterfaceを実現したクラスをmappingsをもとに返します
     def resolve(self, c):
         return injector.Injector(self.mappings).get(c)

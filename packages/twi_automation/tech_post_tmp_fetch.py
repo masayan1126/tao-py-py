@@ -4,6 +4,7 @@ from shared.Core.Log.log_type import LogType
 from shared.Domain.Excel.xcsv import XCsv
 from shared.Domain.Url.x_url import XUrl
 from shared.Domain.Wp.wp_operator import WpOperator
+from shared.Domain.Wp.wp_operator_factory import WpOperatorFactory
 from shared.Domain.Wp.wp_operator_impl import WpOperatorImpl
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
@@ -14,7 +15,7 @@ api_url = url + endpoint
 
 
 try:
-    wp_operator: WpOperator = WpOperatorImpl(api_url=XUrl(api_url))
+    wp_operator = WpOperatorFactory().create(XUrl(api_url))
     posts = wp_operator.fetch_posts(page=1)
 
     XCsv().output(

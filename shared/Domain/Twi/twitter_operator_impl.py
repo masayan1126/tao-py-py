@@ -8,7 +8,7 @@ from tweepy.api import API
 from tweepy import errors
 from tweepy.errors import HTTPException
 from tweepy import models
-from packages.twi_automation._config import CONFIG
+from packages.twi_automation.config import CONFIG
 import tweepy
 
 

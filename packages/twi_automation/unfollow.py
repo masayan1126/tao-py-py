@@ -1,17 +1,21 @@
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Core.operator_factory import OperatorFactory
-from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
+from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
+from shared.Domain.Twi.twitter_operator_factory_option import (
+    TwitterOperatorFactoryOption,
+)
 
 
 try:
-
-    twitter_operator = OperatorFactory().create(OperatorType.TWI)
-    total_unfollow_count, unfollowed_user_screen_names = twitter_operator.unfollow()
+    factory_option = TwitterOperatorFactoryOption(
+        ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"]
+    )
+    operator = TwitterOperatorFactory().create(factory_option)
+    total_unfollow_count, unfollowed_user_screen_names = operator.unfollow()
 
 except Exception as e:
     judgement = TwiErrorJudgement(e)

@@ -4,7 +4,7 @@ from shared.Domain.String.xstr import XStr
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
-from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
+from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
 
 
 class LoginReciver:
@@ -30,6 +30,7 @@ class LoginReciver:
 
     def auth_info(self) -> list[str]:
 
-        return TextFileOperatorImpl(
+        text_file_operator = TextFileOperatorFactory().create(
             XFileSystemPath(XStr("packages/jobcan/auth_info.txt")).to_absolute()
-        ).readlines(encoding="UTF-8")
+        )
+        return text_file_operator.readlines(encoding="UTF-8")

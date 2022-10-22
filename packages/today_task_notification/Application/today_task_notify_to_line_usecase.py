@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 from packages.today_task_notification.config import CONFIG
+from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.GCalendar.g_calendar_events import GCalendarEvents
 from shared.Domain.GCalendar.g_calendar_operator_factory import GCalendarOperatorFactory
 from shared.Domain.Notification.line.line_notification_service import (
     LineNotificationService,
 )
 from shared.Domain.Notification.notification import Notification
+from shared.Domain.String.xstr import XStr
 from shared.Domain.Time.x_date_time import XDateTime
 from packages.today_task_notification.config import CONFIG
 
@@ -30,7 +32,13 @@ class TodayTaskNotifyToLineUsecase:
 
         return (
             GCalendarOperatorFactory()
-            .create()
+            .create(
+                XFileSystemPath(
+                    XStr(
+                        "packages/today_task_notification/my-daily-task-349202-9456073dfb61.json"
+                    )
+                )
+            )
             .fetch_events(
                 calendar_id=CONFIG["CALENDAR_ID"],
                 time_min=time_min,

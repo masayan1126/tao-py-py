@@ -1,20 +1,23 @@
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Core.operator_factory import OperatorFactory
-from shared.Core.operator_type import OperatorType
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
 from shared.Domain.String.xstr import XStr
+from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
+from shared.Domain.Twi.twitter_operator_factory_option import (
+    TwitterOperatorFactoryOption,
+)
 import tweepy
 
-twitter_operator = OperatorFactory().create(OperatorType.TWI)
 
 try:
-    favorited_user_screen_names = twitter_operator.favorite(
-        hashtag=XStr(ENV["HASH_TAG"])
+    factory_option = TwitterOperatorFactoryOption(
+        ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"]
     )
+    operator = TwitterOperatorFactory().create(factory_option)
+    favorited_user_screen_names = operator.favorite(hashtag=XStr(ENV["HASH_TAG"]))
 
     LogHandler(
         LogType.NOTIFICATION,

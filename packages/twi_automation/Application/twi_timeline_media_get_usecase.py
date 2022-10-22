@@ -1,13 +1,16 @@
 from dataclasses import dataclass
-from shared.Core.operator_factory import OperatorFactory
-from shared.Core.operator_type import OperatorType
-
+from packages.twi_automation.env import ENV
 from shared.Domain.File.file_download_service import FileDownloadService
 from shared.Domain.File.x_file import XFile
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
+from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
 from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.tweet import Tweet
+from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
+from shared.Domain.Twi.twitter_operator_factory_option import (
+    TwitterOperatorFactoryOption,
+)
 from shared.Domain.Url.x_url import XUrl
 
 
@@ -49,9 +52,13 @@ class TwiTimelineMediaGetUsecase:
 
     def tweets(self) -> list[Tweet]:
 
+        factory_option = TwitterOperatorFactoryOption(
+            ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"]
+        )
+
         return (
-            OperatorFactory()
-            .create(OperatorType.TWI)
+            TwitterOperatorFactory()
+            .create(factory_option)
             .fetch_timeline(
                 screen_name=self.screen_name,
                 count=self.fetch_count,
@@ -64,7 +71,9 @@ class TwiTimelineMediaGetUsecase:
             XStr("packages/twi_automation/files/fetch_timeline/since_tweet_id.txt")
         ).to_absolute()
 
-        TextFileOperatorImpl(filepath).write(
+        text_file_operator = TextFileOperatorFactory().create(filepath)
+
+        text_file_operator.write(
             content=[str(last_tweet_id)],
             is_overwrite=True,
             encoding="UTF-8",

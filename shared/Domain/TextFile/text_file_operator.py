@@ -11,13 +11,13 @@ class TextFileOperator(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def read(self) -> None:
+    def read(self) -> str:
         pass
 
     @abstractmethod
-    def readlines(self) -> None:
+    def readlines(self) -> list[str]:
         pass
 
     @abstractmethod
-    def write(self) -> None:
+    def write(self) -> str:
         pass

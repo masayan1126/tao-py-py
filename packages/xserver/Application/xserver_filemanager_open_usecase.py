@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from time import sleep
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Domain.Automatic.automatic_operator import AutomaticOperator
+from shared.Domain.GUI.gui_operator import GUIOperator
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Core.command import Command
 from packages.xserver.env import ENV
@@ -11,7 +11,7 @@ from selenium.common.exceptions import SessionNotCreatedException
 
 @dataclass
 class XserverFilemanagerOpenUsecase:
-    automatic_operator: AutomaticOperator
+    gui_operator: GUIOperator
     web_browser_operator: WebBrowserOperator
     login_xserver_command: Command
 
@@ -28,7 +28,7 @@ class XserverFilemanagerOpenUsecase:
             btn_to_filemanager.click()
             sleep(2)
 
-            self.automatic_operator.click(x=127, y=466, duration=1, wait_time=1).click(
+            self.gui_operator.click(x=127, y=466, duration=1, wait_time=1).click(
                 x=163, y=623, duration=1, wait_time=1
             ).click(x=124, y=759, duration=1, wait_time=1).click(
                 x=161, y=811, duration=1, wait_time=1

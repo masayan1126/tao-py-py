@@ -14,7 +14,7 @@ class TextFileOperatorImpl(TextFileOperator):
 
     def _open(self, mode: str, encoding: str) -> IO:
         try:
-            f = open(self.filepath.of_text(), mode=mode, encoding=encoding)
+            f = open(self.filepath.to_text(), mode=mode, encoding=encoding)
             return f
         except FileNotFoundError:
             raise FileNotFoundError

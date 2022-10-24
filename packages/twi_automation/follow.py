@@ -14,28 +14,6 @@ from shared.Domain.Twi.twitter_operator_factory_option import (
 )
 import tweepy
 
-error_log_filepath = XFileSystemPath(
-    XStr("packages/twi_automation/error-log.txt")
-).to_absolute()
-
-text_file_operator = TextFileOperatorFactory().create(error_log_filepath)
-api_code = text_file_operator.read(encoding="UTF-8")
-
-# Rate limit もしくはspam認定ならそもそも1回分処理を中止して、エラーログ用のテキストを空にする
-if api_code == "88" or api_code == "283":
-    LogHandler(
-        LogType.EXCEPTION,
-        "Rate limit もしくはspam認定を受けているため、処理開始前にキャンセルしました",
-        ENV["PACKAGE_NAME"],
-    ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
-
-    text_file_operator.write(
-        "", is_overwrite=True, encoding="UTF-8", needs_indention=True
-    )
-
-    raise Exception
-
-
 try:
     factory_option = TwitterOperatorFactoryOption(
         ENV["MY_SCREEN_NAME"], ENV["BLACK_LIST"]
@@ -56,7 +34,6 @@ except (tweepy.errors.TooManyRequests, tweepy.errors.TweepyException) as e:
         ENV["PACKAGE_NAME"],
     ).to_slack(ENV["SLACK_WEBHOOK_URL_TWITTER_AUTOMATION"])
 
-    text_file_operator.write(e.api_codes[0], is_overwrite=True, encoding="UTF-8")
 finally:
     if "success_count" in locals() and "users_tried_to_follow" in locals():
         LogHandler(

@@ -12,12 +12,12 @@ class SoftWareProcessOperator:
         os_type = judgement.judge()
 
         if os_type == OsType.WINDOWS:
-            subprocess.call(["start", software_path.of_text()])
+            subprocess.call(["start", software_path.to_text()])
         elif os_type == OsType.DARWIN:
-            p = subprocess.Popen(["open", software_path.of_text()])
+            p = subprocess.Popen(["open", software_path.to_text()])
             p.wait()
         else:
-            subprocess.call(["see", software_path.of_text()])
+            subprocess.call(["see", software_path.to_text()])
 
         if wait_time:
             self.wait(wait_time)

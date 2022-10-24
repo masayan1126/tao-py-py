@@ -14,7 +14,7 @@ from shared.Domain.Scraping.browser_type import BrowserType
 
 
 class JobcanLoginUsecase:
-    def handle(self) -> WebBrowserOperator:
+    def login(self) -> WebBrowserOperator:
         try:
 
             chorme_browser_operator = WebBrowserOperatorFactory().create(

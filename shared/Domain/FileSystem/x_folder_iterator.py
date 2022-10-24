@@ -1,11 +1,11 @@
 from shared.Domain.FileSystem.x_folder import XFolder
 
-from shared.Core.i_iterator import IIterator
-from shared.Core.i_aggregate import IAggregate
+from shared.Core.iterator import Iterator
+from shared.Core.aggregate import Aggregate
 
 
-class XFolderIterator(IIterator):
-    def __init__(self, i_aggregate: IAggregate):
+class XFolderIterator(Iterator):
+    def __init__(self, i_aggregate: Aggregate):
         self.i_aggregate = i_aggregate
         self.index = 0
 

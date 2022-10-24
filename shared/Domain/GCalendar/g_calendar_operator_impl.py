@@ -13,7 +13,7 @@ class GCalendarOperatorImpl(GCalendarOperator):
     def __init__(self, credential_json_file: XFileSystemPath):
 
         credentials = auth.load_credentials_from_file(
-            credential_json_file.to_absolute().of_text(),
+            credential_json_file.to_absolute().to_text(),
             ["https://www.googleapis.com/auth/calendar"],
         )[0]
 

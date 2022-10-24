@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.DataFile.Csv.csv_file_operator_impl import CsvFileOperatorImpl
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Youtube.yt_transcript_list import YtTranscriptList
+from shared.Domain.Youtube.yt_transcript_list import YtTranscriptList
 
 
 @dataclass
 class YoutubeTranscriptBuildUsecase:
-
     _yt_transcript_list: YtTranscriptList
 
     def to_csv(self, save_path_to: XFileSystemPath):
@@ -14,7 +13,7 @@ class YoutubeTranscriptBuildUsecase:
         for d in self._yt_transcript_list.all():
             print(d)
 
-        XCsv().output(
+        CsvFileOperatorImpl().output(
             save_path_to,
             self._yt_transcript_list.all(),
             index="vide_id",

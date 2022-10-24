@@ -13,7 +13,7 @@ class XFolder:
         return self
 
     def get_folder_name(self):
-        return self.base_path.to_relative().of_text()
+        return self.base_path.to_relative().to_text()
 
     def get_folder_path(self):
-        return self.base_path.of_text()
+        return self.base_path.to_text()

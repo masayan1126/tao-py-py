@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
-from shared.Domain.Array.abstract_array import AbstractArray
+from shared.Core.abstract_array import AbstractArray
 from shared.Domain.Scraping.xweb_element import XWebElement
 
 

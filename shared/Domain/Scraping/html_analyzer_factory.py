@@ -11,12 +11,12 @@ class HtmlAnalyzerFactory(Factory):
 
         if cookie:
             session = requests.session()
-            session.get(xurl.href())
+            session.get(xurl.url())
 
-            res = requests.get(xurl.href(), cookies=cookie)
+            res = requests.get(xurl.url(), cookies=cookie)
 
         else:
-            res = requests.get(xurl.href())
+            res = requests.get(xurl.url())
 
         html_analyzer: HtmlAnalyzer = DiContainer().resolve(HtmlAnalyzer)
         html_analyzer.bind(beautiful_soup=BeautifulSoup(res.content, "html.parser"))

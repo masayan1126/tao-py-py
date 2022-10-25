@@ -11,7 +11,7 @@ class WpOperatorImpl(WpOperator):
     api_url: XUrl
 
     def response_headers(self):
-        return requests.head(self.api_url.href()).headers
+        return requests.head(self.api_url.url()).headers
 
     def total_page_count(self) -> int:
         return int(self.response_headers()["X-WP-TotalPages"])
@@ -26,13 +26,13 @@ class WpOperatorImpl(WpOperator):
         if page is None:
             _posts = []
             for page in range(1, self.total_page_count() + 1):
-                res = requests.get(f"{self.api_url.href()}?page={page}")
+                res = requests.get(f"{self.api_url.url()}?page={page}")
 
                 for post in json.loads(res.text):
                     _posts.append(post)  # JSON文字列を辞書型に変換
 
         else:
-            res = requests.get(f"{self.api_url.href()}?page={page}")
+            res = requests.get(f"{self.api_url.url()}?page={page}")
             _posts = json.loads(res.text)
 
         for post in _posts:

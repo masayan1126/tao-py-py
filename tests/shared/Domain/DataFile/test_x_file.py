@@ -7,14 +7,14 @@ from shared.Domain.Url.x_url import XUrl
 def sut() -> XFile:
     return XFile(
         x_url=XUrl(
-            encoded_href="https://3.bp.blogspot.com/-X6ruoCYjbMQ/WSa8zi2McUI/AAAAAAABEhc/OtxhrQP4PYIusK-uT61_NHbxUmlEbLWgACLcB/s800/cat_mikeneko2.png"
+            url="https://3.bp.blogspot.com/-X6ruoCYjbMQ/WSa8zi2McUI/AAAAAAABEhc/OtxhrQP4PYIusK-uT61_NHbxUmlEbLWgACLcB/s800/cat_mikeneko2.png"
         )
     )
 
 
 def test_ファイルオブジェクトからファイルのurlを取得できる(sut: XFile):
     assert (
-        sut.filepath().href()
+        sut.filepath().url()
         == "https://3.bp.blogspot.com/-X6ruoCYjbMQ/WSa8zi2McUI/AAAAAAABEhc/OtxhrQP4PYIusK-uT61_NHbxUmlEbLWgACLcB/s800/cat_mikeneko2.png"
     )
 

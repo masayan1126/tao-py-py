@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from shared.Domain.DataFile.Csv.csv_file_operator_impl import CsvFileOperatorImpl
+from shared.Domain.DataFile.data_file_operator_factory import DataFileOperatorFactory
+from shared.Domain.FileSystem.file_format_type import FileFormatType
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Youtube.yt_transcript_list import YtTranscriptList
 
@@ -13,7 +14,9 @@ class YoutubeTranscriptBuildUsecase:
         for d in self._yt_transcript_list.all():
             print(d)
 
-        CsvFileOperatorImpl().output(
+        csv_operator = DataFileOperatorFactory().create(FileFormatType.CSV)
+
+        csv_operator.output(
             save_path_to,
             self._yt_transcript_list.all(),
             index="vide_id",

@@ -1,8 +1,10 @@
 from shared.Domain.GUI.gui_operator import GUIOperator
 from shared.Domain.GUI.gui_operator_impl import GUIOperatorImpl
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
-from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
+from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
+    TextFileOperatorFactory,
+)
+from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 # memo: 一旦保留
 

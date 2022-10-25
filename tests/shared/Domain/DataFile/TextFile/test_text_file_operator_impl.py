@@ -1,18 +1,20 @@
 import pytest
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
+from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
+    TextFileOperatorFactory,
+)
 
 
 @pytest.fixture
 def setuped_filepaths():
     # 読み込み用
     filepath1 = XFileSystemPath(
-        XStr("tests/shared/Domain/TextFile/sample.txt")
+        XStr("tests/shared/Domain/DataFile/TextFile/sample.txt")
     ).to_absolute()
     # 書き込み用
     filepath2 = XFileSystemPath(
-        XStr("tests/shared/Domain/TextFile/sample2.txt")
+        XStr("tests/shared/Domain/DataFile/TextFile/sample2.txt")
     ).to_absolute()
     return filepath1, filepath2
 

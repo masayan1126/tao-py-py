@@ -2,8 +2,10 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.Scraping.web_browser_operator import WebBrowserOperator
 from shared.Domain.Scraping.xweb_element_list import XWebElementList
 from shared.Domain.String.xstr import XStr
-from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
-from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
+from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
+    TextFileOperatorFactory,
+)
+from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 
 class LoginXserverReciver:

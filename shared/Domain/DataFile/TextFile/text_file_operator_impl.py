@@ -5,7 +5,7 @@
 from dataclasses import dataclass
 from typing import IO
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
-from shared.Domain.TextFile.text_file_operator import TextFileOperator
+from shared.Domain.DataFile.TextFile.text_file_operator import TextFileOperator
 
 
 @dataclass

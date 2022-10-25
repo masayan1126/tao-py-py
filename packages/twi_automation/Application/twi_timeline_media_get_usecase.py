@@ -4,8 +4,10 @@ from shared.Domain.File.file_download_service import FileDownloadService
 from shared.Domain.File.x_file import XFile
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
-from shared.Domain.TextFile.text_file_operator_factory import TextFileOperatorFactory
-from shared.Domain.TextFile.text_file_operator_impl import TextFileOperatorImpl
+from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
+    TextFileOperatorFactory,
+)
+from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.tweet import Tweet
 from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
 from shared.Domain.Twi.twitter_operator_factory_option import (

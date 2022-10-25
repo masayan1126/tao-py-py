@@ -22,11 +22,7 @@ open_cases_data_provider = [
     ),
     (
         "tests/shared/Domain/DataFile/Csv/read_sample2.csv",
-        "id,name,type\n1,餃子,中華\n2,明太子パスタ,洋食\n3,ナスの味噌汁,和食",
-    ),
-    (
-        "tests/shared/Domain/DataFile/Csv/read_sample3.csv",
-        "id,name,type\n1,餃子,中華\n2,明太子パスタ,洋食\n3,ナスの味噌汁,和食",
+        "id,name,type\n1,牛丼,和食\n2,カルボナーラ,洋食\n3,鯖の味噌煮,和食",
     ),
 ]
 read_cases_data_provider = [
@@ -41,17 +37,9 @@ read_cases_data_provider = [
     (
         "tests/shared/Domain/DataFile/Csv/read_sample2.csv",
         [
-            {"id": 1, "name": "餃子", "type": "中華"},
-            {"id": 2, "name": "明太子パスタ", "type": "洋食"},
-            {"id": 3, "name": "ナスの味噌汁", "type": "和食"},
-        ],
-    ),
-    (
-        "tests/shared/Domain/DataFile/Csv/read_sample3.csv",
-        [
-            {"id": 1, "name": "餃子", "type": "中華"},
-            {"id": 2, "name": "明太子パスタ", "type": "洋食"},
-            {"id": 3, "name": "ナスの味噌汁", "type": "和食"},
+            {"id": 1, "name": "牛丼", "type": "和食"},
+            {"id": 2, "name": "カルボナーラ", "type": "洋食"},
+            {"id": 3, "name": "鯖の味噌煮", "type": "和食"},
         ],
     ),
 ]

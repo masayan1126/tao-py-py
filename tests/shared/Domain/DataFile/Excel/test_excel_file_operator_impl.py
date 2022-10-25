@@ -37,40 +37,51 @@ read_cases_data_provider = [
         "tests/shared/Domain/DataFile/Excel/read_sample2.xlsx",
         [
             {
-                "プログラミング言語一覧": [
-                    {"id": 1, "name": "PHP", "type": "動的型付け"},
-                    {"id": 2, "name": "Java", "type": "静的型付け"},
-                    {"id": 3, "name": "Python", "type": "動的型付け"},
-                    {"id": 4, "name": "Ruby", "type": "動的型付け"},
+                "出荷一覧": [
+                    {
+                        "shipping_id": 1,
+                        "shipping_date": pd.Timestamp("2022-10-01 00:00:00"),
+                        "delivery_date": pd.Timestamp("2022-10-02 00:00:00"),
+                    },
+                    {
+                        "shipping_id": 2,
+                        "shipping_date": pd.Timestamp("2022-10-02 00:00:00"),
+                        "delivery_date": pd.Timestamp("2022-10-03 00:00:00"),
+                    },
+                    {
+                        "shipping_id": 3,
+                        "shipping_date": pd.Timestamp("2022-10-03 00:00:00"),
+                        "delivery_date": pd.Timestamp("2022-10-04 00:00:00"),
+                    },
+                    {
+                        "shipping_id": 4,
+                        "shipping_date": pd.Timestamp("2022-10-04 00:00:00"),
+                        "delivery_date": pd.Timestamp("2022-10-05 00:00:00"),
+                    },
                 ]
             },
             {
-                "フレームワーク一覧": [
-                    {"id": 1, "name": "Laravel"},
-                    {"id": 2, "name": "Sprint"},
-                    {"id": 3, "name": "Django"},
-                    {"id": 4, "name": "RonR"},
-                ]
-            },
-        ],
-    ),
-    (
-        "tests/shared/Domain/DataFile/Excel/read_sample3.xlsx",
-        [
-            {
-                "プログラミング言語一覧": [
-                    {"id": 1, "name": "PHP", "type": "動的型付け"},
-                    {"id": 2, "name": "Java", "type": "静的型付け"},
-                    {"id": 3, "name": "Python", "type": "動的型付け"},
-                    {"id": 4, "name": "Ruby", "type": "動的型付け"},
-                ]
-            },
-            {
-                "フレームワーク一覧": [
-                    {"id": 1, "name": "Laravel"},
-                    {"id": 2, "name": "Sprint"},
-                    {"id": 3, "name": "Django"},
-                    {"id": 4, "name": "RonR"},
+                "請求一覧": [
+                    {
+                        "billing_id": 1,
+                        "date": pd.Timestamp("2022-10-01 00:00:00"),
+                        "billing_amount": 2000,
+                    },
+                    {
+                        "billing_id": 2,
+                        "date": pd.Timestamp("2022-10-02 00:00:00"),
+                        "billing_amount": 3000,
+                    },
+                    {
+                        "billing_id": 3,
+                        "date": pd.Timestamp("2022-10-03 00:00:00"),
+                        "billing_amount": 2000,
+                    },
+                    {
+                        "billing_id": 4,
+                        "date": pd.Timestamp("2022-10-04 00:00:00"),
+                        "billing_amount": 3000,
+                    },
                 ]
             },
         ],

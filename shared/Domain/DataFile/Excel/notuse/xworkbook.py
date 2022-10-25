@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from pandas import DataFrame
-from shared.Domain.DataFile.Excel.xworksheet import XWorksheet
+from shared.Domain.DataFile.Excel.notuse.xworkbook import XWorksheet
 
 
 @dataclass
 class XWorkbook:
 
     # シート名がキーkey、そのシートのデータpandas.DataFrameが値valueとなる辞書dict
-    def __init__(self, data: dict):
+    def __init__(self, df: DataFrame):
         self.df = df
 
     def get_all_sheet_names(self) -> list:

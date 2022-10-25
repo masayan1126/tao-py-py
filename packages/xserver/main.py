@@ -3,7 +3,7 @@ from packages.xserver.Application.xserver_filemanager_open_usecase import (
     XserverFilemanagerOpenUsecase,
 )
 
-from shared.Domain.Automatic.automatic_operator_impl import AutomaticOperatorImpl
+from shared.Domain.GUI.gui_operator_impl import GUIOperatorImpl
 from shared.Domain.Scraping.web_browser_operator_factory import (
     WebBrowserOperatorFactory,
 )
@@ -26,5 +26,5 @@ command.set_reciver(LoginXserverReciver())
 sleep(3)
 
 XserverFilemanagerOpenUsecase(
-    AutomaticOperatorImpl(), chrome_browser_operator, command
+    GUIOperatorImpl(), chrome_browser_operator, command
 ).open_filemanager()

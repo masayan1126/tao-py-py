@@ -1,11 +1,11 @@
 from packages.twi_automation.env import ENV
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Domain.Excel.xcsv import XCsv
+from shared.Domain.DataFile.Csv.csv_file_operator_impl import CsvFileOperatorImpl
+from shared.Domain.DataFile.data_file_operator_factory import DataFileOperatorFactory
+from shared.Domain.FileSystem.file_format_type import FileFormatType
 from shared.Domain.Url.x_url import XUrl
-from shared.Domain.Wp.wp_operator import WpOperator
 from shared.Domain.Wp.wp_operator_factory import WpOperatorFactory
-from shared.Domain.Wp.wp_operator_impl import WpOperatorImpl
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 
@@ -18,7 +18,9 @@ try:
     wp_operator = WpOperatorFactory().create(XUrl(api_url))
     posts = wp_operator.fetch_posts(page=1)
 
-    XCsv().output(
+    csv_operator = DataFileOperatorFactory().create(FileFormatType.CSV)
+
+    csv_operator.output(
         XFileSystemPath(XStr("packages/twi_automation/posts.csv")).to_absolute(), posts
     )
 except Exception as e:

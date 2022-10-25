@@ -1,10 +1,10 @@
 from typing import Callable
 from shared.Domain.FileSystem.x_folder import XFolder
-from shared.Core.i_aggregate import IAggregate
+from shared.Core.aggregate import Aggregate
 from shared.Domain.FileSystem.x_folder_iterator import XFolderIterator
 
 
-class XFolderAggregate(IAggregate):
+class XFolderAggregate(Aggregate):
     def __init__(self):
         self.x_folder_list = []
 

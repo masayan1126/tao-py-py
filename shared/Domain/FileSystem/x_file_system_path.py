@@ -11,7 +11,7 @@ class XFileSystemPath:
     def path(self) -> pathlib.Path:
         return self._path
 
-    def of_text(self) -> str:
+    def to_text(self) -> str:
         return str(self.path())
 
     # 相対パス(cwdを起点とする相対パス)

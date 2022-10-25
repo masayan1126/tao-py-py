@@ -32,6 +32,6 @@ LogHandler(
     ENV["PACKAGE_NAME"],
 ).to_slack(ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"])
 
-web_browser_operator = JobcanLoginUsecase().handle()
+web_browser_operator = JobcanLoginUsecase().login()
 ManhourRegisterUseCase().handle(web_browser_operator)
 NeedsFixRecordsPickUpUsecase().handle(web_browser_operator)

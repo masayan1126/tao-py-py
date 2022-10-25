@@ -3,34 +3,37 @@ from urllib.parse import urlparse
 from urllib.parse import urljoin
 import urllib.request, urllib.error
 from retry import retry
-
-# URLを6つの構成要素に分解(返り値は6つの構成要素のタプル)
-# [scheme]:// [netloc] / [path] ; [parameters] ? [query] # [fragment]
+import urllib.parse
 
 
 @dataclass
 class XUrl:
-    @retry(exceptions=(urllib.error.HTTPError), tries=10)
-    def __init__(self, encoded_href: str):
-        self._href = encoded_href
+    """インスタンス生成時のドメインルール
+    - URLを6つの構成要素に分解(返り値は6つの構成要素のタプル)
+    - [scheme]:// [netloc] / [path] ; [parameters] ? [query] # [fragment]
+    """
 
-    def href(self) -> str:
-        return self._href
+    @retry(exceptions=(urllib.error.HTTPError), tries=10)
+    def __init__(self, url: str):
+        self._url = url
+
+    def url(self) -> str:
+        return self._url
 
     def scheme(self) -> str:
-        return urlparse(self.href()).scheme
+        return urlparse(self.url()).scheme
 
     def netloc(self) -> str:
-        return urlparse(self.href()).netloc
+        return urlparse(self.url()).netloc
 
     def path(self) -> str:
-        return urlparse(self.href()).path
+        return urlparse(self.url()).path
 
     def query_params(self) -> str:
-        return urlparse(self.href()).query
+        return urlparse(self.url()).query
 
     def fragment(self) -> str:
-        return urlparse(self.href()).fragment
+        return urlparse(self.url()).fragment
 
     # 基底URLを返します
     def baseurl(self) -> str:
@@ -46,3 +49,10 @@ class XUrl:
             joined_url [str]: [基底パスに任意の相対パスを結合したurl]
         """
         return XUrl(urljoin(self.baseurl(), relative_path))
+
+    # def decode(self) -> str:
+    #     return urllib.parse.unquote(self.url())
+
+    # def encode(self) -> str:
+    # not_escape_ascii = "/?:#="
+    #     return urllib.parse.quote(self.url(), safe="")

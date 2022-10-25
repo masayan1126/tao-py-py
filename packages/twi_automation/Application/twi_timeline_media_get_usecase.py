@@ -39,7 +39,7 @@ class TwiTimelineMediaGetUsecase:
                     else:
                         extension = ".jpg"
 
-                    urls.append(XUrl(encoded_href=media["url"]))
+                    urls.append(XUrl(url=media["url"]))
 
             for x_url in urls:
                 x_file = XFile(x_url)

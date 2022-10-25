@@ -7,7 +7,7 @@ class FileDownloadService:
     def download(self, x_file: XFile, download_path_to: XFileSystemPath) -> str:
 
         downloaded_file_path, message = urllib.request.urlretrieve(
-            x_file.filepath().href(),
+            x_file.filepath().url(),
             download_path_to.join(x_file.filename()).to_text(),
         )
 

@@ -9,7 +9,7 @@ from shared.Domain.DataFile.x_file import XFile
 
 @pytest.fixture
 def setuped_xfile() -> None:
-    x_url = XUrl(encoded_href="https://www.home-movie.biz/mov/hts-samp001.mp4")
+    x_url = XUrl(url="https://www.home-movie.biz/mov/hts-samp001.mp4")
     x_file = XFile(x_url)
     yield x_file
 

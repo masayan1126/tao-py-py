@@ -22,7 +22,7 @@ class WebBrowserOperatorImpl(WebBrowserOperator):
             self._webdriver.execute_script("window.open()")
             self._webdriver.switch_to.window(self._webdriver.window_handles[-1])
 
-        self._webdriver.get(self._x_url.href())
+        self._webdriver.get(self._x_url.url())
         self._webdriver.maximize_window()
 
     def find_by_id(self, id_name: str) -> XWebElement:

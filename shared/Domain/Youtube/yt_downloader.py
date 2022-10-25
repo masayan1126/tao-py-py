@@ -14,6 +14,6 @@ class YtDownloader(IYtDownloader):
         try:
 
             with self.downloader as ydl:
-                ydl.download([download_path_from.href()])
+                ydl.download([download_path_from.url()])
         except Exception as e:
             raise e

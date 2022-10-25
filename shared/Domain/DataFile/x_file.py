@@ -13,7 +13,7 @@ class XFile:
 
     # ファイル名を返します(拡張子あり、クエリストリングは含まない)
     def filename(self) -> str:
-        return os.path.basename(self.filepath().href())
+        return os.path.basename(self.filepath().url())
 
     # 拡張子を返します
     def extension(self) -> str:

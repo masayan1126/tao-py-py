@@ -2,9 +2,12 @@ from unittest.mock import MagicMock, patch
 from packages.jobcan.Command.login_jobcan_reciver import LoginJobcanReciver
 
 
+@patch.object(LoginJobcanReciver, "_auth_info")
 @patch("packages.jobcan.Command.login_jobcan_reciver.WebBrowserOperator")
-def test_勤怠システムへのログインコマンド用レシーバー(operator_mock):
+def test_勤怠システムへのログインコマンド用レシーバー(operator_mock, auth_info_mock):
+
     operator_mock.find_by_id.return_value = MagicMock()
+    auth_info_mock.return_value = ["email1", "password1"]
 
     sut = LoginJobcanReciver(operator_mock)
     sut.action()

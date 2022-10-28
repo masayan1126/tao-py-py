@@ -10,8 +10,12 @@ from shared.Domain.IpAddress.ip_address_service import IpAddressService
 from shared.Core.Log.log_handler import LogHandler
 from packages.today_task_notification.env import ENV as ENV_TODAY_IP
 from time import sleep
+from shared.Domain.Scraping.browser_type import BrowserType
 from shared.Domain.Scraping.html_analyzer_factory import (
     HtmlAnalyzerFactory,
+)
+from shared.Domain.Scraping.web_browser_operator_factory import (
+    WebBrowserOperatorFactory,
 )
 from shared.Domain.Url.x_url import XUrl
 
@@ -32,6 +36,11 @@ LogHandler(
     ENV["PACKAGE_NAME"],
 ).to_slack(ENV_TODAY_IP["SLACK_WEBHOOK_URL_MY_TASK"])
 
-web_browser_operator = JobcanLoginUsecase().login()
-ManhourRegisterUseCase().handle(web_browser_operator)
-NeedsFixRecordsPickUpUsecase().handle(web_browser_operator)
+chorme_browser_operator = WebBrowserOperatorFactory().create(
+    x_url=XUrl("https://id.jobcan.jp/"),
+    browser_type=BrowserType.CHROME,
+)
+
+JobcanLoginUsecase(chorme_browser_operator).login()
+ManhourRegisterUseCase().handle(chorme_browser_operator)
+NeedsFixRecordsPickUpUsecase().handle(chorme_browser_operator)

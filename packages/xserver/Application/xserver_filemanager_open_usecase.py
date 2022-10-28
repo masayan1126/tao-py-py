@@ -15,7 +15,7 @@ class XserverFilemanagerOpenUsecase:
     web_browser_operator: WebBrowserOperator
     login_xserver_command: Command
 
-    def open_filemanager(self):
+    def open(self):
         try:
             self.login_xserver_command.execute()
             sleep(2)

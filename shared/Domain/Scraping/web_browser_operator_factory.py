@@ -14,7 +14,7 @@ class WebBrowserOperatorFactory(Factory):
         self,
         x_url: XUrl,
         browser_type: BrowserType = BrowserType.CHROME,
-        is_headless=True,
+        is_headless=False,
     ) -> WebBrowserOperator:
 
         judgement = BrowserDriverTypeJudgement(browser_type, is_headless)

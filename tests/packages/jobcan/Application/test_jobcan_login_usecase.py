@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 import sys
 
 env_mock = MagicMock()
-sys.modules["packages.jobcan.ENV"] = env_mock
+sys.modules["packages.jobcan.env"] = env_mock
 
 # memo: テスト対象のクラスでconfigを使用しているので、mockした後にimportする必要あり
 from packages.jobcan.Application.jobcan_login_usecase import JobcanLoginUsecase

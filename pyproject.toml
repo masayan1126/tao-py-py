@@ -29,6 +29,7 @@ tqdm = "^4.64.1"
 atomicwrites = "^1.4.1"
 flask = "^2.2.2"
 chromedriver-binary = "^107.0.5304.18.0"
+geckodriver-autoinstaller = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]

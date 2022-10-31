@@ -16,3 +16,4 @@ requirements.txt
 *.exe
 hoge.py
 .DS_Store
+geckodriver.log

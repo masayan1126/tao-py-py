@@ -1,0 +1,4 @@
+﻿id,name,type
+1,Python,動的型付け
+2,Typescript,静的型付け
+3,PHP,動的型付け

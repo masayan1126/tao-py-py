@@ -1,7 +1,9 @@
 import pandas as pd
 from pandas import read_excel
 
-# memo: テストでこのimport文を使用
+# memo: テストでこのimport文を使用しているので注意
+from pandas import DataFrame
+
 from shared.Domain.DataFile.data_file_operator import DataFileOperator
 from shared.Domain.DataFile.data_frame_converter import DataFrameConverter
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
@@ -39,11 +41,12 @@ class ExcelFileOperatorImpl(DataFileOperator):
         filepath: XFileSystemPath,
         sheet_name: str,
         data_list: list,
+        mode: str = "a",
     ) -> None:
 
         with pd.ExcelWriter(
             filepath.to_text(),
-            mode="a",
+            mode=mode,
             if_sheet_exists="replace",  # すでに存在するシートを指定した場合は置き換え
         ) as writer:
             df = pd.DataFrame(data_list)

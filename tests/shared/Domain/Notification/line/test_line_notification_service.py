@@ -1,5 +1,4 @@
 from unittest.mock import Mock, patch
-import pytest
 from shared.Domain.Notification.line.line_notification_service import (
     LineNotificationService,
 )

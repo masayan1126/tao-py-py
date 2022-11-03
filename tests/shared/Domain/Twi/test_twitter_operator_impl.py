@@ -2,7 +2,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Twi.tweet import Tweet
-from shared.Domain.Twi.twitter_operator import TwitterOperator
 from shared.Domain.Twi.twitter_operator_factory_option import (
     TwitterOperatorFactoryOption,
 )

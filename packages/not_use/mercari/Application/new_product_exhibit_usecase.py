@@ -4,7 +4,6 @@ from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
     TextFileOperatorFactory,
 )
-from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 
 # memo: 一旦保留
 

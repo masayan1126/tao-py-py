@@ -1,6 +1,3 @@
-from argparse import FileType
-from shared.Domain.DataFile.Csv.csv_file_operator_impl import CsvFileOperatorImpl
-from shared.Domain.DataFile.data_file_operator import DataFileOperator
 from shared.Domain.DataFile.data_file_operator_factory import DataFileOperatorFactory
 from shared.Domain.FileSystem.file_format_type import FileFormatType
 from shared.Domain.FileSystem.make_folder_command import MakeFolderCommand

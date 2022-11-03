@@ -1,7 +1,6 @@
 from packages.twi_automation.env import ENV
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Domain.DataFile.Csv.csv_file_operator_impl import CsvFileOperatorImpl
 from shared.Domain.DataFile.data_file_operator_factory import DataFileOperatorFactory
 from shared.Domain.FileSystem.file_format_type import FileFormatType
 from shared.Domain.Url.x_url import XUrl

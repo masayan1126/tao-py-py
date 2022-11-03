@@ -1,14 +1,9 @@
 from shared.Core.Log.log_handler import LogHandler
 from shared.Core.Log.log_type import LogType
-from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
-    TextFileOperatorFactory,
-)
-from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.twi_error_judgement import (
     TwiErrorJudgement,
 )
 from packages.twi_automation.env import ENV
-from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Twi.twitter_operator_factory import TwitterOperatorFactory
 from shared.Domain.Twi.twitter_operator_factory_option import (

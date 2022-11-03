@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import pandas as pd
-import pandas as DataFrame
 from pandas import read_table
 from codecs import open
 from shared.Domain.DataFile.data_file_operator import DataFileOperator

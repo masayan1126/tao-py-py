@@ -2,7 +2,6 @@ import pandas as pd
 from pandas import read_excel
 
 # memo: テストでこのimport文を使用
-import pandas as DataFrame
 from shared.Domain.DataFile.data_file_operator import DataFileOperator
 from shared.Domain.DataFile.data_frame_converter import DataFrameConverter
 from shared.Domain.FileSystem.x_file_system_path import XFileSystemPath

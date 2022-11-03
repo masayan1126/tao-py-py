@@ -54,12 +54,11 @@ def sut() -> CsvFileOperatorImpl:
 
 
 @pytest.fixture
-def output_filepath() -> XFileSystemPath:
+def output_filepath(sut: CsvFileOperatorImpl) -> XFileSystemPath:
     filepath = XFileSystemPath(
         XStr("tests/shared/Domain/DataFile/Csv/output_sample.csv")
     )
     yield filepath
-    filepath.delete()
 
 
 @pytest.fixture

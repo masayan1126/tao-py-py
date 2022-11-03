@@ -1,5 +1,9 @@
 from dataclasses import dataclass
 import pandas as pd
+
+# memo: テストでこのimport文を使用しているので注意
+from pandas import DataFrame
+
 from pandas import read_table
 from codecs import open
 from shared.Domain.DataFile.data_file_operator import DataFileOperator
@@ -54,6 +58,7 @@ class CsvFileOperatorImpl(DataFileOperator):
         data_list: list,
         index=False,
         encoding: str = "utf-8-sig",
+        mode: str = "w",
     ):
 
         pd.DataFrame(data_list).to_csv(
@@ -61,5 +66,5 @@ class CsvFileOperatorImpl(DataFileOperator):
             encoding=encoding,
             index=index,
             errors="ignore",
-            mode="a",  # 追記
+            mode=mode,  # 追記
         )

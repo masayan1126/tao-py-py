@@ -9,7 +9,6 @@ from shared.Domain.Notification.line.line_notification_service import (
 from shared.Domain.Notification.notification import Notification
 from shared.Domain.String.xstr import XStr
 from shared.Domain.Time.x_date_time import XDateTime
-from packages.today_task_notification.config import CONFIG
 
 
 # グーグルカレンダーから取得した予定をメッセージとして作成し、通知します

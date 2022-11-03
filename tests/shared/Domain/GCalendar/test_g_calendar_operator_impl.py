@@ -7,7 +7,6 @@ from shared.Domain.String.xstr import XStr
 from shared.Domain.Time.x_date import XDate
 from shared.Domain.Time.x_date_time import XDateTime
 from unittest.mock import MagicMock, patch
-import pytest
 from shared.Domain.GCalendar.g_calendar_operator_factory import GCalendarOperatorFactory
 from shared.Domain.GCalendar.g_calendar_operator_impl import GCalendarOperatorImpl
 

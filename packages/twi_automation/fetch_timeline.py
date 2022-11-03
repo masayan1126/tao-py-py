@@ -9,7 +9,6 @@ from shared.Domain.String.xstr import XStr
 from shared.Domain.DataFile.TextFile.text_file_operator_factory import (
     TextFileOperatorFactory,
 )
-from shared.Domain.DataFile.TextFile.text_file_operator_impl import TextFileOperatorImpl
 from shared.Domain.Twi.twitter_operator_factory_option import (
     TwitterOperatorFactoryOption,
 )

@@ -1,5 +1,4 @@
 from shared.Domain.Twi.tweet import Tweet
-from shared.Util.dict_util import DictUtil
 from tweepy.models import Status
 
 

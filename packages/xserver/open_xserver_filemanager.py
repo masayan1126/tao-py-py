@@ -8,8 +8,8 @@ from shared.Domain.Scraping.web_browser_operator_factory import (
     WebBrowserOperatorFactory,
 )
 from shared.Domain.Url.x_url import XUrl
-from packages.xserver.Domain.login_xserver_reciver import LoginXserverReciver
-from packages.xserver.Domain.login_xserver_command import LoginXserverCommand
+from packages.xserver.Command.login_xserver_reciver import LoginXserverReciver
+from packages.xserver.Command.login_xserver_command import LoginXserverCommand
 from shared.Domain.Scraping.browser_type import BrowserType
 
 
@@ -18,8 +18,8 @@ chrome_browser_operator = WebBrowserOperatorFactory().create(
     BrowserType.CHROME,
 )
 
-command = LoginXserverCommand(chrome_browser_operator)
-command.set_reciver(LoginXserverReciver())
+command = LoginXserverCommand()
+command.set_reciver(LoginXserverReciver(chrome_browser_operator))
 
 sleep(3)
 

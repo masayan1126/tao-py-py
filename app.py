@@ -3,6 +3,9 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from packages.api.dataset import datasetfunc
+from packages.jobcan.env import ENV
+from shared.Core.Log.log_handler import LogHandler
+from shared.Core.Log.log_type import LogType
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -12,6 +15,12 @@ CORS(app, resources={r"/tao-py-py/api/v1/*": {"origins": "*"}})
 
 @app.route("/tao-py-py/api/v1/recipes", methods=["GET"])
 def recipes1():
+    # LogHandler(
+    #     LogType.NOTIFICATION,
+    #     "error!!",
+    #     ENV["PACKAGE_NAME"],
+    # ).to_slack(ENV["SLACK_WEBHOOK_URL_JOBCAN"])
+
     recipes = datasetfunc()
     return jsonify({"recipe": recipes})
 

@@ -79,11 +79,14 @@ class TwitterOperatorImpl(TwitterOperator):
 
             except (HTTPException) as e:
 
-                # フォロー・イイね済み例外(139)は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけ
+                needs_raise_exception = (
+                    139 not in e.api_codes and 162 not in e.api_codes
+                )
 
-                if 139 not in e.api_codes:
+                if needs_raise_exception:
                     raise e
                 else:
+                    # フォロー・イイね済み例外(139)、ブロックしているユーザーへのフォロー(162)時は例外を投げて落とさなくてよい。そのユーザーへの処理をスキップするだけ
                     continue
         return follow_count, followed_users
 

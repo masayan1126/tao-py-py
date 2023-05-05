@@ -6,7 +6,7 @@ from shared.Domain.Twi.tweet import Tweet
 
 class TwitterOperator(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def do_tweet(self) -> Tweet:
+    def do_tweet(self, tweet_content: XStr) -> Tweet:
         pass
 
     @abc.abstractmethod

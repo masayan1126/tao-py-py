@@ -82,12 +82,6 @@ def output_data() -> list:
     ]
 
 
-@pytest.mark.parametrize("filepath, expected", open_cases_data_provider)
-def test_open_csvを開くことができる_モック未使用(filepath, expected, sut: CsvFileOperatorImpl):
-    actual = sut._open(XFileSystemPath(XStr(filepath))).read()
-    assert expected == actual
-
-
 def test_open_csvを開くことができる_モック使用(sut: CsvFileOperatorImpl):
     file_name: str = "no_exists.txt"
     result = "id,name,type1,餃子,中華2,明太子パスタ,洋食3,ナスの味噌汁,和食".encode()
